@@ -1,0 +1,3295 @@
+## "Objects"
+pl "Obiekty"
+en "Objects"
+de "Objects"
+
+## "Saving"
+pl "Zapisywanie"
+en "Saving"
+de "Saving"
+
+## "WindowMgr"
+pl "Obs³uga okien"
+en "WindowMgr"
+de "WindowMgr"
+
+## " %d seconds idle"
+pl "bezczynnoœc trwa %1 sek."
+en " %1 seconds idle"
+de "seit %1 Sekunden frei"
+
+## ""erfuellt""
+pl ""wykonano""
+en ""fulfilled""
+de ""erfüllt""
+
+## "(+%2d:%02d)"
+pl "(+%1:%2)"
+en "(+%1:%2)"
+de "(+%1:%2)"
+
+## "-1-:+-2-%in-3-(-4-)"
+pl "-1-: +-2-% w -3- (-4-)"
+en "-1-: +-2-% in -3- (-4-)"
+de "-1-: +-2-% in -3- (-4-)"
+
+## "-1-:+-2-in-3-(-4-)"
+pl "-1-: +-2- w -3- (-4-)"
+en "-1-: +-2- in -3- (-4-)"
+de "-1-: +-2- in -3- (-4-)"
+
+## "-1-:-2-%in-3-(-4-)"
+pl "-1-: -2-% w -3- (-4-)"
+en "-1-: -2-% in -3- (-4-)"
+de "-1-: -2-% in -3- (-4-)"
+
+## "Abbrechen"
+pl "Anuluj"
+en "Cancel"
+de "Abbruch"
+
+## "Abfluss"
+pl "Odp³yw"
+en "Drain"
+de "Abfluss"
+
+## "Age"
+pl "Wiek"
+en "Age"
+de "Alter"
+
+## "Alchemie"
+pl "Alchemia"
+en "Alchemy"
+de "Alchemie"
+
+## "AlchemiePos0"
+pl "Historia energii"
+en "The History of Energy"
+de "Energien durch die Zeit"
+
+## "AlchemiePos1"
+pl "Wydajna elektrownia chomicza"
+en "The Efficient Hamster Wheel"
+de "Laufhamster-Futterquoten"
+
+## "AlchemiePos2"
+pl "Tajemnice przetapiania"
+en "Fire and Ice"
+de "Brennwertetabellen"
+
+## "AlchemiePos3"
+pl "Podziemne anomalie"
+en "Underground Anomalies"
+de "Anomalien unter der Erde"
+
+## "AlchemiePos4"
+pl "Magiczne dowody"
+en "Magical Evidence"
+de "Magische Beweise"
+
+## "Alienpflanze"
+pl "Fabryka obcych"
+en "Alien plant"
+de "Alienpflanze"
+
+## "Amboss"
+pl "Kowad³o"
+en "Anvil"
+de "Amboss"
+
+## "Amulett_1"
+pl "Amulet Brzydoty "
+en "Amulett Issnichschick"
+de "Amulett Issnichschick"
+
+## "Amulett_2"
+pl "Smocza £za "
+en "Drachentränenamulett"
+de "Drachentränenamulett"
+
+## "Amulett_3"
+pl "Amulet P³omieni"
+en "Flammenamulett"
+de "Flammenamulett"
+
+## "Assigned to"
+pl "przydzia³:"
+en "assigned to"
+de "zugewiesen zu"
+
+## "Audio Options"
+pl "Opcje dŸwiêkowe"
+en "Audio options"
+de "Audiooptionen"
+
+## "Auflegen"
+pl "Wystêpuj"
+en "Perform"
+de "Auflegen"
+
+## "Aufm."
+pl "Czuj."
+en "Aler."
+de "Aufm."
+
+## "Aufmerksamkeit"
+pl "Czujnoœæ"
+en "Alertness"
+de "Aufmerksamkeit"
+
+## "Aufzug"
+pl "Winda"
+en "Lift"
+de "Aufzug"
+
+## "Aufzugkabine"
+pl "Kabina windy"
+en "Elevator car"
+de "Aufzugkabine"
+
+## "Automatic schedule"
+pl "Automatyczne ustawianie czasu pracy"
+en "Automatic scheduling"
+de "Automatische Planung"
+
+## "Axt"
+pl "Topór"
+en "Mace"
+de "Axt"
+
+## "Axt_1"
+pl "Ma³y topór bojowy"
+en "smal Axe"
+de "Kleine Streitaxt"
+
+## "Axt_2"
+pl "Topór dwurêczny"
+en "Battle axe"
+de "Streitaxt"
+
+## "Axt_3"
+pl "Du¿y topór bojowy"
+en "big Axe"
+de "Grosse Streitaxt"
+
+## "Axt_4"
+pl "Topór katowski"
+en "Henkerschreck"
+de "Henkerschreck"
+
+## "Axt_unq_1"
+pl "Szmaragdowy topór"
+en "Smaragdaxe"
+de "Smaragdaxt"
+
+## "Axt_unq_2"
+pl "Usypiacz"
+en "Tutnichweh"
+de "Tutnichweh"
+
+## "Axt_unq_3"
+pl "Rêbacz"
+en "Haudrauf"
+de "Haudrauf"
+
+## "Axt_unq_4"
+pl "Smocza Zguba"
+en "Drachenspalter"
+de "Drachenspalter"
+
+## "Baby"
+pl "Dziecko"
+en "Baby"
+de "Baby"
+
+## "Back"
+pl "Powrót"
+en "Back"
+de "Zurück"
+
+## "Ballist."
+pl "Balist."
+en "Ballist."
+de "Ballist."
+
+## "Bar"
+pl "Bar"
+en "Bar"
+de "Bar"
+
+## "Barbetrieb"
+pl "Bar"
+en "Bar service"
+de "Barbetrieb"
+
+## "Bewegen"
+pl "Ruch"
+en "Move"
+de "Bewegen"
+
+## "Bier"
+pl "Piwo"
+en "Beer"
+de "Bier"
+
+## "Bild1"
+pl "Portret m³odego kar³a"
+en "Painting of young dwarf"
+de "Bild eines jungen Zwerges"
+
+## "Bild2"
+pl "Portret m³odego kar³a w czerwonej czapce"
+en "Painting of dwarf with red cape"
+de "Bild eines Zwerges mit rotem Umhang"
+
+## "Bild3"
+pl "Portret m³odego kar³a w niebieskiej czapce"
+en "Painting of Dwarf with blue cape"
+de "Bild eines Zwerges mit blauem Umhang"
+
+## "Bild4"
+pl "Portret Królewny Œnie¿ki"
+en "Painting of Snow-White"
+de "Bild von Schneewitchen"
+
+## "Bild5"
+pl "Portret karlego dziadka "
+en "Painting of grandfather dwarf"
+de "Bild vom Zwergen-Grossvater"
+
+## "Bild6"
+pl "Portret kar³a w fioletowej czapce "
+en "Painting of dwarf with violet cape"
+de "Bild eines Zwerges mit violettem Umhang"
+
+## "Bild7"
+pl "Portret rudego kar³a"
+en "Painting of redheaded dwarf"
+de "Bild eines rothaarigen Zwerges"
+
+## "Bild8"
+pl "Portret blondw³osego kar³a"
+en "Painting of blonde dwarf"
+de "Bild eines blonden Zwerges"
+
+## "BitteeinenZwerganwaehlen"
+pl "Proszê wybraæ kar³a"
+en "please, select dwarf"
+de "Bitte einen Zwerg anwählen"
+
+## "BlockDB done"
+pl "BlockDB gotowe"
+en "BlockDB done"
+de "BlockDB fertig"
+
+## "BlockDB"
+pl "BlockDB"
+en "BlockDB"
+de "BlockDB"
+
+## "Bordell"
+pl "Klub ze striptizem"
+en "Brothel"
+de "Bordell"
+
+## "Bowlen"
+pl "Graj w krêgle"
+en "Bowl"
+de "Bowlen"
+
+## "Bowlingbahn"
+pl "Krêgielnia"
+en "Bowling alley"
+de "Bowlingbahn"
+
+## "Brainmaschine_Schalter"
+pl "Ogromny prze³¹cznik"
+en "Huge Switch"
+de "Grosser Schalter"
+
+## "Brauerei"
+pl "Browar"
+en "Brewery"
+de "Brauerei"
+
+## "Brightness"
+pl "Jasnoœæ"
+en "Brightness"
+de "Helligkeit"
+
+## "Buechse"
+pl "Karabin"
+en "Rifle"
+de "Buechse"
+
+## "Campaign"
+pl "Kampania"
+en "Campaign"
+de "Kampagne"
+
+## "Cancel"
+pl "Anuluj"
+en "Cancel"
+de "Abbruch"
+
+## "Child: "
+pl "Dziecko: "
+en "Child: "
+de "Kind: "
+
+## "Children: "
+pl "Dzieci: "
+en "Children: "
+de "Kinder: "
+
+## "Clan"
+pl "Klan"
+en "Clan"
+de "Clan"
+
+## "Clannearwarning"
+pl "Klan -clanname- ostrzega ciê, abyœ siê nie zbli¿a³"
+en "The clan of the -clanname- warns you to keep your distance"
+de "Der Clan der -clanname- warnt Sie, nicht zu nahe zu kommen"
+
+## "Clanstealwarning"
+pl "Klan -clanname- ostrzega, abys nie krad³"
+en "The clan of the -clanname- warns you not to steal"
+de "Der Clan der -clanname- warnt Sie, nicht zu stehlen"
+
+## "Clantoally"
+pl "Od teraz klan -clanname- bêdzie twoim 'sojusznikiem'"
+en "From now on the clan of the -clanname- is your 'ally'"
+de "Der Clan der -clanname- wechselt Ihnen gegenüber zu 'verbündet'"
+
+## "Clantoenemy"
+pl "Od teraz klan -clanname- bêdzie wobec ciebie 'wrogo nastawiony'"
+en "From now on the clan of the -clanname- has a 'hostile' attitude towards you"
+de "Der Clan der -clanname- wechselt Ihnen gegenüber zu 'feindlich'"
+
+## "Clantofriend"
+pl "Od teraz klan -clanname- bêdzie wobec ciebie 'przyjaŸnie nastawiony'"
+en "From now on the clan of the -clanname- has a 'friendly' attitude towards you"
+de "Der Clan der -clanname- wechselt Ihnen gegenüber zu 'freundlich'"
+
+## "Clantoneutral"
+pl "Od teraz klan -clanname- bêdzie wobec ciebie 'neutralny'"
+en "From now on the clan of the -clanname- has a 'neutral' attitude towards you"
+de "Der Clan der -clanname- wechselt Ihnen gegenüber zu 'neutral'"
+
+## "Clanwarning1"
+pl "Klan -clanname- udziela ci drugiego ostrze¿enia"
+en "The clan of the -clanname- gives you a second warning"
+de "Der Clan der -clanname- warnt Sie ein zweites Mal"
+
+## "Classes done"
+pl "Zakoñczone kategorie"
+en "Classes done"
+de "Klassen geladen"
+
+## "Classes"
+pl "Kategorie"
+en "Classes"
+de "Klassen"
+
+## "Classes:"
+pl "Kategorie:"
+en "Classes:"
+de "Klassen:"
+
+## "Click to invent."
+pl "Kliknij, aby wynaleŸæ."
+en "Click to invent."
+de "Anklicken um zu erfinden."
+
+## "Credits"
+pl "Twórcy gry"
+en "Credits"
+de "Credits"
+
+## "Cycle"
+pl "Prze³¹cz"
+en "Cycle"
+de "Durchschalten"
+
+## "Dampfaufzug"
+pl "Winda parowa"
+en "Steam lift"
+de "Dampfaufzug"
+
+## "Dampfhammer"
+pl "M³ot parowy"
+en "Steam Hammer"
+de "Dampfhammer"
+
+## "Dampflore"
+pl "Pojazd parowy"
+en "Strean lorry"
+de "Dampflore"
+
+## "Dampfmaschine"
+pl "Silnik parowy"
+en "Steam engine"
+de "Dampfmaschine"
+
+## "Database:"
+pl "Baza danych: "
+en "Database:"
+de "Datenbank:"
+
+## "Delete"
+pl "Skasuj"
+en "Delete"
+de "Löschen"
+
+## "Desktop"
+pl "Ekran"
+en "Desktop"
+de "Desktop"
+
+## "Dimensionstor"
+pl "Brama ponadprzestrzenna"
+en "Dimension gate"
+de "Dimensionstor"
+
+## "Disco"
+pl "Klub nocny"
+en "Night club"
+de "Disco"
+
+## "Dojo"
+pl "Dojo"
+en "Dojo"
+de "Dojo"
+
+## "Dolch_2"
+pl "Chichot"
+en "Stichling"
+de "Stichling"
+
+## "Drache"
+pl "Smok"
+en "Dragon"
+de "Drache"
+
+## "Drachen_Ei"
+pl "Smocze jajo"
+en "Dragon egg"
+de "Drachenei"
+
+## "Drachen_Ei_1"
+pl "Smocze jajo"
+en "Dragon egg"
+de "Drachenei"
+
+## "Dreherei"
+pl "Obrabiarka"
+en "Turner"
+de "Dreherei"
+
+## "Eierbecher"
+pl "Pojemnik na jajka"
+en "Eggcup"
+de "Eierbecher"
+
+## "Einsiedler"
+pl "Pustelnik"
+en "Hermit"
+de "Einsiedler"
+
+## "Eisen"
+pl "¯elazo"
+en "Iron"
+de "Eisen"
+
+## "Eisen_"
+pl "¯elazo"
+en "Iron"
+de "Eisen"
+
+## "Eisenerz"
+pl "Ruda ¿elaza"
+en "Iron ore"
+de "Eisenerz"
+
+## "Eisenerzbrocken"
+pl "Kawa³ek rudy ¿elaza"
+en "Iron ore boulder"
+de "Eisenerzbrocken"
+
+## "Eisenwand"
+pl "¯elazna œciana"
+en "Iron wall"
+de "Eisenwand"
+
+## "ElfenFluegelA"
+pl "Skrzyd³o olbrzymiej wró¿ki"
+en "giant fairy wing"
+de "Riesenelfenflügel"
+
+## "ElfenFluegelB"
+pl "Skrzyd³o olbrzymiej wró¿ki"
+en "giant fairy wing"
+de "Riesenelfenflügel"
+
+## "ElfenFluegelC"
+pl "Skrzyd³o olbrzymiej wró¿ki"
+en "giant fairy wing"
+de "Riesenelfenflügel"
+
+## "ElfenFluegelD"
+pl "Skrzyd³o olbrzymiej wró¿ki"
+en "giant fairy wing"
+de "Riesenelfenflügel"
+
+## "Energie"
+pl "Energia"
+en "Energy"
+de "Energie"
+
+## "Energie&Chemie"
+pl "Energia i Chemia"
+en "Energy&Chemistry"
+de "Energie&Chemie"
+
+## "Energie_"
+pl "Energia"
+en "Energy"
+de "Energie"
+
+## "Energie__"
+pl "Energia"
+en "Energy"
+de "Energie"
+
+## "Energie___"
+pl "Energia"
+en "Energy"
+de "Energie"
+
+## "Energyclass"
+pl "Kategoria energii"
+en "Energy category"
+de "Energieklasse"
+
+## "Energyload"
+pl "obecnie wykorzystywana energia:"
+en "presently used energy:"
+de "momentan verbrauchte Energie:"
+
+## "Energystore:"
+pl "dostêpna energia:"
+en "energy available:"
+de "vorhandene Energie:"
+
+## "Ern."
+pl "Syt."
+en "Nut."
+de "Ern."
+
+## "Ernährung"
+pl "Sytoœæ"
+en "Nutrition"
+de "Ernährung"
+
+## "Essgrillhamster"
+pl "Sma¿ony chomik"
+en "Grilled hamster"
+de "Essgrillhamster"
+
+## "Family"
+pl "Rodzina"
+en "Family"
+de "Familie"
+
+## "Farm"
+pl "Farma"
+en "Farm"
+de "Farm"
+
+## "Father: "
+pl "Ojciec: "
+en "Father: "
+de "Vater: "
+
+## "Fee"
+pl "Wró¿ka"
+en "Fairy"
+de "Fee"
+
+## "FenrisFuss"
+pl "£apa Fenrisa"
+en "Fenris foot"
+de "Fenris Fuss"
+
+## "FenrisFuss"
+pl "£apa Fenrisa"
+en "Fenris foot"
+de "Fenris Fuss"
+
+## "Fenris_Krug"
+pl "Kufel"
+en "mug"
+de "Krug"
+
+## "Fenris_Stoepsel"
+pl "£añcuch"
+en "chain"
+de "Kette"
+
+## "Fenris_Stuhl"
+pl "Siedzisko Fenrisa"
+en "Fenris' chair"
+de "Fenris' Stuhl"
+
+## "Fenris_greifen"
+pl "Fenris"
+en "Fenris"
+de "Fenris"
+
+## "Feuerstelle"
+pl "Ognisko"
+en "Fireplace"
+de "Feuerstelle"
+
+## "Fight"
+pl "Walka"
+en "Fight"
+de "Kampf"
+
+## "Fightinit done"
+pl "System walki gotowy"
+en "Combatsystem done"
+de "Kampfsystem fertig"
+
+## "Finder mode"
+pl "Tryb szukania"
+en "Finder mode"
+de "Finder-Modus"
+
+## "Fitnessstudio"
+pl "Fitness-club"
+en "Gym"
+de "Fitnessstudio"
+
+## "Fresspflanze"
+pl "Miêso¿erna roœlina"
+en "Carnivorous plant"
+de "Fresspflanze"
+
+## "Fruchtbarkeitstrank"
+pl "Mikstura p³odnoœci"
+en "Potion of Fertility"
+de "Fruchtbarkeitstrank"
+
+## "Fuchsschwanz"
+pl "Pi³a rêczna"
+en "Handsaw"
+de "Fuchsschwanz"
+
+## "Game Paused"
+pl "Gra zatrzymana"
+en "Game Paused"
+de "Pause"
+
+## "Game options"
+pl "Ustawienia gry"
+en "Game settings"
+de "Spieleinstellungen"
+
+## "Gamma"
+pl "Gamma"
+en "Gamma correction"
+de "Gammakorrektur"
+
+## "Gamma correction"
+pl "Gamma"
+en "Gamma correction"
+de "Gammakorrektur"
+
+## "GehirngroessePos0"
+pl "Indiañska m¹droœæ"
+en "Indian Wisdom"
+de "Indische Weisheiten"
+
+## "GehirngroessePos1"
+pl "Samoocena poprzez Jogê"
+en "A Better Understanding Through Yoga"
+de "Mehr Begreifen mit Yoga"
+
+## "GehirngroessePos2"
+pl "Æwiczenia w medytacji"
+en "Meditation Excersises"
+de "Meditationsübungen"
+
+## "GehirngroessePos3"
+pl "Chomiki i kar³y"
+en "Of Hamsters and Men"
+de "Mal nachgedacht!"
+
+## "GehirngroessePos4"
+pl "O starych"
+en "Knowledge of the Old Folks"
+de "Das Wissen der Alten"
+
+## "Ges."
+pl "Zdr."
+en "Hea."
+de "Ges."
+
+## "Gesundheit"
+pl "Zdrowie"
+en "Health"
+de "Gesundheit"
+
+## "Gleipnir"
+pl "Gleipnir"
+en "Gleipnir"
+de "Gleipnir"
+
+## "GleipnirHammer"
+pl "M³ot Gleipnir"
+en "Gleipnir Hammer"
+de "Magischer Schmiedehammer"
+
+## "GleipnirHammer_1"
+pl "M³ot Gleipnir"
+en "Gleipnir Hammer"
+de "Gleipnir Hammer"
+
+## "Gnomes"
+pl "Kar³y"
+en "Dwarves"
+de "Zwerge"
+
+## "Go !"
+pl "Zacznij!"
+en "Go !"
+de "Start"
+
+## "Go to main menu"
+pl "PrzejdŸ do menu g³ównego"
+en "Switch to main menu"
+de "Zum Hauptmenü wechseln"
+
+## "Einschalten"
+pl "w³¹cz"
+en "switch on"
+de "Einschalten"
+
+## "Ausschalten"
+pl "wy³¹cz"
+en "switch off"
+de "Ausschalten"
+
+## "Gold"
+pl "Z³oto"
+en "Gold"
+de "Gold"
+
+## "Golderz"
+pl "Ruda z³ota"
+en "Gold ore"
+de "Golderz"
+
+## "Golderzbrocken"
+pl "Z³oty samorodek"
+en "Gold ore boulder"
+de "Golderzbrocken"
+
+## "Gourmetsuppe"
+pl "Zupa smakosza"
+en "Gourmet soup"
+de "Gourmetsuppe"
+
+## "Gourmetsuppe_"
+pl "Zupa smakosza"
+en "Gourmet soup"
+de "Gourmetsuppe"
+
+## "Gourmetsuppe__"
+pl "Zupa smakosza"
+en "Gourmet soup"
+de "Gourmetsuppe"
+
+## "Gourmetsuppe___"
+pl "Zupa smakosza"
+en "Gourmet soup"
+de "Gourmetsuppe"
+
+## "Grabstein"
+pl "Nagrobek"
+en "Tombstone"
+de "Grabstein"
+
+## "Grenzstein"
+pl "Kamieñ graniczny"
+en "Boundary stone"
+de "Grenzstein"
+
+## "Grillhamster"
+pl "Sma¿ony chomik"
+en "Grilled hamster"
+de "Grillhamster"
+
+## "Grillhamster_"
+pl "Sma¿ony chomik"
+en "Grilled hamster"
+de "Grillhamster"
+
+## "Grillhamster__"
+pl "Sma¿ony chomik"
+en "Grilled hamster"
+de "Grillhamster"
+
+## "Grillhamster___"
+pl "Sma¿ony chomik"
+en "Grilled hamster"
+de "Grillhamster"
+
+## "Grillpilz"
+pl "Sma¿ony grzyb"
+en "Grilled Fungus"
+de "Grillpilz"
+
+## "Grillpilz_"
+pl "Sma¿ony grzyb"
+en "Grilled Fungus"
+de "Grillpilz"
+
+## "Grillpilz__"
+pl "Sma¿ony grzyb"
+en "Grilled Fungus"
+de "Grillpilz"
+
+## "Grillpilz___"
+pl "Sma¿ony grzyb"
+en "Grilled Fungus"
+de "Grillpilz"
+
+## "Grosse_Holzkiepe"
+pl "Du¿y kosz"
+en "big pannier"
+de "große Holzkiepe"
+
+## "Grosser_Heiltrank"
+pl "Du¿a mikstura lecznicza "
+en "Large Healing Potion"
+de "Grosser Heiltrank"
+
+## "HP:%d AL:%d NU:%d MO:%d"
+pl "PZ:%1%% CZ:%2%% SY:%3%% NA:%4%%"
+en "HP:%1%% AL:%2%% NU:%3%% MO:%4%%"
+de "Ges:%1%% Ern:%3%% Auf:%2%% Sti:%4%% "
+
+## "Hammer"
+pl "M³ot"
+en "Hammer"
+de "Hammer"
+
+## "Hamster"
+pl "Chomik"
+en "Hamster"
+de "Hamster"
+
+## "Hamsterkarren"
+pl "Wózek dla chomika "
+en "Hamster cart"
+de "Hamsterkarren"
+
+## "Hamstershake"
+pl "Koktajl z chomika"
+en "Hamster shake"
+de "Hamstershake"
+
+## "Hamstershake_"
+pl "Koktajl z chomika"
+en "Hamster shake"
+de "Hamstershake"
+
+## "Hamstershake__"
+pl "Koktajl z chomika"
+en "Hamster shake"
+de "Hamstershake"
+
+## "Hamstershake___"
+pl "koktajl z chomika"
+en "Hamster shake"
+de "Hamstershake"
+
+## "Hauklotz"
+pl "Kloc do r¹bania"
+en "Log"
+de "Hauklotz"
+
+## "Heiltrank"
+pl "Mikstura lecznicza"
+en "Healing Potion"
+de "Heiltrank"
+
+## "Hellebarde"
+pl "Halabarda"
+en "Halberd"
+de "Hellebarde"
+
+## "Help"
+pl "Pomoc"
+en "Help"
+de "Hilfe"
+
+## "Hide subtitles"
+pl "Napisy: wy³¹czone"
+en "Hide subtitles"
+de "Ohne Untertitel"
+
+## "Hochofen"
+pl "Du¿y piec"
+en "Furnace"
+de "Hochofen"
+
+## "Holz"
+pl "Drewno"
+en "Wood"
+de "Holz"
+
+## "HolzPos0"
+pl "Technologia obróbki drewna"
+en "Wood Processing Techniques"
+de "Moderne Spanbehandlung"
+
+## "HolzPos1"
+pl "Drewniana bi¿uteria?"
+en "Wooden Jewelery?"
+de "Schmuck aus Holzsplitter"
+
+## "HolzPos2"
+pl "Encyklopedia grzybów"
+en "Encyclopedia of Mushroom Strains"
+de "Enzyklopädie der Pilzstämme"
+
+## "HolzPos3"
+pl "Grzyby egzotyczne"
+en "Exotic Mushroom Strains"
+de "Exotische Pilzstämme"
+
+## "HolzPos4"
+pl "Jak r¹baæ grzyby"
+en "How to Chop Mushrooms"
+de "Pilzfällvorschriften"
+
+## "Holzkiepe"
+pl "Kosz"
+en "Pannier"
+de "Holzkiepe"
+
+## "Holztuer"
+pl "Drewniane drzwi"
+en "Wooden Door"
+de "Holztür"
+
+## "Holzwand"
+pl "Drewniana œciana"
+en "Wooden wall"
+de "Holzwand"
+
+## "Host game"
+pl "ProwadŸ grê"
+en "Host game"
+de "Spiel einleiten"
+
+## "Hoverboard"
+pl "Szybowiec"
+en "Hoverboard"
+de "Hoverboard"
+
+## "Huge"
+pl "Du¿y"
+en "Large"
+de "Groß"
+
+## "Icon precache"
+pl "Buforowanie ikon"
+en "Icon precache"
+de "Icons puffern"
+
+## "Idle"
+pl "bez roboty"
+en "idle"
+de "arbeitslos"
+
+## "Industriebad"
+pl "£azienka ery przemys³owej"
+en "Industrial bathroom"
+de "Industriebad"
+
+## "Industriekueche"
+pl "Kuchnia ery przemys³owej "
+en "Industrial Kitchen"
+de "Industrieküche"
+
+## "Industrieschlafzimmer"
+pl "Sypialnia ery przemys³owej"
+en "Industrial bedroom"
+de "Industrieschlafzimmer"
+
+## "Industriewohnzimmer"
+pl "Salon ery przemys³owej"
+en "Industrial living room"
+de "Industriewohnzimmer"
+
+## "Init..."
+pl "Inicjalizacja..."
+en "Init..."
+de "Initialisierung..."
+
+## "Input Options"
+pl "Opcje sterowania"
+en "Input options"
+de "Eingabeoptionen"
+
+## "Introduction"
+pl "Wprowadzenie"
+en "Introduction"
+de "Einführung"
+
+## "Invention"
+pl "Wynalazek"
+en "Invention"
+de "Erfindung"
+
+## "Invention:"
+pl "Wynalazek:"
+en "Invention:"
+de "Erfindung:"
+
+## "Inventory"
+pl "Inwentarz"
+en "Inventory"
+de "Inventory"
+
+## "Jungbrunnentrank"
+pl "Fontanna m³odoœci"
+en "Potion of Youth"
+de "Trank der Jugend"
+
+## "Kampf"
+pl "Walka"
+en "Fight"
+de "Kampf"
+
+## "Kampfkunst"
+pl "Sztuki walki"
+en "Martial art"
+de "Kampfkunst"
+
+## "Karte"
+pl "Mapa"
+en "Map"
+de "Karte"
+
+## "Kettensaege"
+pl "Pi³a ³añcuchowa"
+en "Chainsaw"
+de "Kettensäge"
+
+## "Keule"
+pl "Maczuga"
+en "Club"
+de "Keule"
+
+## "Kinder"
+pl "Dzieci"
+en "Children"
+de "Kinder"
+
+## "Kippen"
+pl "Przechylenie"
+en "Tilt"
+de "Kippen"
+
+## "Kleiner_Heiltrank"
+pl "Ma³a mikstura lecznicza "
+en "Small Healing Potion"
+de "Kleiner Heiltrank"
+
+## "Kohle"
+pl "Wêgiel"
+en "Coal"
+de "Kohle"
+
+## "Kohlebrocken"
+pl "Kawa³ wêgla"
+en "Chunk of coal"
+de "Kohlebrocken"
+
+## "Krake"
+pl "Oœmiornica"
+en "Octopus"
+de "Krake"
+
+## "Krankenhaus"
+pl "Szpital"
+en "Hospital"
+de "Krankenhaus"
+
+## "Kristall"
+pl "Kryszta³"
+en "Crystal"
+de "Kristall"
+
+## "Kristallaufzug"
+pl "Kryszta³owa winda"
+en "Crystal elevator"
+de "Kristallaufzug"
+
+## "Kristallbrut"
+pl "Pomiot"
+en "Spawn"
+de "Brut"
+
+## "Kristallerz"
+pl "Ruda kryszta³u"
+en "Crystal ore"
+de "Kristallerz"
+
+## "Kristallerzbrocken"
+pl "Kawa³ek rudy kryszta³u"
+en "Crystal ore boulder"
+de "Kristallerzbrocken"
+
+## "Kristallschild"
+pl "Kryszta³owa tarcza"
+en "Crystal shield"
+de "Kristallschild"
+
+## "Kristallschmiede"
+pl "KuŸnia kryszta³ów"
+en "Crystal Forge"
+de "Kristallschmiede"
+
+## "Kristallstrahl"
+pl "Kryszta³owy promieñ"
+en "Crystal beam"
+de "Kristallstrahl"
+
+## "Kristalltuer"
+pl "Kryszta³owe drzwi"
+en "Crystal Door"
+de "Kristalltür"
+
+## "Kristallwand"
+pl "Kryszta³owa œciana"
+en "Crystal Wall"
+de "Kristallwand"
+
+## "Krumsaebel"
+pl "Bu³at"
+en "Scimitar"
+de "Krumsäbel"
+
+## "Kungfu"
+pl "Kung Fu"
+en "Kungfu"
+de "Kungfu"
+
+## "KungfuPos0"
+pl "Techniki dalekowschodnie "
+en "Far Eastern Techniques"
+de "Fernöstliche Taktiken"
+
+## "KungfuPos1"
+pl "Tai Chi i dalej"
+en "Tai Chi and More"
+de "Taichi und Nebenwirkungen"
+
+## "KungfuPos2"
+pl "Skuteczne ciosy karate "
+en "Efficient Karate Chops"
+de "Handkante links und rechts"
+
+## "KungfuPos3"
+pl "Znaczenie kolorystycznych oznaczeñ pasów"
+en "The Meaning of Belt Colors"
+de "Bedeutung der Gürtelfarben"
+
+## "KungfuPos4"
+pl "Poza nokaut"
+en "Beyond the K.O."
+de "Wege zum Knockout"
+
+## "LGInit done"
+pl "Generator Œwiata gotowy"
+en "Worldgenerator done"
+de "Weltgenerator fertig"
+
+## "LMB:"
+pl "LPM:"
+en "LMB:"
+de "LMB:"
+
+## "Labor"
+pl "Laboratorium"
+en "Laboratory"
+de "Labor"
+
+## "Lager"
+pl "Sk³ad"
+en "Store"
+de "Lager"
+
+## "Language"
+pl "PL"
+en "English"
+de "German"
+
+## "Lanze_1"
+pl "Lanca"
+en "Lance"
+de "Lanze"
+
+## "Lanze_2"
+pl "Lanca"
+en "Lance"
+de "Lanze"
+
+## "Laseremitter"
+pl "Dziwne œwiat³o"
+en "Strange Light"
+de "Seltsames Licht"
+
+## "Last workplace: "
+pl "Poprzednie miejsce pracy: "
+en "Last workplace: "
+de "Letzter Arbeitsplatz: "
+
+## "Laufrad"
+pl "Elektrownia chomicza"
+en "Wheel"
+de "Laufrad"
+
+## "Laufradhamster"
+pl "Chomik energetyczny"
+en "Wheel hamster"
+de "Laufradhamster"
+
+## "Lava"
+pl "Lawa"
+en "Lava"
+de "Lava"
+
+## "Lava_Hammer_Stein"
+pl "M³ot w kamieniu"
+en "Hammer stuck in stone"
+de "Hammer in Stein"
+
+## "Lavabrut"
+pl "Pomiot"
+en "Spawn"
+de "Brut"
+
+## "Leiter"
+pl "Drabina"
+en "Ladder"
+de "Leiter"
+
+## "Leiter_Kristall"
+pl "Kryszta³owa drabina"
+en "Crystal ladder"
+de "Kristallleiter"
+
+## "Leiter_Metall"
+pl "Metalowa drabina"
+en "Metal ladder"
+de "Metallleiter"
+
+## "Lichtschwert"
+pl "Miecz œwietlny"
+en "Lightsword"
+de "Lichtschwert"
+
+## "Liebestrank"
+pl "Misktura mi³oœci"
+en "Aphrodisiac"
+de "Liebestrank"
+
+## "Load Game"
+pl "Wczytaj grê"
+en "Load Game"
+de "Spiel laden"
+
+## "Load game"
+pl "Wczytaj grê"
+en "Load game"
+de "Spiel laden"
+
+## "Load saved game"
+pl "Wczytaj zapisan¹ grê"
+en "Load saved game"
+de "Gespeichertes Spiel laden"
+
+## "Load"
+pl "Wczytaj"
+en "Load"
+de "Laden"
+
+## "Loading"
+pl "Wczytywanie"
+en "Loading"
+de "Laden"
+
+## "Lorenwaggon"
+pl "Wóz transportowy"
+en "Lorry wagon"
+de "Lorenwaggon"
+
+## "Lupe"
+pl "Powiêkszenie obrazu"
+en "Zoom"
+de "Lupe"
+
+## "Luxusbad"
+pl "Luksusowa ³azienka "
+en "Deluxe Bath"
+de "Luxusbad"
+
+## "Luxuskueche"
+pl "Luksusowa kuchnia"
+en "Deluxe kitchen"
+de "Luxusküche"
+
+## "Luxusschlafzimmer"
+pl "Luksusowa sypialnia"
+en "Deluxe bedroom"
+de "Luxusschlafzimmer"
+
+## "Luxuswohnzimmer"
+pl "Luksusowy salon "
+en "Deluxe Living Room"
+de "Luxuswohnzimmer"
+
+## "MMB/CTRL:"
+pl "ŒPM/CTRL:"
+en "MMB/CTRL:"
+de "MMB/Strg:"
+
+## "Main Menu"
+pl "Menu g³ówne "
+en "Main menu"
+de "Hauptmenü"
+
+## "Main menu"
+pl "Menu g³ówne"
+en "Main menu"
+de "Hauptmenü"
+
+## "Map PosHash"
+pl "Mapowanie PosHash"
+en "Map PosHash"
+de "Map PosHash"
+
+## "Map create"
+pl "Tworzenie mapy"
+en "Map create"
+de "Map anlegen"
+
+## "Map done"
+pl "Mapa gotowa"
+en "Map done"
+de "Map fertig"
+
+## "Material:"
+pl "Materia³:"
+en "Material:"
+de "Material:"
+
+## "Medium"
+pl "Œredni"
+en "Medium"
+de "Mittel"
+
+## "Metalle"
+pl "Metale"
+en "Metals"
+de "Metalle"
+
+## "MetallePos0"
+pl "Tablice przetapiania"
+en "Melting Tables"
+de "Schmelztabellen"
+
+## "MetallePos1"
+pl "Gotowanie i palenie"
+en "Boiling and Burning"
+de "Sieden und Verkoksen"
+
+## "MetallePos2"
+pl "Ciê¿sze gatunki metalu"
+en "Heavy Metal"
+de "Walzen und Strecken"
+
+## "MetallePos3"
+pl "Jak unikn¹æ poparzeñ "
+en "How to Avoid Flying Sparks"
+de "Funkenflugvermeidung"
+
+## "MetallePos4"
+pl "Nity rz¹dz¹!"
+en "Rivets Rock!"
+de "Nietverbindungen"
+
+## "Metallschild"
+pl "Metalowa tarcza"
+en "Metal shield"
+de "Metallschild"
+
+## "Metalltuer"
+pl "Metalowe drzwi"
+en "Metal Door"
+de "Metalltür"
+
+## "Mine"
+pl "Mina"
+en "Mine"
+de "Mine"
+
+## "Mittelalterbad"
+pl "Œredniowieczna ³azienka"
+en "Medieval bathroom"
+de "Mittelalterbad"
+
+## "Mittelalterkueche"
+pl "Œredniowieczna kuchnia"
+en "Medival Kitchen"
+de "Mittelalterküche"
+
+## "Mittelalterschlafzimmer"
+pl "Œredniowieczna sypialnia"
+en "Medieval bedroom"
+de "Mittelalterschlafzimmer"
+
+## "Mittelalterwohnzimmer"
+pl "Œredniowieczny salon"
+en "Medieval living room"
+de "Mittelalterwohnzimmer"
+
+## "Modus"
+pl "Tryb"
+en "Mode"
+de "Modus"
+
+## "Moebeltischlerei"
+pl "Warsztat meblarski"
+en "Furniture Joinery"
+de "Moebeltischlerei"
+
+## "Mother: "
+pl "Matka: "
+en "Mother: "
+de "Mutter: "
+
+## "Muetze"
+pl "Czapka"
+en "Cap"
+de "Mütze"
+
+## "Multiplayer"
+pl "Gra wieloosobowa"
+en "Multiplayer"
+de "Mehrspieler"
+
+## "Music Volume"
+pl "G³oœnoœæ muzyki"
+en "Music volume"
+de "Musiklautstärke"
+
+## "Musicinit done"
+pl "Muzyka zainicjowana"
+en "Music initialized"
+de "Musik initialisiert"
+
+## "Mutter"
+pl "Matka"
+en "Mother"
+de "Mutter"
+
+## "Nahrung"
+pl "Jedzenie"
+en "Food"
+de "Nahrung"
+
+## "NahrungPos0"
+pl "Ksiêga robaków"
+en "Book of Worms"
+de "Buch der Würmer"
+
+## "NahrungPos1"
+pl "Ksiêga grzybów"
+en "Book of Mushrooms"
+de "Buch der Pilze"
+
+## "NahrungPos2"
+pl "101 potraw z chomika"
+en "Hamster Variations"
+de "Hamster mal anders"
+
+## "NahrungPos3"
+pl "Kamienne przyprawy"
+en "Stone Spices"
+de "Gewürze aus Steinen"
+
+## "NahrungPos4"
+pl "LE CHEF"
+en "LE CHEF"
+de "Tranchierhilfe"
+
+## "Name"
+pl "Imiê"
+en "Name"
+de "Name"
+
+## "Net Client"
+pl "Klient sieci"
+en "Net Client"
+de "Netzwerg Client"
+
+## "Net Server"
+pl "Serwer sieciowy"
+en "Net Server"
+de "NetZwerg Server"
+
+## "New Game"
+pl "Nowa gra"
+en "New game"
+de "Neues Spiel"
+
+## "Newsticker"
+pl "Podpowiedzi"
+en "Newsticker"
+de "Newsticker"
+
+## "Nichts"
+pl "brak"
+en "none"
+de "Nichts"
+
+## "No Quests"
+pl "Brak zadañ"
+en "No quests"
+de "Keine Aufgaben"
+
+## "No games found."
+pl "Nie znaleziono gier."
+en "No games found."
+de "Keine Spiele gefunden."
+
+## "No"
+pl "Nie"
+en "No"
+de "Nein"
+
+## "Normal stereo"
+pl "Zwyk³e stereo"
+en "Normal stereo"
+de "Normales Stereo"
+
+## "Nur noch -1- Minuten Zeit zum Umzug!"
+pl "Jeszcze tylko -1- minut na ruch!"
+en "Only -1- minute(s) remaining to move!"
+de "Nur noch -1- Minuten Zeit zum Umzug!"
+
+## "Odin"
+pl "Odyn"
+en "Odin"
+de "Odin"
+
+## "Options"
+pl "Opcje"
+en "Options"
+de "Einstellungen"
+
+## "Pan"
+pl "ruszaj siê"
+en "Pan"
+de "Bewegen"
+
+## "Partner"
+pl "Partner"
+en "Partner"
+de "Partner"
+
+## "Partner: "
+pl "Partner/ka: "
+en "Partner: "
+de "Partner: "
+
+## "Pedigree"
+pl "Rodowód"
+en "Pedigree"
+de "Stammbaum"
+
+## "PfeilUndBogen"
+pl "£uk i strza³y"
+en "Arrow&Bow"
+de "Pfeil und Bogen"
+
+## "Pilz"
+pl "Grzyb"
+en "Fungus"
+de "Pilz"
+
+## "Pilzbrot"
+pl "Chleb z grzybów"
+en "Mushroom bread"
+de "Pilzbrot"
+
+## "Pilzbrot_"
+pl "Chleb z grzybów"
+en "Mushroom bread"
+de "Pilzbrot"
+
+## "Pilzbrot__"
+pl "Chleb z grzybów"
+en "Mushroom bread"
+de "Pilzbrot"
+
+## "Pilzbrot___"
+pl "Chleb z grzybów"
+en "Mushroom bread"
+de "Pilzbrot"
+
+## "Pilzhut"
+pl "Grzybi kapelusz"
+en "Fungus hat"
+de "Pilzhut"
+
+## "Pilzschnaps"
+pl "Nalewka na grzybach"
+en "Mushroom liquor"
+de "Pilzschnaps"
+
+## "Pilzstamm"
+pl "Grzybia nó¿ka"
+en "Fungus stem"
+de "Pilzstamm"
+
+## "Plattmachfalle"
+pl "Pu³apka"
+en "Sqishing Trap"
+de "Plattmachfalle"
+
+## "Preferred workplace: "
+pl "Ulubione miejsce pracy: "
+en "Preferred workplace: "
+de "Bevorzugter Arbeitsplatz: "
+
+## "Presslufthammer"
+pl "M³ot pneumatyczny"
+en "Jackhammer"
+de "Presslufthammer"
+
+## "Primitivbad"
+pl "Prosta ³azienka"
+en "Simple bath"
+de "Primitivbad"
+
+## "Primitivschlafzimmer"
+pl "Prosta sypialnia"
+en "Simple bedroom"
+de "Primitivschlafzimmer"
+
+## "Primitivwohnzimmer"
+pl "Prosty salon"
+en "Simple living room"
+de "Primitivwohnzimmer"
+
+## "Production"
+pl "Produkcja"
+en "Production"
+de "Produktion"
+
+## "Produktion"
+pl "Produkcja"
+en "Production"
+de "Produktion"
+
+## "PseudoZwerg"
+pl "Pseudokarze³"
+en "PseudoDwarf"
+de "PseudoZwerg"
+
+## "Quest Done"
+pl "Zadanie wykonane"
+en "Quest completed"
+de "Aufgabe erledigt"
+
+## "Questlog"
+pl "Dziennik"
+en "Questlog"
+de "Aufträge"
+
+## "Quicksave current game"
+pl "Szybki zapis gry"
+en "Quicksave current game"
+de "Aktuelles Spiel schnellspeichern"
+
+## "Quicksave"
+pl "Szybki zapis"
+en "Quicksave"
+de "Schnellspeichern"
+
+## "Quietschewiggle"
+pl "Gumowy Wiggles"
+en "Squeaking-Diggle"
+de "Quietschewiggle"
+
+## "Quit game"
+pl "WyjdŸ z gry"
+en "Quit game"
+de "Spiel beenden"
+
+## "Quit"
+pl "Wyjœcie"
+en "Quit"
+de "Beenden"
+
+## "RMB:"
+pl "PPM:"
+en "RMB:"
+de "RMB:"
+
+## "Raupe"
+pl "Pêdrak"
+en "Grub"
+de "Raupe"
+
+## "Raupenschleimkuchen"
+pl "placki pêdraczane"
+en "Slimy grubcakes"
+de "Raupenschleimkuchen"
+
+## "Raupenschleimkuchen_"
+pl "placki pêdraczane"
+en "Slimy grubcakes"
+de "Raupenschleimkuchen"
+
+## "Raupenschleimkuchen__"
+pl "placki pêdraczane"
+en "Slimy grubcakes"
+de "Raupenschleimkuchen"
+
+## "Raupenschleimkuchen___"
+pl "placki pêdraczane"
+en "Slimy grubcakes"
+de "Raupenschleimkuchen"
+
+## "Raupensuppe"
+pl "Zupa z pêdraków"
+en "Grub soup"
+de "Raupensuppe"
+
+## "Raupensuppe_"
+pl "Zupa z pêdraków"
+en "Grub soup"
+de "Raupensuppe"
+
+## "Raupensuppe__"
+pl "Zupa z pêdraków"
+en "Grub soup"
+de "Raupensuppe"
+
+## "Raupensuppe___"
+pl "Zupa z pêdraków"
+en "Grub soup"
+de "Raupensuppe"
+
+## "Reaktor"
+pl "Reaktor"
+en "Reactor"
+de "Reaktor"
+
+## "Really quit?"
+pl "Na pewno chcesz wyjœæ?"
+en "Are you sure you want to quit?"
+de "Wirklich beenden?"
+
+## "Reithamster"
+pl "Chomik wierzchowy"
+en "Riding Hamster"
+de "Reithamster"
+
+## "Resume Game"
+pl "Wznów grê"
+en "Resume game"
+de "Spiel fortsetzen"
+
+## "Reverse stereo"
+pl "Odwrócone stereo"
+en "Reversed stereo"
+de "Gespiegeltes Stereo"
+
+## "Riesenelfe"
+pl "Olbrzymia wró¿ka"
+en "giant fairy"
+de "Riesenelfe"
+
+## "Riesenhamster"
+pl "Chomik-gigant"
+en "Giant Hamster"
+de "Riesenhamster"
+
+## "Riesenlaufrad"
+pl "Olbrzymia elektrownia chomicza"
+en "Giant Hamster Wheel"
+de "Riesen-Hamster-Laufrad"
+
+## "Riesentor"
+pl "Olbrzymia brama"
+en "Giant gate"
+de "Riesentor"
+
+## "Ring_Der_Erde"
+pl "Pierœcieñ Ziemi"
+en "ring of earth"
+de "Ring der Erde"
+
+## "Ring_Der_Luft"
+pl "Pierœcieñ Powietrza"
+en "ring of air"
+de "Ring der Luft"
+
+## "Ring_Der_Magie"
+pl "Pierœcieñ Magii"
+en "ring of magic"
+de "Ring der Magie"
+
+## "Ring_Des_Feuers"
+pl "Pierœcieñ Ziemi"
+en "ring of fire"
+de "Ring des Feuers"
+
+## "Ring_Des_Lebens"
+pl "Pierœcieñ ¯ycia"
+en "ring of life"
+de "Ring des Lebens"
+
+## "Ring_Des_Wassers"
+pl "Pierœcieñ Wody "
+en "ring of water"
+de "Ring des Wassers"
+
+## "Ring_Des_Wissens"
+pl "Pierœcieñ Wiedzy"
+en "Ring of Knowledge"
+de "Ring des Wissens"
+
+## "Saegewerk"
+pl "Tartak"
+en "Sawmill"
+de "Sägewerk"
+
+## "Sandkasten"
+pl "Piaskownica"
+en "Sandbox"
+de "Sandksaten"
+
+## "Save Game"
+pl "Zapisz grê"
+en "Save game"
+de "Spiel speichern"
+
+## "Save current game"
+pl "Zapisz aktualn¹ rozgrywkê"
+en "Save current game"
+de "Aktuelles Spiel abspeichern"
+
+## "Save game"
+pl "Zapisz grê"
+en "Save game"
+de "Spiel speichern"
+
+## "Save"
+pl "Zapisz"
+en "Save"
+de "Speichern"
+
+## "Schalter"
+pl "Prze³¹cznik"
+en "button"
+de "Schalter"
+
+## "Schalter_hebel_holz_up"
+pl "Prze³¹cznik"
+en "button"
+de "Schalter"
+
+## "Schalter_knopf_stein"
+pl "Prze³¹cznik"
+en "button"
+de "Schalter"
+
+## "Schalter_knopf_lava_1"
+pl "Prze³¹cznik"
+en "button"
+de "Schalter"
+
+## "Schalter_knopf_lava_2"
+pl "Prze³¹cznik"
+en "button"
+de "Schalter"
+
+## "Schalter_knopf_lava_3"
+pl "Prze³¹cznik"
+en "button"
+de "Schalter"
+
+## "Schalter_knopf_lava_4"
+pl "Prze³¹cznik"
+en "button"
+de "Schalter"
+
+## "Schalter_knopf_lava_5"
+pl "Zawór"
+en "valve"
+de "Ventil"
+
+## "Schalter_knopf_lava_6"
+pl "Zawór"
+en "valve"
+de "Ventil"
+
+## "Schatzbuch"
+pl "Ksiêga"
+en "Book"
+de "Buch"
+
+## "Schatzkiste"
+pl "Skrzynia ze skarbami"
+en "Treasure box"
+de "Schatzkiste"
+
+## "Schatztonne"
+pl "Beczka ze skarbami"
+en "Treasure barrel"
+de "Schatztonne"
+
+## "Schild"
+pl "Tarcza"
+en "Holzschild"
+de "Holzschild"
+
+## "Schild_1"
+pl "Wzmocniona drewniana tarcza "
+en "Beschlagener Holzschild"
+de "Beschlagener Holzschild"
+
+## "Schild_2"
+pl "Stalowa tarcza p³ytowa "
+en "Blechschild"
+de "Blechschild"
+
+## "Schild_3"
+pl "RzeŸbiona tarcza metalowa"
+en "Verzierter Metallschild"
+de "Verzierter Metallschild"
+
+## "Schild_unq_1"
+pl "Bariera dla Wrogów "
+en "Prallab"
+de "Prallab"
+
+## "Schild_unq_2"
+pl "Szmaragdowa tarcza"
+en "Smaragdshield"
+de "Smaragdschild"
+
+## "Schleiferei"
+pl "Warsztat szlifierski"
+en "Sanding site"
+de "Schleiferei"
+
+## "Schmelze"
+pl "Ma³y piec"
+en "Smeltery"
+de "Schmelze"
+
+## "Schmetterling"
+pl "Motyl"
+en "Butterfly"
+de "Schmetterling"
+
+## "Schmiede"
+pl "KuŸnia"
+en "Forge"
+de "Schmiede"
+
+## "Schreinerei"
+pl "Warsztat ciesielski"
+en "Carpenter"
+de "Schreinerei"
+
+## "Schubkarren"
+pl "Taczka"
+en "Barrow"
+de "Schubkarren"
+
+## "Schule"
+pl "Szko³a"
+en "School"
+de "Schule"
+
+## "Schusswaffen"
+pl "Broñ palna"
+en "Firearms"
+de "Schusswaffen"
+
+## "SchusswaffenPos0"
+pl "Podstawy balistyki"
+en "Basic Ballistics"
+de "Ballistik selber rechnen"
+
+## "SchusswaffenPos1"
+pl "Twój zasiêg - mój zasiêg"
+en "Your Range - My Range"
+de "Schussweiten"
+
+## "SchusswaffenPos2"
+pl "Celowanie"
+en "The Shooter's Aim"
+de "Zielen leicht gemacht"
+
+## "SchusswaffenPos3"
+pl "Identyfikacja celu"
+en "Friend or Foe?"
+de "Freund-, Feinderkennung"
+
+## "SchusswaffenPos4"
+pl "Znaczenie kalibru broni"
+en "The Caliber Counts"
+de "Lieber Kaliber"
+
+## "Schwefelwuker"
+pl "Siarczany wuker"
+en "Sulphur Wuker"
+de "Schwefelwuker"
+
+## "Schwert"
+pl "Miecz"
+en "Sword"
+de "Schwert"
+
+## "Schwert_1"
+pl "Krajalnica do chomików"
+en "Machete"
+de "Machete"
+
+## "Schwert_2"
+pl "Ognisty Miecz"
+en "Flamesword"
+de "Flammenschwert"
+
+## "Schwert_3"
+pl "Miecz"
+en "Broadsword"
+de "Breitschwert"
+
+## "Schwert_4"
+pl "Szabla"
+en "Saber"
+de "Säbel"
+
+## "Schwertkampf"
+pl "Walka na miecze"
+en "Sword fight"
+de "Einhänder"
+
+## "SchwertkampfPos0"
+pl "Ciêcie i pchniêcie"
+en "Cut-and-Thrust"
+de "Von Hieben und Stechen"
+
+## "SchwertkampfPos1"
+pl "Typologia ran ciêtych"
+en "About Stab Wounds"
+de "Gezielte Stichwunden"
+
+## "SchwertkampfPos2"
+pl "Jak przekuæ lemiesze na miecze"
+en "Turning Plowshares into Swords"
+de "Schwerter statt Pflugscharen"
+
+## "SchwertkampfPos3"
+pl "Mój miecz i ja"
+en "My Sword and I"
+de "Mein Schwert und ich"
+
+## "SchwertkampfPos4"
+pl "Wspó³czesny miecz"
+en "The Sword Today"
+de "Das Schwert heute"
+
+## "Service"
+pl "Us³uga"
+en "Service"
+de "Service"
+
+## "Service&Lehre"
+pl "Us³ugi"
+en "Service"
+de "Service"
+
+## "ServicePos0"
+pl "Przepisy BHP"
+en "Hygienic Regulations"
+de "Hygienevorschriften"
+
+## "ServicePos1"
+pl "Podstawy aktorstwa"
+en "Basic Acting"
+de "Kleiner Schauspielkurs"
+
+## "ServicePos2"
+pl "Era muzyki"
+en "The Age of Music"
+de "Musikstile aus fünf Jahren"
+
+## "ServicePos3"
+pl "Podrêczniki pierwszej pomocy"
+en "First Aid Manuals"
+de "Erste-Hilfe-Anleitungen"
+
+## "ServicePos4"
+pl "Psychoterapeutyka dla opornych"
+en "Be Your Own Shrink"
+de "Psycho-Tipps"
+
+## "Show gnome pedigree"
+pl "Wyœwietl genealogiê kar³a"
+en "Display dwarf pedigree"
+de "Stammbaum der Zwerge anzeigen"
+
+## "Show gnome stats"
+pl "Wyœwietl statystyki kar³ów"
+en "Display dwarf stats"
+de "Zwergenstatistik anzeigen"
+
+## "Show online help"
+pl "Wyœwietl pomoc"
+en "Display online help"
+de "Hilfe anzeigen"
+
+## "Show production sites"
+pl "Wyswietl listê placówek produkcyjnych"
+en "Display production facilities"
+de "Übersicht Produktionsstätten"
+
+## "Show quest log"
+pl "Wyœwietl Dziennik"
+en "Show Questlog"
+de "Aufträge anzeigen"
+
+## "Show questlog"
+pl "Wyœwietl Dziennik"
+en "Show Questlog"
+de "Aufträge anzeigen"
+
+## "Show subtitles"
+pl "Napisy: w³¹czone"
+en "Show subtitles"
+de "Mit Untertiteln"
+
+## "Show technologies"
+pl "Wyœwietl wynalazki"
+en "Display inventions"
+de "Erfindungen anzeigen"
+
+## "Shutdown"
+pl "Wychodzenie..."
+en "Shutdown"
+de "Beenden"
+
+## "Single"
+pl "Jeden gracz"
+en "Single"
+de "Heinzelspiel"
+
+## "Skirmish"
+pl "Tryb potyczek"
+en "Skirmish mode"
+de "Freies Spiel"
+
+## "Small"
+pl "Ma³y"
+en "Small"
+de "Klein"
+
+## "Sound Volume"
+pl "G³oœnoœæ"
+en "Sound volume"
+de "Effektlautstärke"
+
+## "Soundinit done"
+pl "DŸwiêk zainicjowany"
+en "Sound initialized"
+de "Ton initialisiert"
+
+## "Sparetime"
+pl "Czas wolny"
+en "Leisure time"
+de "Freizeit"
+
+## "Spiegel"
+pl "Lustro"
+en "Mirror"
+de "Spiegel"
+
+## "Spieler"
+pl "Gracz"
+en "Player"
+de "Spieler"
+
+## "Spinne"
+pl "Paj¹k"
+en "Spider"
+de "Spinne"
+
+## "Spinne_tot"
+pl "Paj¹k"
+en "Spider"
+de "Spinne"
+
+## "Spitzhacke"
+pl "Kilof"
+en "Pick"
+de "Spitzhacke"
+
+## "Stammbaum"
+pl "Genealogia"
+en "Pedigree"
+de "Stammbaum"
+
+## "Standard"
+pl "Standard"
+en "Standard"
+de "Standard"
+
+## "Standardbad"
+pl "Standardowa ³azienka "
+en "Standard bath"
+de "Standardbad"
+
+## "Standardschlafzimmer"
+pl "Standardowa sypialnia"
+en "Standard Bedroom"
+de "Standardschlafzimmer"
+
+## "Standardwohnzimmer"
+pl "Standardowy salon"
+en "Standard Living Room"
+de "Standardwohnzimmer"
+
+## "Start"
+pl "Start!"
+en "Go !"
+de "Start"
+
+## "Stein"
+pl "Kamieñ"
+en "Stone"
+de "Stein"
+
+## "Steinbrocken"
+pl "G³az"
+en "Stone boulder"
+de "Steinbrocken"
+
+## "Steine"
+pl "Kamienie"
+en "Stones"
+de "Steine"
+
+## "SteinePos0"
+pl "Podstawy ska³oznawstwa"
+en "Basic Rockology"
+de "Kleine Steinkunde"
+
+## "SteinePos1"
+pl "Ska³oznawstwo zaawansowane"
+en "Advanced Rockology"
+de "Große Steinkunde"
+
+## "SteinePos2"
+pl "Podstawowe tablice kamienne"
+en "Basic Stone Tables"
+de "1x1 der Steine"
+
+## "SteinePos3"
+pl "Choroba szlanoych kamieni"
+en "The Mad Stone Disease"
+de "Granitkollersymptome"
+
+## "SteinePos4"
+pl "Aby zapobiec osuwiskom"
+en "No More Rockfall"
+de "Steinschlagsicherungen"
+
+## "SteinfalleMedusa"
+pl "Pu³apka Meduzy"
+en "Medusa trap"
+de "SteinfalleMedusa"
+
+## "Steinmauer"
+pl "Kamienna œciana"
+en "Stone Wall"
+de "Steinmauer"
+
+## "Steinmetz"
+pl "Kamieniarz"
+en "Stonemason"
+de "Steinmetz"
+
+## "Steinschleuder"
+pl "Proca"
+en "Stone Sling"
+de "Steinschleuder"
+
+## "Steintuer"
+pl "Kamienne drzwi"
+en "Stone Door"
+de "Steintür"
+
+## "Stimm."
+pl "Nastr."
+en "Mood"
+de "Stimm."
+
+## "Stimmung"
+pl "Nastrój"
+en "Mood"
+de "Stimmung"
+
+## "StimmungNeg0"
+pl "Brzydkie karl¹tko"
+en "Ugly Little Diggle"
+de "Kleiner hässlicher Wiggle"
+
+## "StimmungNeg1"
+pl "Chwile smutku"
+en "Melancholic Moments"
+de "Trauer um Aase"
+
+## "StimmungNeg2"
+pl "Deszcz i s³oñce"
+en "Rain and Sunshine"
+de "Regen und Sonne"
+
+## "StimmungNeg3"
+pl "O elfim szczêœciu"
+en "On Happy Elves"
+de "Von glücklichen Elfen"
+
+## "StimmungNeg4"
+pl "Zagro¿one pêdraki"
+en "Grubs in Danger"
+de "Raupen in Gefahr"
+
+## "StimmungPos0"
+pl "Z³ote nadzieje"
+en "Golden Prospects"
+de "Goldige Aussichten"
+
+## "StimmungPos1"
+pl "Poradnik dowcipnego Wigglesa"
+en "The Funny Diggle"
+de "Der lustige Wiggle"
+
+## "StimmungPos2"
+pl "Na przód, podziemna brygado!"
+en "Rock On!"
+de "Bunter als Gunther"
+
+## "StimmungPos3"
+pl "Podziemne dowcipy"
+en "Underground Jokes"
+de "Unter-Tage-Witze"
+
+## "StimmungPos4"
+pl "Mój chomik to twój chomik"
+en "My Hamster is Your Hamster"
+de "Hamstereien"
+
+## "Streitaxt"
+pl "Topór dwurêczny"
+en "twohand Axe"
+de "Zweihandaxt"
+
+## "Streitkolben"
+pl "Maczuga bojowa"
+en "Battle club"
+de "Streitkolben"
+
+## "Summe"
+pl "Suma"
+en "Sum"
+de "Summe"
+
+## "Taucherglock"
+pl "Dzwon nurkowy"
+en "Diving Bell"
+de "Taucherglocke"
+
+## "Taucherglocke"
+pl "Dzwon nurkowy"
+en "diving bell"
+de "Taucherglocke"
+
+## "Team"
+pl "Zespó³"
+en "Team"
+de "Team"
+
+## "Techtree done"
+pl "Wykres odkryæ gotowy"
+en "Techtree done"
+de "Techtree fertig"
+
+## "Techtree"
+pl "Wykres odkryæ"
+en "Techtree"
+de "Entwicklungen"
+
+## "Tempel"
+pl "Œwi¹tynia"
+en "Temple"
+de "Tempel"
+
+## "Theater"
+pl "Teatr"
+en "Theater"
+de "Theater"
+
+## "Theatervorstellung"
+pl "Przedstawienie"
+en "Show"
+de "Theatervorstellung"
+
+## "Tilt"
+pl "Przechylenie"
+en "Tilt"
+de "Kippen"
+
+## "Tiny"
+pl "Malutki"
+en "Tiny"
+de "Winzig"
+
+## "Tischlerei"
+pl "Warsztat meblarski"
+en "Joinery"
+de "Tischlerei"
+
+## "TitanicKolben"
+pl "T³ok"
+en "Piston"
+de "Kolben"
+
+## "Titanic_abpumpen"
+pl "Wypompuj wodê z Titanica"
+en "Pump the Titanic dry"
+de "Titanic abpumpen"
+
+## "Toggle finder"
+pl "W³¹cz szukanie"
+en "Toggle finder"
+de "Finder umschalten"
+
+## "Toggle newsticker"
+pl "W³¹cz podpowiedzi"
+en "Toggle newsticker"
+de "Newsticker umschalten"
+
+## "Torwaechterin"
+pl "Stra¿niczka bramy"
+en "Gatekeeper"
+de "Torwaechterin"
+
+## "Transp."
+pl "Trans."
+en "Transp."
+de "Transp."
+
+## "Transport"
+pl "Budowa i Trans."
+en "Transport"
+de "Bau&Transport"
+
+## "TransportPos0"
+pl "Oda do ma³ego kosza"
+en "An Ode to the Small Pannier"
+de "Kleine Kiepe ganz groß"
+
+## "TransportPos1"
+pl "Chomicze rodeo"
+en "Hamster Rodeo"
+de "Hamsterreiten in 2 Tagen"
+
+## "TransportPos2"
+pl "Wydajne pakowanie"
+en "Efficient Packing"
+de "Effizienter Packen"
+
+## "TransportPos3"
+pl "plac budowy"
+en "Under Construction"
+de "Gefahren beim Bau"
+
+## "TransportPos4"
+pl "Wskazówki konstrukcyjne"
+en "Construction Guideline"
+de "Bauratgeber"
+
+## "Troll"
+pl "Troll"
+en "Troll"
+de "Troll"
+
+## "Trollschild_2"
+pl "Tarcza trolla"
+en "Troll shield"
+de "Trollschild"
+
+## "Trollschild_3"
+pl "Tarcza trolla"
+en "Troll shield"
+de "Trollschild"
+
+## "Trolltuer"
+pl "Drzwi trolli"
+en "Troll door"
+de "Trolltür"
+
+## "Tuer_LavaK"
+pl "Drzwi"
+en "door"
+de "Tür"
+
+## "Tunnel"
+pl "Tunel"
+en "Tunnel"
+de "Gang"
+
+## "Umzug"
+pl "Ruch"
+en "Move"
+de "Umzug"
+
+## "Undo"
+pl "Skasuj"
+en "Delete"
+de "Löschen"
+
+## "Unknown"
+pl "Nieznane"
+en "Unknown"
+de "Unbekannt"
+
+## "Unsichtbarkeitstrank"
+pl "Mikstura niewidzialnoœci"
+en "Potion of Invisibility"
+de "Unsichtbarkeitstrank"
+
+## "Unterricht"
+pl "Klasa"
+en "Education"
+de "Unterricht"
+
+## "Unverwundbarkeitstrank"
+pl "Mikstura niewra¿liwoœci na ciosy"
+en "Invulnerability potion"
+de "Unverwundbarkeitstrank"
+
+## "Vater"
+pl "Ojciec"
+en "Father"
+de "Vater"
+
+## "Verteid."
+pl "Obrona"
+en "Defense"
+de "Verteid."
+
+## "Verteidigung"
+pl "Obrona"
+en "Defense"
+de "Verteidigung"
+
+## "VerteidigungPos0"
+pl "Tarczologia"
+en "Shield Science"
+de "Schildkunde"
+
+## "VerteidigungPos1"
+pl "Sekrety Blokowanie"
+en "Secrets of Blocking"
+de "Wie blocke ich richtig?"
+
+## "VerteidigungPos2"
+pl "Umiejêtne upadanie"
+en "Correct Falling"
+de "Fallübungen"
+
+## "VerteidigungPos3"
+pl "W³aœciwe parowanie ciosów"
+en "Perfect Parees"
+de "Paraden im Kampf"
+
+## "VerteidigungPos4"
+pl "Techniki uników"
+en "Evasion Techniques"
+de "Ausweichen, aber wohin?"
+
+## "Video Options"
+pl "Opcje graficzne"
+en "Video options"
+de "Videooptionen"
+
+## "Wachhaus"
+pl "Stra¿nica"
+en "Guard House"
+de "Wachhaus"
+
+## "Waffenfabrik"
+pl "Zbrojownia"
+en "Arsenal"
+de "Waffenfabrik"
+
+## "Waffenschmiede"
+pl "KuŸnia uzbrojenia"
+en "Blacksmith"
+de "Waffenschmiede"
+
+## "Wasser"
+pl "Woda"
+en "Water"
+de "Wasser"
+
+## "Wasserrad"
+pl "Elektrownia wodna"
+en "Water Wheel"
+de "Wasserrad"
+
+## "Weichensignal_1"
+pl "Sygna³ toru_1"
+en "Track signal_1"
+de "Weichensignal_1"
+
+## "Weichensignal_2"
+pl "Sygna³ toru_2"
+en "Track signal_2"
+de "Weichensignal_2"
+
+## "Weichensignal_3"
+pl "Sygna³ toru_3"
+en "Track signal_3"
+de "Weichensignal_3"
+
+## "Weichensignal_4"
+pl "Sygna³ toru_4"
+en "Track signal_4"
+de "Weichensignal_4"
+
+## "Werkzeug:"
+pl "Najlepszy pracownik:"
+en "best worker:"
+de "Bester Arbeiter:"
+
+## "Wiederbelebung"
+pl "Reanimacja"
+en "CPR"
+de "Wiederbelebung"
+
+## "Work %2d:%02d "
+pl "Praca %1:%2 "
+en "Work %1:%2 "
+de "Arbeit %1:%2 "
+
+## "Work end"
+pl "Koniec dnia pracy"
+en "End of working day"
+de "Arbeitsende"
+
+## "Work start"
+pl "Pocz¹tek pracy "
+en "Start of work"
+de "Arbeitsbeginn"
+
+## "Wuker"
+pl "Wuker"
+en "Wuker"
+de "Wuker"
+
+## "Yes"
+pl "Tak"
+en "Yes"
+de "Ja"
+
+## "Zauberstab"
+pl "Magiczna ró¿d¿ka"
+en "Magic wand"
+de "Zauberstab"
+
+## "Zelt"
+pl "Namiot"
+en "Tent"
+de "Zelt"
+
+## "Zipfelmuetze"
+pl "Czapka zmar³ego kar³a"
+en "jelly bag cap of a dead dwarf"
+de "Zipfelmütze eines Verstorbenen"
+
+## "Zoom in"
+pl "Przybli¿enie"
+en "Zoom in"
+de "Reinzoomen"
+
+## "Zoom out"
+pl "Oddalenie"
+en "Zoom out"
+de "Rauszoomen"
+
+## "Zoom"
+pl "Zbli¿enie"
+en "Zoom"
+de "Lupe"
+
+## "Zurück"
+pl "Powrót"
+en "Back"
+de "Zurück"
+
+## "Zweihand"
+pl "Dwurêczna"
+en "Two-handed"
+de "Zweihand"
+
+## "Zweihandkampf"
+pl "Walka dwurêczna"
+en "Two-handed fight"
+de "Zweihänder"
+
+## "ZweihandkampfPos0"
+pl "Dwie dzielne r¹czki"
+en "Two Brave Hands"
+de "Der Mut der zwei Hände"
+
+## "ZweihandkampfPos1"
+pl "Morderczy zamach"
+en "The Deadly Swing"
+de "Der tödliche Schwung"
+
+## "ZweihandkampfPos2"
+pl "Przytrzymaj mnie za rêkê"
+en "Hold My Hand"
+de "Von Äxten und Sternen"
+
+## "ZweihandkampfPos3"
+pl "Koordynacja oczu i r¹k"
+en "Hand-Eye Coordination"
+de "Beide Hände fest am Griff"
+
+## "ZweihandkampfPos4"
+pl "Ksiêga walki dwurêcznej"
+en "Book of Two-handed Combat"
+de "Zweihänderalmanach"
+
+## "Zwerg"
+pl "Karze³"
+en "Dwarf"
+de "Zwerg"
+
+## "Zwerge"
+pl "Kar³y"
+en "Dwarves"
+de "Zwerge"
+
+## "Zwergeangegriffen"
+pl "Zaatakowano twoje kar³y"
+en "Your dwarfs are under attack"
+de "Ihre Zwerge werden angegriffen"
+
+## "_Auflegen"
+pl "Wystêpy"
+en "Perform"
+de "Auflegen"
+
+## "_Automatisch"
+pl "Automatyczne otwieranie i zamykanie drzwi"
+en "open and close door automaticly"
+de "Tür automatisch öffnen und schliessen"
+
+## "_Barbetrieb"
+pl "Stanie za barem"
+en "Bar service"
+de "Barbetrieb"
+
+## "_Bewachen_mittel"
+pl "Warta, œredni dystans"
+en "guard, medium range"
+de "Wachdienst, mittlere Reichweite"
+
+## "_Bewachen_nah"
+pl "Warta, krótki dystans"
+en "guard, small range"
+de "Wachdienst, kleine Reichweite"
+
+## "_Bewachen_weit"
+pl "Warta, du¿y dystans"
+en "guard, large range"
+de "Wachdienst, grosse Reichweite"
+
+## "_Heilen"
+pl "Leczenie"
+en "Healing"
+de "Heilung"
+
+## "_Kamera"
+pl "Tryb kamery pod¹¿aj¹cej"
+en "Camera Follow-Mode"
+de "Verfolgerkamera"
+
+## "_Kisten_einlagern"
+pl "Zbieranie skrzyñ"
+en "store boxes"
+de "Kisten einlagern"
+
+## "_Kungfu"
+pl "Trening Kung Fu"
+en "kungfu training"
+de "Kungfu-Training"
+
+## "_Liebesdienst"
+pl "Mi³oœæ"
+en "Love"
+de "Liebesdienst"
+
+## "_Mineralien_einlagern"
+pl "Zbieranie z³ota, ¿elaza, wêgla, kryszta³ów i kamieni"
+en "store gold, iron, coal, crystals and stones"
+de "Gold, Eisen, Kohle, Kristall und Stein einlagern"
+
+## "_Nahrung_einlagern"
+pl "Zbieranie ¿ywnoœci"
+en "store food"
+de "Nahrung einlagern"
+
+## "_Offen"
+pl "Otwieranie drzwi"
+en "open door"
+de "Tür öffnen"
+
+## "_Pilze_einlagern"
+pl "Zbieranie gzybich kapeluszy i nó¿ek"
+en "store fungus hats and stems"
+de "Pilzhüte und Pilzstämme einlagern"
+
+## "_Rohmineralien_einlagern"
+pl "Zbieranie rud"
+en "store raw ores"
+de "rohe Mineralien einlagern"
+
+## "_Schusswaffen"
+pl "Trening w u¿yciu broni dystansowej"
+en "firearms training"
+de "Schusswaffentraining"
+
+## "_Schwertkampf"
+pl "Trning w walce na miecze"
+en "swordsfight training"
+de "Schwertkampftraining"
+
+## "_Theatervorstellung"
+pl "Przedstawienie"
+en "Show"
+de "Theatervorstellung"
+
+## "_Titanic_abpumpen"
+pl "Wypompuj wodê z Titanica"
+en "Pump the Titanic dry"
+de "Titanic abpumpen"
+
+## "_Unterricht"
+pl "Edukacja"
+en "Education"
+de "Unterricht"
+
+## "_Verschlossen"
+pl "Zamykanie drzwi"
+en "lock door"
+de "Tür verschliessen"
+
+## "_Verteidigung"
+pl "Trening obrony"
+en "Defense Training"
+de "Verteidigungstraining"
+
+## "_Waffen_Werkzeug_und_Traenke_einlagern"
+pl "Zbieranie broni, narzêdzi i mikstur"
+en "store weapons, tools and potions"
+de "Waffen, Werkzeuge und Tränke einlagern"
+
+## "_Weiche_1"
+pl "Prze³¹cznik toru 1"
+en "Track Switch 1"
+de "Weiche 1"
+
+## "_Weiche_2"
+pl "Prze³¹cznik toru 2"
+en "Track Switch 2"
+de "Weiche 2"
+
+## "_Weiche_3"
+pl "Prze³¹cznik toru 3"
+en "Track Switch 3"
+de "Weiche 3"
+
+## "_Weiche_4"
+pl "Prze³¹cznik 4"
+en "Track Switch 4"
+de "Weiche 4"
+
+## "_Zweihandkampf"
+pl "Trening w walce dwurêcznej"
+en "two-handed fight training"
+de "Zweihandkampftraining"
+
+## "agressiv"
+pl "agresywny"
+en "aggressive"
+de "aggressiv"
+
+## "anfeindverloren"
+pl "przej¹³ przeciwnik!"
+en "has been taken over by the enemy!"
+de "an den Feind verloren!"
+
+## "assign"
+pl "przyporz¹dkuj"
+en "assign"
+de "zuweisen"
+
+## "attack"
+pl "atakuj"
+en "attack"
+de "angreifen"
+
+## "boxed"
+pl "zapakowany"
+en "boxed"
+de "eingepackt"
+
+## "packtobox"
+pl "pakuj"
+en "pack"
+de "einpacken"
+
+## "build"
+pl "robi"
+en "makes"
+de "macht"
+
+## "buildup"
+pl "budowa"
+en "buildup"
+de "aufbauen"
+
+## "catch"
+pl "³ap"
+en "catch"
+de "fangen"
+
+## "clanname0"
+pl "Wigglesy"
+en "Diggles"
+de "Wiggles"
+
+## "clanname1"
+pl "Hippisi"
+en "Voodoos"
+de "Voodoos"
+
+## "clanname2"
+pl "Pukniêci"
+en "Knockers"
+de "Knockers"
+
+## "clanname3"
+pl "Jajog³owi"
+en "Brains"
+de "Brains"
+
+## "clanname4"
+pl "Wampiry"
+en "Vampires"
+de "Vampire"
+
+## "conquer"
+pl "podbij"
+en "conquer"
+de "erobern"
+
+## "continue"
+pl "kontynuuj"
+en "continue"
+de "weiter"
+
+## "dead!"
+pl "nie ¿yje!"
+en "dead!"
+de "tot!"
+
+## "defensiv"
+pl "defensywny"
+en "defensive"
+de "defensiv"
+
+## "dig"
+pl "kop"
+en "dig"
+de "graben"
+
+## "erfuellt"
+pl "wykonano"
+en "fulfilled"
+de "erfuellt"
+
+## "erfunden"
+pl "wynaleziono"
+en "invented"
+de "erfunden"
+
+## "grab"
+pl "chwyæ"
+en "grab"
+de "greife"
+
+## "harvest"
+pl "zbieraj"
+en "harvest"
+de "ernten"
+
+## "idle"
+pl "wolny"
+en "idle"
+de "frei"
+
+## "inactive"
+pl "nieaktywne"
+en "inactive"
+de "inaktiv"
+
+## "invent"
+pl "wynajdŸ"
+en "invent"
+de "erfinden"
+
+## "istfasttot"
+pl "ledwo zipie"
+en "is almost dead"
+de "ist fast tot"
+
+## "istgestorben"
+pl "nie ¿yje"
+en "has died"
+de "ist gestorben"
+
+## "istsehralt"
+pl "jest bardzo stary"
+en "is very old"
+de "ist sehr alt"
+
+## "istsehrhungrig"
+pl "cierpi straszny g³ód"
+en "is very hungry"
+de "ist sehr hungrig"
+
+## "istvonaltergestorben"
+pl "umar³ ze staroœci"
+en "has died of old age"
+de "ist durch Altersschwäche gestorben"
+
+## "mince"
+pl "zniszcz"
+en "destroy"
+de "zerhacken"
+
+## "mine"
+pl "kop"
+en "mine"
+de "abbauen"
+
+## "move"
+pl "ruch"
+en "move"
+de "bewegen"
+
+## "no Energy!"
+pl "Brak energii!"
+en "No energy!"
+de "Keine Energie!"
+
+## "none"
+pl "nic"
+en "none"
+de "Nichts"
+
+## "normal"
+pl "normalne"
+en "normal"
+de "normal"
+
+## "open"
+pl "otwórz"
+en "open"
+de "öffnen"
+
+## "pack"
+pl "pakuj"
+en "pack"
+de "einpacken"
+
+## "pickup"
+pl "podnieœ"
+en "pick up"
+de "aufheben"
+
+## "Reparieren"
+pl "napraw"
+en "repair"
+de "Reparieren"
+
+## "poison"
+pl "otruj"
+en "poison"
+de "vergiften"
+
+## "preg."
+pl "ci¹¿."
+en "preg."
+de "schw."
+
+## "pullout"
+pl "wyci¹gnij"
+en "pull out"
+de "ziehe raus"
+
+## "putdown"
+pl "odstaw"
+en "put down"
+de "ablegen"
+
+## "readit"
+pl "czytaj"
+en "read"
+de "lesen"
+
+## "sparetime"
+pl "Czas wolny"
+en "Leisure time"
+de "Freizeit"
+
+## "squeeze"
+pl "œciœnij"
+en "squeeze"
+de "zusammendrücken"
+
+## "switch"
+pl "prze³¹cz"
+en "switch"
+de "schalten"
+
+## "switcher in use"
+pl "Prze³¹cznik nie dzia³a"
+en "Switch not usable"
+de "Schalter nicht benutzbar"
+
+## "turn"
+pl "kolejka"
+en "turn"
+de "drehen"
+
+## "unknown"
+pl "nieznane"
+en "unknown"
+de "unbekannt"
+
+## "unpack"
+pl "rozpakuj"
+en "unpack"
+de "auspacken"
+
+## "use"
+pl "u¿yj:"
+en "use"
+de "benutzen"
+
+## "walk through"
+pl "przejdŸ"
+en "walk through"
+de "gehe durch"
+
+## "walk"
+pl "idŸ"
+en "walk"
+de "laufen"
+
+## "walkto"
+pl "idŸ do"
+en "walk to"
+de "gehe zu"
+
+## "workat"
+pl "pracuj"
+en "work at"
+de "arbeiten"
+
+## "wurdeerobert"
+pl "przejêto!"
+en "has been taken over!"
+de "wurde erobert!"
+
+## "wurdezerstoert"
+pl "zniszczono"
+en "has been destroyed"
+de "wurde zerstört"
+
+## "zwerggeboren"
+pl "Narodzi³ siê nowy karze³!"
+en "A new dwarf is born!"
+de "Neuer Zwerg geboren!"
+
+## "ICQ_Found"
+pl "Zalecamy zamkniêcie ICQ przed rozpoczêciem gry w Wiggles."
+en "We strongly recommend to shut ICQ before playing Diggles."
+de "Wir empfehlen dringend, ICQ zu schließen, bevor Wiggles gestartet wird."
+
+## "WinAmp_Found"
+pl "Zalecamy zamkniêcie WinAmpa przed rozpoczêciem gry w Wiggles."
+en "We strongly recommend to shut WinAmp before playing Diggles."
+de "Wir empfehlen dringend, WinAmp zu schließen, bevor Wiggles gestartet wird."
+
+## "ICQ_WinAmp_Found"
+pl "Zalecamy zamkniêcie ICQ i WinAmpa przed rozpoczêciem gry w Wiggles."
+en "We strongly recommend to shut ICQ and WinAmp before playing Diggles."
+de "Wir empfehlen dringend, ICQ und WinAmp zu schließen, bevor Wiggles gestartet wird."
+
+## "Holzpuppe"
+pl "Drewniany manekin"
+en "Wooden dummy"
+de "Holzpuppe"
+
+## "Trainingspuppe"
+pl "Manekin æwiczebny"
+en "Training dummy"
+de "Trainingspuppe"
+
