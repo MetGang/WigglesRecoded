@@ -1,1 +1,1 @@
-# WigglesRemaster
+# Wiggles Re:coded (Base)
