@@ -64,11 +64,11 @@ def_class Zwerg none gnome 0 {reproduces lives moves} {
 		set is_dying 0								;# Zwerg stirbt
 		set is_burning 0							;# Zwerg brennt
 		set is_underwater 0							;# Zwerg ist unter Wasser
-		set is_wearing_divingbell 0					;# Zwerg trägt eine Taucherglocke
-		set is_wearing_divingbell_by_usercommand 0	;# Zwerg trägt Taucherglocke auf Befehl (= kein autom. Absetzen!)
+		set is_wearing_divingbell 0					;# Zwerg trï¿½gt eine Taucherglocke
+		set is_wearing_divingbell_by_usercommand 0	;# Zwerg trï¿½gt Taucherglocke auf Befehl (= kein autom. Absetzen!)
 		set out_of_water_timer 0					;# Zwerg ist soviel Zeit (events...) aus dem Wasser raus
-		set MAX_AIR_UNDERWATER 15					;# Konstante: Luft für x Sekunden bevor Lebensabzug
-		set remainingair $MAX_AIR_UNDERWATER		;# tatsächlich übrige Atemluft
+		set MAX_AIR_UNDERWATER 15					;# Konstante: Luft fï¿½r x Sekunden bevor Lebensabzug
+		set remainingair $MAX_AIR_UNDERWATER		;# tatsï¿½chlich ï¿½brige Atemluft
 		set love_potion_taken 0						;# Zwerg hat einen Liebestrank genommen
 		set fertility_potion_taken 0				;# Zwerg hat einen Fruchtbarkeitstrank genommen
 		set trap_mode 0								;# Zwerg ist in Falle
@@ -93,7 +93,7 @@ def_class Zwerg none gnome 0 {reproduces lives moves} {
 		set event_repeat 0
 		set last_event ""
 		set last_userevent_time 0
-		set objghostlist 	 ""						;# Alphaobjekte, die gültig sind und nicht gelöscht werden sollen
+		set objghostlist 	 ""						;# Alphaobjekte, die gï¿½ltig sind und nicht gelï¿½scht werden sollen
 		set putdownitemslist ""						;# wird im Putdown-Event gebraucht
 		set idle_action_list ""
 		set dig_versuche 4
@@ -115,7 +115,7 @@ def_class Zwerg none gnome 0 {reproduces lives moves} {
         set ntHitMessage -1  ;#newsTicker HitpointsMeldung
         set ntAltMessage -1
 
-		// Idle anims für Sequenzen (Statistenrollen)
+		// Idle anims fï¿½r Sequenzen (Statistenrollen)
 		set seq_idle_anims [list]
 		lappend seq_idle_anims {10 {stand_anim_a}}
 		lappend seq_idle_anims {10 {stand_anim_b}}
