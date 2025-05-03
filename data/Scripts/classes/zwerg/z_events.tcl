@@ -1,11 +1,6 @@
-// ---------------------------------------------------------------------
-// z_events.tcl
-//
-// Zwerg event handlers
-// ---------------------------------------------------------------------
+call scripts/debug.tcl
 
-
-if {[in_class_def]} {
+if { [in_class_def] } {
 
 	def_event evt_timer0
 	def_event evt_system_gamestart
@@ -73,56 +68,40 @@ if {[in_class_def]} {
 
 
 	handle_event evt_system_gamestart {
-		if {[get_cloaked this]} {
+		if { [get_cloaked this] } {
 			set_rendermaterial this additiveonly
 		}
 	}
-
 
 	handle_event evt_task_walk {
 		evt_task_walk_proc
 	}
 
-
 	handle_event evt_task_guard {
 		evt_task_guard_proc
 	}
-
 
 	handle_event evt_burnend {
 		evt_burnend_proc
 	}
 
-
-	// Unsichtbarkeitstrank endet
 	handle_event evt_cloakend {
 		call_method this set_invisibility 0 0
 	}
 
-
-	// Unsichtbarkeitstrank endet in wenigen Sekunden
 	handle_event evt_cloakend_warning {
-		if {![get_cloaked this]} {
-			return
-		}
+		if { ![get_cloaked this] } { return }
 		timer_event this evt_cloakend -repeat 1 -interval 1 -userid 3 -attime [expr {[gettime] + 20}]
 	}
 
-
-	// Unverwundbarkeitstrank endet
 	handle_event evt_invulnerableend {
 		call_method this set_invulnerability 0 0
 	}
 
-
-	// Unverwundbarkeitstrank endet in wenigen Sekunden
 	handle_event evt_invulnerableend_warning {
-		if {![get_invulnerable this]} {
-			return
-		}
+		if { ![get_invulnerable this] } { return }
 		timer_event this evt_invulnerableend -repeat 1 -interval 1 -userid 4 -attime [expr {[gettime] + 5}]
 	}
-
 
 	handle_event evt_task_pickup {
 		evt_task_pickup_proc
@@ -156,7 +135,6 @@ if {[in_class_def]} {
 		evt_task_open_box_proc
 	}
 
-
 	handle_event evt_task_putdown {
 		evt_task_putdown_proc
 	}
@@ -169,51 +147,41 @@ if {[in_class_def]} {
 		evt_task_buildup_proc
 	}
 
-
 	handle_event evt_task_harvest {
 		evt_task_harvest_proc
 	}
-
 
 	handle_event evt_task_mine {
 		evt_task_mine_proc
 	}
 
-
 	handle_event evt_task_switch {
 		evt_task_switch_proc
 	}
-
 
 	handle_event evt_task_dig {
 		evt_task_dig_proc
 	}
 
-
 	handle_event evt_task_workprod {
 		evt_task_workprod_proc
 	}
-
 
 	handle_event evt_task_prodattack {
 		evt_task_prodattack_proc
 	}
 
-
 	handle_event evt_task_workprod_prefer {
 		evt_task_workprod_prefer_proc
 	}
-
 
 	handle_event evt_autoprod_workat {
 		evt_autoprod_workat_proc
 	}
 
-
 	handle_event evt_autoprod_pickup {
 		evt_autoprod_pickup_proc
 	}
-
 
 	handle_event evt_autoprod_pickup_store {
 		evt_autoprod_pickup_store_proc
@@ -221,69 +189,55 @@ if {[in_class_def]} {
 
 	handle_event evt_autoprod_pack {
 		evt_autoprod_pack_proc
-
 	}
-
 
 	handle_event evt_autoprod_buildup {
 		evt_autoprod_buildup_proc
 	}
 
-
 	handle_event evt_autoprod_unpack {
 		evt_autoprod_unpack_proc
 	}
-
 
 	handle_event evt_autoprod_bringprod {
 		evt_autoprod_bringprod_proc
 	}
 
-
 	handle_event evt_autoprod_transferprod {
 		evt_autoprod_transferprod_proc
 	}
-
 
 	handle_event evt_autoprod_harvest {
 		evt_autoprod_harvest_proc
 	}
 
-
 	handle_event evt_autoprod_mine_new {
 		evt_autoprod_mine_new_proc
 	}
-
 
 	handle_event evt_autoprod_walk {
 		evt_autoprod_walk_proc
 	}
 
-
 	handle_event evt_autoprod_dig {
 		evt_autoprod_dig_proc
 	}
-
 
 	handle_event evt_task_attack {
 		evt_task_attack_proc
 	}
 
-
 	handle_event evt_task_defend {
 		evt_task_defend_proc
 	}
-
 
 	handle_event evt_zwerg_workannounce {
 		evt_zwerg_workannounce_proc
 	}
 
-
 	handle_event evt_zwerg_greet {
 		evt_zwerg_greet_proc
 	}
-
 
 	handle_event evt_zwerg_attribupdate {
 		evt_zwerg_attribupdate_proc
@@ -291,18 +245,15 @@ if {[in_class_def]} {
 
 	handle_event evt_talkissue_update {
 		event_talkissue_update
-		// zu finden in z_spare_talk.tcl
 	}
 
 	handle_event evt_sparewish_update {
 		event_sparewish_update
-		// zu finden in z_spare_main.tcl
 	}
 
 	handle_event evt_zwerg_die {
 		evt_zwerg_die_proc
 	}
-
 
 	handle_event evt_zwerg_break {
 		evt_zwerg_break_proc
@@ -310,7 +261,7 @@ if {[in_class_def]} {
 
 	handle_event evt_wiggolympics {
 		set mystate [state_get this]
-		if {$mystate!="work_dispatch"&&$mystate!="work_auto"&&$mystate!="fight_dispatch"} {
+		if { $mystate != "work_dispatch" && $mystate != "work_auto" && $mystate != "fight_dispatch" } {
 			evt_wiggolympics_proc
 		}
 	}
@@ -329,48 +280,42 @@ if {[in_class_def]} {
 
 } else {
 
-
-	// Laufen : vom User ausgelöst
-	// -pos1	= Zielposition
-
+	# Invoked when gnome is tasked (LMB) with going to the pointed location
+	# -pos1 = cursor's position
 	proc evt_task_walk_proc {} {
-		global event_log current_plan
-		global last_event event_repeat last_userevent_time
+		global last_event event_repeat
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_WALK"
-		}
+		log EVENT "evt_task_walk" [event_get this -target] [event_get this -pos1]
 
-		set evtpos [event_get this -pos1]
+		set pos [event_get this -pos1]
 
 		gnome_failed_work this
 		tasklist_clear this
 		kill_all_ghosts
 		stop_prod
 
-		set this_event "walk \{$evtpos\}"
-		if {[lindex $last_event 0]=="walk"&&[vector_dist3d $evtpos [lindex $last_event 1]]<3} {set event_repeat 1}
-		set last_event $this_event
+		set last_event "walk \{$pos\}"
+
+		if { [lindex $last_event 0] == "walk" && [vector_dist3d $pos [lindex $last_event 1]] < 3 } {
+			set event_repeat 1
+		}
 
 		notify_userevent
 
-		tasklist_add this "walk_pos \{$evtpos\}"
+		tasklist_add this "walk_pos \{$pos\}"
 
 		state_triggerfresh this task
+
 		set_objworkicons this
-		prod_gnome_state this walk "$evtpos"
+
+		prod_gnome_state this walk "$pos"
 	}
 
-
-
-	// Bewachen : vom Wachhaus ausgelöst
-
+	# Invoked when ...
 	proc evt_task_guard_proc {} {
-		global event_log current_plan
+		global current_plan
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_GUARD"
-		}
+		log EVENT "evt_task_guard" [event_get this -target]
 
 		notify_autoevent
 
@@ -379,33 +324,25 @@ if {[in_class_def]} {
 		state_triggerfresh this task
 	}
 
-
-
-	// Zwerg hört auf zu brennen : vom Attrib-Update-Event ausgelöst
-
+	# Invoked when ...
 	proc evt_burnend_proc {} {
-		global event_log is_burning
+		global is_burning
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_BURNEND"
-		}
+		log EVENT "evt_burnend" [event_get this -target]
 
-		if {$is_burning == 0} {
-			return
-		}
+		if { $is_burning == 0 } { return }
 
 		set is_burning 0
 		set_particlesource this 4 0
 		free_particlesource this 4
 	}
 
-
-	// Gegenstand aufheben : vom User ausgelöst
-	// -subject1	= Obj-ID des aufzuhebenden Items
-
+	# Invoked when gnome is tasked (LMB) with picking up item
+	# -subject1 = item
 	proc evt_task_pickup_proc {} {
-		global current_plan
-		global last_event last_userevent_time event_repeat
+		global current_plan last_event last_userevent_time event_repeat
+
+		log EVENT "evt_task_pickup" [event_get this -target] [event_get this -subject1]
 
 		set evtitem [event_get this -subject1]
 		if {[obj_valid $evtitem] == 0} {
@@ -432,11 +369,12 @@ if {[in_class_def]} {
 		prod_gnome_state this pickup $evtitem
 	}
 
-
-
-
+	# Invoked when ...
+	# -subject1 = ???
 	proc evt_task_convert_proc {} {
 		global current_plan last_event event_repeat last_userevent_time
+
+		log EVENT "evt_task_convert" [event_get this -target] [event_get this -subject1]
 
 		set evtitem [event_get this -subject1]
 		if {[obj_valid $evtitem] == 0} {
@@ -463,18 +401,12 @@ if {[in_class_def]} {
 		prod_gnome_state this convert $evtitem
 	}
 
-
-
-	// ruft show_info auf einem Item auf
-	// -subject1	= Obj-ID des Items
-
+	# Invoked when ...
+	# -subject1 = ???
 	proc evt_task_showinfo_proc {} {
-		global event_log
 		global last_event event_repeat
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_SHOWINFO"
-		}
+		log EVENT "evt_task_showinfo" [event_get this -target] [event_get this -subject1]
 
 		set evtitem [event_get this -subject1]
 		if {[obj_valid $evtitem] == 0} {
@@ -504,18 +436,12 @@ if {[in_class_def]} {
 		set_objworkicons this question [get_objclass $evtitem]
 	}
 
-
-
-	// Benutzten von Items (Heiltränke usw.) : vom User ausgelöst
-	// -subject1 	= Obj-ID des zu benutzenden Objektes
-
+	# Invoked when gnome is tasked (Alt + LMB) with using item
+	# -subject1 = item
 	proc evt_task_useitem_proc {} {
-		global event_log
 		global last_event event_repeat last_userevent_time
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_USEITEM"
-		}
+		log EVENT "evt_task_useitem" [event_get this -target] [event_get this -subject1]
 
 		set evtitem [event_get this -subject1]
 		if {[obj_valid $evtitem] == 0} {
@@ -542,17 +468,12 @@ if {[in_class_def]} {
 		set_objworkicons this [get_objclass $evtitem]
 	}
 
-
-	// Benutzten von Objekten in der Welt (vor allem Questitem etc.) : vom User ausgelöst
-	// -subject1 	= Obj-ID des zu benutzenden Objektes
-
+	# Invoked when ...
+	# -subject1 = ???
 	proc evt_task_objaction_proc {} {
-		global event_log
 		global last_event event_repeat last_userevent_time
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_OBJACTION"
-		}
+		log EVENT "evt_task_objaction" [event_get this -target] [event_get this -subject1]
 
 		set evtitem [event_get this -subject1]
 		if {[obj_valid $evtitem] == 0} {
@@ -580,14 +501,12 @@ if {[in_class_def]} {
 		prod_gnome_state this walk [get_pos $evtitem]
 	}
 
-
+	# Invoked when ...
+	# -subject1 = ???
 	proc evt_task_kidnap_proc {} {
-		global event_log
 		global last_event event_repeat last_userevent_time
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_KIDNAP"
-		}
+		log EVENT "evt_task_kidnap" [event_get this -target] [event_get this -subject1]
 
 		set evtitem [event_get this -subject1]
 		if {![obj_valid $evtitem]} {
@@ -613,13 +532,12 @@ if {[in_class_def]} {
 		prod_gnome_state this walk [get_pos $evtitem]
 	}
 
-
+	# Invoked when ...
+	# -subject1 = ???
 	proc evt_task_bombe_proc {} {
-		global last_event event_repeat last_userevent_time event_log
+		global last_event event_repeat last_userevent_time
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_BOMBE"
-		}
+		log EVENT "evt_task_bombe" [event_get this -target] [event_get this -subject1]
 
 		set evtitem [event_get this -subject1]
 		if {![obj_valid $evtitem]} {
@@ -643,19 +561,13 @@ if {[in_class_def]} {
 		prod_gnome_state this walk [get_pos $evtitem]
 	}
 
-
-	// Item ist von der Plazierungsroutine an ein anderes Item gesnapt worden : vom User ausgelöst
-	// (z.B. snappen Bilder an ihre Haken an der Wand)
-	// -subject1 	= Obj-ID des plazierten Items
-	// -subject2	= Obj-ID des Items, an das gesnapt worden ist
-
+	# Invoked when ...
+	# -subject1 = ???
+	# -subject2 = ???
 	proc evt_task_snapitem_proc {} {
-		global event_log
 		global last_event event_repeat
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_SNAPITEM"
-		}
+		log EVENT "evt_task_snapitem" [event_get this -target] [event_get this -subject1] [event_get this -subject2]
 
 		set placeditem [event_get this -subject1]
 		if {[obj_valid $placeditem] == 0} {
@@ -669,12 +581,12 @@ if {[in_class_def]} {
 			return
 		}
 
-		// grundsätzlich nicht zulassen, wenn host schon ein Objekt hat
+		// grundsï¿½tzlich nicht zulassen, wenn host schon ein Objekt hat
 		if {[call_method $hostitem get_snapped_obj] != -1} {
 			return
 		}
 
-//		log "EVENT: [get_objname $placeditem] snapped on [get_objname $hostitem]"
+		log EVENT "[get_objname $placeditem] snapped on [get_objname $hostitem]"
 
 		gnome_failed_work this
 		tasklist_clear this
@@ -694,18 +606,12 @@ if {[in_class_def]} {
 		prod_gnome_state this walk [get_pos $hostitem]
 	}
 
-
-
-	// öffnen von Schatztonnen, Kisten etc... : vom User ausgelöst
-	// -subject1	= Obj-ID der Box
-
+	# Invoked when gnome is tasked (LMB/Alt + LMB) with opening container (e.g. barrel, chest) or reading book
+	# -subject1 = container
 	proc evt_task_open_box_proc {} {
-		global event_log current_plan
-		global last_event event_repeat last_userevent_time
+		global current_plan last_event event_repeat last_userevent_time
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_OPEN_BOX"
-		}
+		log EVENT "evt_task_open_box" [event_get this -target] [event_get this -subject1]
 
 		set evtitem [event_get this -subject1]
 		if {[obj_valid $evtitem] == 0} {
@@ -728,19 +634,14 @@ if {[in_class_def]} {
 		prod_gnome_state this walk [get_pos $evtitem]
 	}
 
-
-
-	// Ablegen von Gegenständen : von User ausgelöst
-	// -subject1	= Item, das abgelegt werden soll
-	// -pos1		= Position, an der abgelegt werden soll (nur bei bestimmten Items)
-	// -text1		= weitere Parameter
-
+	# Invoked when gnome is tasked (LMB) with putting down item
+	# -subject1 = item
+	# -pos1     = cursor's position
+	# -text1    = ???
 	proc evt_task_putdown_proc {} {
-		global event_log current_plan last_event last_userevent_time putdownitemslist
+		global current_plan last_event last_userevent_time putdownitemslist
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_PUTDOWN"
-		}
+		log EVENT "evt_task_putdown" [event_get this -target] [event_get this -subject1] [event_get this -pos1] [event_get this -text1]
 
 		set evtitem [event_get this -subject1]
 		if {![obj_valid $evtitem]} {
@@ -749,7 +650,7 @@ if {[in_class_def]} {
 		set evtpos  [event_get this -pos1]
 		if {[llength $evtpos] != 3  ||  [lindex $evtpos 0] <= 0  ||  [lindex $evtpos 2] > 15} {
 			log "putdown: invalid position $evtpos"
-			// Position ist ungültig
+			// Position ist ungï¿½ltig
 			set evtpos 0
 		}
 
@@ -772,14 +673,14 @@ if {[in_class_def]} {
 
 		} else {
 
-			// andernfalls überprüfen wir, ob das item vielleicht schon zum Ablegen vorgesehen ist...
+			// andernfalls ï¿½berprï¿½fen wir, ob das item vielleicht schon zum Ablegen vorgesehen ist...
 
 			if {[lsearch $putdownitemslist $evtitem] >= 0} {
 				set i 0
 				set s [tasklist_get this $i]
 				while {$s != ""} {
 					if {[string first "putdown_tasklist $evtitem" $s] == 0} {
-						// wir haben das putdown - Kommando gefunden; die Aktion läßt sich also noch rückgängig machen
+						// wir haben das putdown - Kommando gefunden; die Aktion lï¿½ï¿½t sich also noch rï¿½ckgï¿½ngig machen
 						tasklist_rem this $i
 						set i -1
 						break
@@ -789,8 +690,8 @@ if {[in_class_def]} {
 					set s [tasklist_get this $i]
 				}
 
-				// putdown nicht gefunden; Ablege-Aktion läuft also schon!
-				// --> alle Aktionen vor dem ersten "putdown" in der Tasklist löschen und walk-Action abbrechen
+				// putdown nicht gefunden; Ablege-Aktion lï¿½uft also schon!
+				// --> alle Aktionen vor dem ersten "putdown" in der Tasklist lï¿½schen und walk-Action abbrechen
 				if {$i != -1} {
 					set i 0
 					set s [tasklist_get this $i]
@@ -810,21 +711,15 @@ if {[in_class_def]} {
 		set last_event $this_event
 		notify_userevent
 
-		tasklist_add this "putdown_tasklist $evtitem \{$evtpos\}"		;// mit dieser Zeile wird oben verglichen - Vorsicht bei Änderung!
+		tasklist_add this "putdown_tasklist $evtitem \{$evtpos\}"		;// mit dieser Zeile wird oben verglichen - Vorsicht bei ï¿½nderung!
 		lappend putdownitemslist $evtitem
 	}
 
-
-
-	// Alle Gegenstände abwerfen : vom User ausgelöst
-
+	# Invoked when gnome is tasked (F9) with dropping all items
 	proc evt_task_dropall_proc {} {
-		global event_log current_plan
-		global last_event event_repeat last_userevent_time
+		global last_event event_repeat
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_DROPALL"
-		}
+		log EVENT "evt_task_dropall" [event_get this -target]
 
 		gnome_failed_work this
 		tasklist_clear this
@@ -832,36 +727,35 @@ if {[in_class_def]} {
 		stop_prod
 
 		set this_event "dropall"
-		if {$this_event==$last_event} {set event_repeat 1}
+		if { $this_event == $last_event } { set event_repeat 1 }
 		set last_event $this_event
 		notify_userevent
 
 		state_triggerfresh this task
 
-		set invlist [inv_list this]
-		if {[llength $invlist] == 0} {
-			tasklist_add this "play_anim dontknow"
-		} else {
+		set items_to_drop [get_droppable_items]
+
+		if { [llength $items_to_drop] == 0 } {
+			set items_to_drop [inv_list this]
+		}
+
+		if { [llength $items_to_drop] != 0 } {
 			tasklist_add this "play_anim [putdown_anim]"
-			tasklist_add this "beamto_world_all"
+			tasklist_add this "drop_items {$items_to_drop}"
 			set_objworkicons this arrow_down
-			prod_gnome_state this putdown [lindex $invlist 0]
+			prod_gnome_state this putdown [lindex $items_to_drop 0]
+		} else {
+			tasklist_add this "play_anim dontknow"
 		}
 	}
 
-
-
-	// Aufbauen einer Produktionsstätte : vom User ausgelöst
-	// -subject1	= Obj-ID der aufzubauenden PS
-	// -evtpos		= Position, an der aufgebaut werden soll
-
+	# Invoked when ...
+	# -subject1 = ???
+	# -evtpos   = ???
 	proc evt_task_buildup_proc {} {
-		global event_log current_plan current_workclass
-		global last_event last_userevent_time
+		global current_plan current_workclass last_event last_userevent_time
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_BUILDUP"
-		}
+		log EVENT "evt_task_buildup" [event_get this -target] [event_get this -subject1] [event_get this -evtpos]
 
 		set evtitem [event_get this -subject1]
 		set evtpos [event_get this -pos1]
@@ -893,17 +787,12 @@ if {[in_class_def]} {
 		tasklist_add this "unpack_pos_unfixed $evtitem \{$evtpos\} 0"
 	}
 
-
-	// Pilz fällen: von User ausgelöst
-	// - subject 	= obj-ID des Pilzes
-
+	# Invoked when gnome is tasked (LMB) with harvesting mushroom
+	# -subject1 = mushroom
 	proc evt_task_harvest_proc {} {
-		global event_log current_workplace current_plan current_workclass
-		global last_event event_repeat current_tool_class last_userevent_time
+		global current_workplace current_plan current_workclass last_event event_repeat current_tool_class last_userevent_time
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_HARVEST"
-		}
+		log EVENT "evt_task_harvest" [event_get this -target] [event_get this -subject1]
 
 		set evtitem [event_get this -subject1]
 		if {[obj_valid $evtitem] == 0} {
@@ -935,17 +824,12 @@ if {[in_class_def]} {
 		prod_gnome_state this harvest $evtitem
 	}
 
-
-	// Teile aus einem großen Erzbroken rausschlagen : vom User ausgelöst
-	// -subject1	= Obj-ID des Brockens
-
+	# Invoked when gnome is tasked (LMB) with mining boulder (e.g. stone, iron ore)
+	# -subject1 = boulder
 	proc evt_task_mine_proc {} {
-		global event_log current_workplace
-		global last_event event_repeat current_tool_class last_userevent_time
+		global current_workplace last_event event_repeat current_tool_class last_userevent_time
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_MINE"
-		}
+		log EVENT "evt_task_mine" [event_get this -target] [event_get this -subject1]
 
 		set evtitem [event_get this -subject1]
 		if {[obj_valid $evtitem] == 0} {
@@ -977,18 +861,12 @@ if {[in_class_def]} {
 		prod_gnome_state this harvest $evtitem
 	}
 
-
-
-	// Schalter drücken : vom User ausgelöst
-	// -subject1	: Obj-ID des Schalters
-
+	# Invoked when ...
+	# -subject1 = ???
 	proc evt_task_switch_proc {} {
-		global event_log
 		global last_event event_repeat last_userevent_time
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_SWITCH"
-		}
+		log EVENT "evt_task_switch" [event_get this -target] [event_get this -subject1]
 
 		set evtitem [event_get this -subject1]
 		if {[obj_valid $evtitem] == 0} {
@@ -1011,18 +889,12 @@ if {[in_class_def]} {
 		set_objworkicons this [get_switcher_icon $evtitem] Schalter
 	}
 
-
-
-	// Graben : vom User ausgelöst
-	// -pos1	= Grabeposition
-
+	# Invoked when gnome is tasked (LMB) with digging
+	# -pos1 = cursor's position
 	proc evt_task_dig_proc {} {
-		global event_log current_plan current_workplace current_digpos
-		global last_event event_repeat current_tool_class last_userevent_time
+		global current_plan current_workplace current_digpos last_event event_repeat current_tool_class last_userevent_time
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_DIG"
-		}
+		log EVENT "evt_task_dig" [event_get this -target] [event_get this -pos1]
 
 		set evtpos [event_get this -pos1]
 
@@ -1054,13 +926,12 @@ if {[in_class_def]} {
 		prod_gnome_state this dig "$evtpos"
 	}
 
-
+	# Invoked when ...
+	# -subject1 = ???
 	proc evt_task_workprod_proc {} {
-		global event_log current_workplace current_plan
-		global last_event
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_WORKPROD"
-		}
+		global current_workplace current_plan last_event
+
+		log EVENT "evt_task_workprod" [event_get this -target] [event_get this -subject1]
 
 		gnome_failed_work this
 		tasklist_clear this
@@ -1080,17 +951,12 @@ if {[in_class_def]} {
 		set last_event ""
 	}
 
-
-	// Gegner angreifen : vom User ausgelöst
-	// -subject1	= Gegner
-
+	# Invoked when ...
+	# -subject1 = ???
 	proc evt_task_prodattack_proc {} {
-		global event_log attack_item approach attack_behaviour current_plan
-		global last_event event_repeat last_userevent_time
+		global attack_item approach attack_behaviour current_plan last_event event_repeat last_userevent_time
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_PRODATTACK"
-		}
+		log EVENT "evt_task_prodattack" [event_get this -target] [event_get this -subject1]
 
 		set attack_item [event_get this -subject1]
 		if {[obj_valid $attack_item] == 0} {
@@ -1117,18 +983,23 @@ if {[in_class_def]} {
 		prod_gnome_state this fight $attack_item
 	}
 
-
+	# Invoked when gnome is assigned (Alt + LMB) to workplace
+	# -subject1 = workplace
+	# -pos1     = cursor's position
 	proc evt_task_workprod_prefer_proc {} {
-		global event_log current_workplace
-		if {$event_log} {log "[get_objname this] getting event EVT_AUTOPROD_WORKPROD_PREFFER"}
+		log EVENT "evt_task_workprod_prefer" [event_get this -target] [event_get this -subject1] [event_get this -pos1]
+
 		prod_gnome_preferred_workplace this [event_get this -subject1]
 	}
 
+	# Invoked when gnome starts working on activity (e.g. item, building, invention) at workplace
+	# -subject1 = workplace
+	# -text1    = activity's class
 	proc evt_autoprod_workat_proc {} {
-		global event_log current_workclass current_workplace current_workclass current_worktask
-		global last_event
+		global current_workclass current_workplace current_workclass current_worktask last_event
 
-		if {$event_log} {log "[get_objname this] getting event EVT_AUTOPROD_WORKAT - Workplace = [event_get this -subject1]"}
+		log EVENT "evt_autoprod_workat" [event_get this -target] [event_get this -subject1] [event_get this -text1]
+
 		tasklist_clear this
 //		kill_all_ghosts
 		stop_prod
@@ -1167,18 +1038,13 @@ if {[in_class_def]} {
 		state_triggerfresh this work_auto
 	}
 
-
-
-	// Gegenstand aufheben : vom System ausgelöst
-	// -subject1	= Obj-ID des Gegenstandes
-
+	# Invoked when gnome picks up item
+	# -subject1 = item
+	# -text1    = item's class
 	proc evt_autoprod_pickup_proc {} {
-		global event_log current_plan current_workplace current_worktask current_workclass current_workitem
-		global last_event
+		global current_plan current_workplace current_worktask current_workclass current_workitem last_event
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_AUTOPROD_PICKUP"
-		}
+		log EVENT "evt_autoprod_pickup" [event_get this -target] [event_get this -subject1] [event_get this -text1]
 
 		set evtitem [event_get this -subject1]
 		if {[obj_valid $evtitem] == 0} {
@@ -1201,18 +1067,13 @@ if {[in_class_def]} {
 		state_triggerfresh this work_auto
 	}
 
-
-
-	// Gegenstand aus dem Lager aufheben : vom System ausgelöst
-	// -subject1 	= Obj-ID des Gegenstandes
-
+	# Invoked when gnome picks up item from store
+	# -subject1 = item
+	# -text1    = item's class
 	proc evt_autoprod_pickup_store_proc {} {
-		global event_log current_plan current_workplace current_worktask current_workclass current_workitem
-		global last_event
+		global current_plan current_workplace current_worktask current_workclass current_workitem last_event
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_AUTOPROD_PICKUP_STORE"
-		}
+		log EVENT "evt_autoprod_pickup_store" [event_get this -target] [event_get this -subject1] [event_get this -text1]
 
 		set evtitem [event_get this -subject1]
 		if {[obj_valid $evtitem] == 0} {
@@ -1235,32 +1096,35 @@ if {[in_class_def]} {
 		state_triggerfresh this work_auto
 	}
 
-
-
+	# Invoked when gnome starts packing building
+	# -subject1 = building
+	# -text1    = building's class
 	proc evt_autoprod_pack_proc {} {
-		global event_log current_plan current_workplace current_worktask current_workclass
-		global last_event
-		if {$event_log} {log "[get_objname this] getting event EVT_AUTOPROD_PACK"}
+		global current_plan current_workplace current_worktask current_workclass last_event
+
+		log EVENT "evt_autoprod_pack" [event_get this -target] [event_get this -subject1] [event_get this -pos1]
+
 		tasklist_clear this
-//		kill_all_ghosts
 		stop_prod
 		notify_autoevent
-		set last_event ""
+
 		set current_plan "work"
 		set current_workplace [event_get this -subject1]
 		set current_worktask "pack"
 		set current_workclass 0
+		set last_event ""
+
 		set_objworkicons this arrow_down [get_objclass $current_workplace]
+
 		state_triggerfresh this work_auto
 	}
 
-
+	# Invoked when ...
+	# -subject1 = ???
 	proc evt_autoprod_buildup_proc {} {
-		global event_log current_plan current_workplace current_worktask current_workclass last_event
+		global current_plan current_workplace current_worktask current_workclass last_event
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_AUTOPROD_BUILDUP"
-		}
+		log EVENT "evt_autoprod_buildup" [event_get this -target] [event_get this -subject1]
 
 		set eventitem [event_get this -subject1]
 		if {[obj_valid $eventitem] == 0} {
@@ -1287,32 +1151,27 @@ if {[in_class_def]} {
 		state_triggerfresh this work_auto
 	}
 
-
+	# Invoked when gnome starts unpacking/repairing building
+	# -subject1 = building
+	# -text1    = building's class
+	# -pos1     = building's position
+	# -num1     = ???
 	proc evt_autoprod_unpack_proc {} {
-		global event_log current_plan current_workplace current_worktask current_workpos current_worknum current_workclass
-		global last_event
+		global current_plan current_workplace current_worktask current_workpos current_worknum current_workclass last_event
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_AUTOPROD_UNPACK"
-		}
+		log EVENT "evt_autoprod_unpack" [event_get this -target] [event_get this -subject1] [event_get this -text1] [event_get this -pos1] [event_get this -num1]
 
-		set eventitem [event_get this -subject1]
-		if {[obj_valid $eventitem] == 0} {
-			return
-		}
+		set box [event_get this -subject1]
+
+		if { ![obj_valid $box] } { return }
 
 		tasklist_clear this
-//		set_ghostlist $eventitem
-//		kill_old_ghosts
 		stop_prod
 		notify_autoevent
 
-		set last_event ""
 		set current_plan "work"
-		set current_workplace $eventitem
-		log "Hitpoints von $eventitem : [get_attrib $eventitem atr_Hitpoints]"
-		if {[get_attrib $eventitem atr_Hitpoints] < 0.99} {
-			log "Zwerg soll zur Reparatur von $eventitem  gehen"
+		set current_workplace $box
+		if { [get_attrib $box atr_Hitpoints] < 0.99 } {
 			set current_worktask "repair"
 			set_objworkicons this Hammer [get_objclass $current_workplace]
 		} else {
@@ -1322,86 +1181,75 @@ if {[in_class_def]} {
 		set current_workpos [event_get this -pos1]
 		set current_worknum [event_get this -num1]
 		set current_workclass 0
-
-
-//     	log "CURRENT_WORKCLASS = $current_workclass"
-		prod_change_muetze service
+		set last_event ""
 
 		state_triggerfresh this work_auto
 	}
 
-
+	# Invoked when ...
+	# -subject1 = ???
+	# -text     = ???
 	proc evt_autoprod_bringprod_proc {} {
-		global event_log current_plan current_workplace current_worktask current_workclass last_event
+		global current_plan current_workplace current_worktask current_workclass last_event
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_AUTOPROD_BRINGPROD"
-		}
+		log EVENT "evt_autoprod_bringprod" [event_get this -target] [event_get this -subject1] [event_get this -text1]
 
 		tasklist_clear this
-//		kill_all_ghosts
 		stop_prod
 		notify_autoevent
 
-		set last_event ""
 		set current_plan "work"
 		set current_workplace [event_get this -subject1]
 		set current_worktask "bringprod"
 		set current_workclass [event_get this -text1]
+		set last_event ""
 
 		set_objworkicons this $current_workclass arrow_right [get_objclass $current_workplace]
+
 		state_triggerfresh this work_auto
 	}
 
-
-	// Zwerg bringt Gegenstand aus seinem Inventar in die Produktionsstätte : vom System ausgelöst
-	// -subject1	= ID Produktionsstätte
-	// -subject2	= ID Gegenstand
-
+	# Invoked when gnome brings item (singular, so it's called for each one) to workplace
+	# -subject1 = workplace
+	# -subject2 = item
+	# -text1    = item's class
 	proc evt_autoprod_transferprod_proc {} {
-		global event_log current_plan current_workplace current_worktask current_workclass current_workitem
-		global last_event
+		global current_plan current_workplace current_worktask current_workclass current_workitem last_event
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_AUTOPROD_TRANSFERPROD"
-		}
+		log EVENT "evt_autoprod_transferprod" [event_get this -target] [event_get this -subject1] [event_get this -subject2] [event_get this -text1]
 
 		tasklist_clear this
-//		kill_all_ghosts
 		stop_prod
 		notify_autoevent
-		set last_event ""
 
-		set current_plan "work"
-		set workitem [event_get this -subject2]
 		set workplace [event_get this -subject1]
 
-		if {![obj_valid $workitem]} {
-			return
-		}
-		if {[inv_find_obj this $workitem] < 0} {
+		if { ![obj_valid $workplace] } { return }
+
+		set workitem [event_get this -subject2]
+
+		if { ![obj_valid $workitem] } { return }
+
+		if { [inv_find_obj this $workitem] < 0 } {
 			gnome_failed_work this
 			return
 		}
-		if {![obj_valid $workplace]} {
-			return
-		}
 
-		set current_workitem $workitem
+		set current_plan "work"
 		set current_workplace $workplace
-
-
 		set current_worktask "transferprod"
 		set current_workclass [event_get this -text1]
+		set current_workitem $workitem
+		set last_event ""
 
 		set_objworkicons this $current_workclass arrow_right [get_objclass $current_workplace]
+
 		state_triggerfresh this work_auto
 	}
 
-
-	// Pilz fällen: von KI ausgelöst
-	// - subject 	= obj-ID des Pilzes
-
+	# Invoked when ...
+	# -subject1 = ???
+	# -text1    = ???
 	proc evt_autoprod_harvest_proc {} {
 
 		set objref [event_get this -subject1]
@@ -1415,12 +1263,9 @@ if {[in_class_def]} {
 			return
 		}
 
-		global event_log current_plan current_workplace current_worktask current_workclass
-		global last_event
+		global current_plan current_workplace current_worktask current_workclass last_event
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_AUTOPROD_HARVEST"
-		}
+		log EVENT "evt_autoprod_harvest" [event_get this -target] [event_get this -subject1] [event_get this -text1]
 
 		tasklist_clear this
 //		kill_all_ghosts
@@ -1439,17 +1284,13 @@ if {[in_class_def]} {
 		state_triggerfresh this work_dispatch
 	}
 
-
-	// Stücke aus einem Erzbrocken herausschlagen : vom System ausgelöst
-	// -subject1	= Obj-ID des Brockens
-
+	# Invoked when gnome goes mining boulder (e.g. stone, iron ore)
+	# -subject1 = boulder
+	# -text1    = boulder's class
 	proc evt_autoprod_mine_new_proc {} {
-		global event_log current_plan current_workplace current_worktask current_workclass
-		global last_event
+		global current_plan current_workplace current_worktask current_workclass last_event
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_AUTOPROD_MINE_NEW"
-		}
+		log EVENT "evt_autoprod_mine_new" [event_get this -target] [event_get this -subject1] [event_get this -text1]
 
 		set obj_ref [event_get this -subject1]
 		if {[obj_valid $obj_ref] == 0} {
@@ -1472,18 +1313,12 @@ if {[in_class_def]} {
 		state_triggerfresh this work_dispatch
 	}
 
-
-
-	// An Position laufen : vom System ausgelöst
-	// -pos1	= Zielposition
-
+	# Invoked when ...
+	# -pos1 = ???
 	proc evt_autoprod_walk_proc {} {
-		global event_log current_plan current_workplace current_worktask current_workclass
-		global last_event
+		global current_plan current_workplace current_worktask current_workclass last_event
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_AUTOPROD_WALK"
-		}
+		log EVENT "evt_autoprod_walk" [event_get this -target] [event_get this -pos1]
 
 		set evtpos [event_get this -pos1]
 		if { $evtpos == 0 } {
@@ -1506,18 +1341,12 @@ if {[in_class_def]} {
 		state_triggerfresh this work_dispatch
 	}
 
-
-
-	// Graben : vom System ausgelöst
-	// -pos1	: Grabeposition
-
+	# Invoked when gnome goes digging
+	# -pos1 = destination
 	proc evt_autoprod_dig_proc {} {
-		global event_log current_plan current_workplace current_worktask current_digpos
-		global last_event
+		global current_plan current_workplace current_worktask current_digpos last_event
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_AUTOPROD_DIG"
-		}
+		log EVENT "evt_autoprod_dig" [event_get this -target] [event_get this -pos1]
 
 		set evtpos [event_get this -pos1]
 
@@ -1538,21 +1367,15 @@ if {[in_class_def]} {
 		set_objworkicons this Spitzhacke
 	}
 
-
-
-	// Angriff : vom User oder von AI ausgelöst
-	// -subject1	: Angriffsziel
-	// -text1		: == "userevent", wenn vom User ausgelöst
-
+	# Invoked when gnome is tasked (LMB) with attacking enemy
+	# -subject1 = enemy
+	# -text1    = ??? (always "userevent"?)
 	proc evt_task_attack_proc {} {
-		global event_log attack_item approach attack_behaviour userevent current_plan
-		global last_event event_repeat last_userevent_time
+		global attack_item approach attack_behaviour userevent current_plan last_event event_repeat last_userevent_time
 
 		if {[state_get this]=="trapped"} {return}
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_TASK_ATTACK"
-		}
+		log EVENT "evt_task_attack" [event_get this -target] [event_get this -subject1] [event_get this -text1]
 
 		set attack_item [event_get this -subject1]
 		if {[obj_valid $attack_item] == 0} {
@@ -1619,11 +1442,12 @@ if {[in_class_def]} {
 		set_objworkicons this
 	}
 
-
+	# Invoked when gnome defends itself while being attacked
+	# -subject1 = enemy
 	proc evt_task_defend_proc {} {
-		global event_log current_plan attack_item attack_behaviour approach last_userevent_time
+		global current_plan attack_item attack_behaviour approach last_userevent_time
 
-		if {$event_log} {log "[get_objname this] getting event EVT_TASK_DEFEND"}
+		log EVENT "evt_task_defend" [event_get this -target] [event_get this -subject1]
 
 		if {[state_get this]=="trapped"} {return}
 
@@ -1662,36 +1486,25 @@ if {[in_class_def]} {
 		set_objworkicons this
 	}
 
-
+	# Invoked periodically (~1s), keeps gnome assigned to the certain workplace as worker
 	proc evt_zwerg_workannounce_proc {} {
-		global current_workplace workannounce_log
-		if {$current_workplace != 0} {
+		global current_workplace
+
+		if { $current_workplace != 0 } {
 			prod_assignworker this $current_workplace
-			if {$workannounce_log} {log "[get_objname this] confirming prod_assignworker"}
-		} else {
-			if {$workannounce_log} {log "[get_objname this] denying prod_assignworker"}
 		}
 	}
 
-
-
-	// Zwerg grüßt einen anderen Zwerg : vom System ausgelöst
-	// -subject1	= der zu grüßende Zwerg
-
+	# Invoked when gnome greets another gnome
+	# -subject1 = greeted gnome
 	proc evt_zwerg_greet_proc {} {
-		global event_log
+		log EVENT "evt_zwerg_greet" [event_get this -target] [event_get this -subject1]
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_ZWERG_GREET"
-		}
-
-//    	set othergnome [event_get this -subject1]
 		tasklist_addfront this "play_anim talkm"
 	}
 
-
-
-	// Update der Statuswerte des Zwergen : in regelmäßigen Abständen ausgelöst
+	// Update der Statuswerte des Zwergen : in regelmï¿½ï¿½igen Abstï¿½nden ausgelï¿½st
+	# Invoked when ...
 	proc evt_zwerg_attribupdate_proc {} {
 		global is_burning is_sleeping is_old
 		global is_underwater is_wearing_divingbell is_wearing_divingbell_by_usercommand remainingair MAX_AIR_UNDERWATER out_of_water_timer
@@ -1701,6 +1514,8 @@ if {[in_class_def]} {
 		global ntNutrMessage ntHitMessage ntAltMessage
 		// nur fuer Timeline:
 		global tll_fl_common tll_fl_hunger tll_fl_tired
+
+		# log EVENT "evt_zwerg_attribupdate" [event_get this -target]
 
 		// Effekte von Lava und Schwefel
 
@@ -1730,7 +1545,7 @@ if {[in_class_def]} {
 
 		if {$is_wearing_divingbell} {
 			if {[inv_find this Taucherglocke] == -1} {
-				set is_wearing_divingbell 0									;// möglicherweise abgelegt o.ä.
+				set is_wearing_divingbell 0									;// mï¿½glicherweise abgelegt o.ï¿½.
 			}
 		}
 
@@ -1802,7 +1617,7 @@ if {[in_class_def]} {
 			random_fanim_sequence
 		}
 
-	////Lebenspunkt- und Stimmungsverluste durch Hunger und Müdigkeit
+	////Lebenspunkt- und Stimmungsverluste durch Hunger und Mï¿½digkeit
 		if {$at_Nu<0.2} {
 			set sub_Hi [expr {($at_Nu - 0.2) * 0.004}]
 		}
@@ -1821,7 +1636,7 @@ if {[in_class_def]} {
 			fincr tll_fl_tired [expr {([hmax $at_Al 0.2] - 0.4) * -0.0003} ]
 		}
 
-	////Altersschwäche
+	////Altersschwï¿½che
 		set current_age [calc_age]
 		if {$current_age>24*1800-300} {
 			if {$ntAltMessage == -1} {
@@ -1901,7 +1716,7 @@ if {[in_class_def]} {
 					set ntNutrMessage $id
 				}
 			} else {
-				//falls die NutritionMeldung angezeigt wurde, lösche sie
+				//falls die NutritionMeldung angezeigt wurde, lï¿½sche sie
 				if {$ntNutrMessage != -1} {newsticker delete $ntNutrMessage; set ntNutrMessage -1}
 			}
 		}
@@ -1927,7 +1742,7 @@ if {[in_class_def]} {
 					set ntHitMessage $id
 				}
 			} else {
-				//falls die HitpointsMeldung angezeigt wurde, lösche sie
+				//falls die HitpointsMeldung angezeigt wurde, lï¿½sche sie
 				if {$ntHitMessage != -1} {newsticker delete $ntHitMessage; set ntHitMessage -1}
 			}
 		}
@@ -1939,10 +1754,7 @@ if {[in_class_def]} {
 		if { $at_Mo+$sub_Mo<0.3 } {set_objicon this -1 1 7 5}
 	}
 
-
-
-	// Zwerg stirbt : vom Attrib-Update-Event ausgelöst
-
+	# Invoked when gnome dies
 	proc evt_zwerg_die_proc {} {
 		global is_dying gnome_gender is_underwater clan myhairs myglasses
 		global ntHitMessage ntNutrMessage is_old ntAltMessage
@@ -1951,6 +1763,8 @@ if {[in_class_def]} {
 			incr is_dying
 			return
 		}
+
+		log EVENT "evt_zwerg_die" [event_get this -target]
 
 		set is_dying 1
 		set pos [get_pos this]
@@ -1984,7 +1798,7 @@ if {[in_class_def]} {
 
 		if {$myglasses} {catch {del $myglasses}}
 
-		// Mütze zurücklassen, für mögliche Wiederbelebung
+		// Mï¿½tze zurï¿½cklassen, fï¿½r mï¿½gliche Wiederbelebung
 
 		set cap [new Zipfelmuetze]
 		call_method $cap set_parameters $gnome_gender [get_objname this] [get_worktime this] [get_attrib this atr_ExpMax] $attribs $age $clan
@@ -2018,14 +1832,14 @@ if {[in_class_def]} {
 				} else {
 					add_owner_attrib 0 PlayerAggressivity 0.005
 					set nachher [get_owner_attrib 0 PlayerAggressivity]
-					time_line_log "Feindlichen Zwerg [get_objname this] getötet: +0.005 $vorher -> $nachher"
+					time_line_log "Feindlichen Zwerg [get_objname this] getï¿½tet: +0.005 $vorher -> $nachher"
 				}
 			}
 		}
 
-		// schöne Todesanimation abspielen
+		// schï¿½ne Todesanimation abspielen
 
-		if {[get_diedinfight this] || [state_get this] == "trapped" } {		;// im Kampf gestorben - Animation läuft bereits
+		if {[get_diedinfight this] || [state_get this] == "trapped" } {		;// im Kampf gestorben - Animation lï¿½uft bereits
 			log "Gnome died in fight."
 			action this wait 3.0 "
 				destroy; set_pos $cap [vector_add $pos {0.0 -0.2 0.0}]; if {$gnome_dead_on_wall} {call_method $cap from_wall}
@@ -2046,25 +1860,19 @@ if {[in_class_def]} {
 				" " destroy; set_pos $cap [vector_add $pos {0.0 -0.2 0.0}]; if {$gnome_dead_on_wall} {call_method $cap from_wall} "
 			}
 
-		} else {										;// sonst mehr oder minder natürlicher Tod
+		} else {										;// sonst mehr oder minder natï¿½rlicher Tod
 			log "Gnome died in a natural way."
 			action this anim die "
 				destroy; set_pos $cap [vector_add $pos {0.0 -0.2 0.0}]; if {$gnome_dead_on_wall} {call_method $cap from_wall}
 			" " destroy; set_pos $cap [vector_add $pos {0.0 -0.2 0.0}]; if {$gnome_dead_on_wall} {call_method $cap from_wall} "
 		}
-		//Mütze soll runterfallen
+		//Mï¿½tze soll runterfallen
 		//if {$gnome_dead_on_wall} {call_method $cap from_wall}
 	}
 
-
-	// Zwerg hört auf, mit was immer er eben getan hat
-
+	# Invoked when ...
 	proc evt_zwerg_break_proc {} {
-		global event_log
-
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_ZWERG_BREAK"
-		}
+		log EVENT "evt_zwerg_break" [event_get this -target]
 
 		gnome_failed_work this
 		tasklist_clear this
@@ -2076,12 +1884,12 @@ if {[in_class_def]} {
 		state_triggerfresh this task
 	}
 
+	# Invoked when ...
+	# -num1 = ???
 	proc evt_wiggolympics_proc {} {
-		global event_log gnome_gender
+		global gnome_gender
 
-		if {$event_log} {
-			log "[get_objname this] getting event EVT_WIGGOLYMPICS"
-		}
+		log EVENT "evt_wiggolympics" [event_get this -target] [event_get this -num1]
 
 		gnome_failed_work this
 		tasklist_clear this
@@ -2117,46 +1925,49 @@ if {[in_class_def]} {
 
 	}
 
+	# Invoked when gnome changes hat
+	# -text1 = hat's category
 	proc evt_change_muetze_proc {} {
-		global event_log
-		//Parameter: objref der Produktionstätte, classe des hergestelltes Produktes
+		log EVENT "evt_change_muetze" [event_get this -target] [event_get this -text1]
 
 		tasklist_clear this
 		kill_all_ghosts
 		stop_prod
 		hide_tools
 
-
-		//------Hauptteil--(erwartet current_workclassals text1)------
 		set category [event_get this -text1]
-		if {$event_log} {log "EVT_CHANGE_MUETZE: Category = $category"}
-		if {$category != 0} {
-			if {[string compare -length 2 $category "Bp"] == 0 } {
+
+		if { $category != 0 } {
+			if { [string compare -length 2 $category "Bp"] == 0 } {
 				set category "erfinden"
 			} else {
 				switch $category {
+					"harvest" {}
 					"dig" {}
-					"transport" {}
 					"pack" {}
 					"unpack" {}
-					"harvest" {}
-					default {set category [get_class_category $category]}
+					"transport" {}
+					default {
+						set category [get_class_category $category]
+					}
 				}
 			}
+
 			prod_change_muetze $category
 		}
+
 		state_triggerfresh this task
 	}
 
-	//  Gebäude übernehmen --> vom User ausgelöst
-	//	subject1 - produktionstättenreferenz
-
+	# Invoked when ...
+	# -subject1 = ???
 	proc evt_task_buildingconquer_proc {} {
-		global event_log current_plan current_workplace current_worktask current_workpos current_worknum current_workclass
-		global last_event
+		global current_plan current_workplace current_worktask current_workpos current_worknum current_workclass last_event
+
+		log EVENT "evt_task_buildingconquer" [event_get this -target] [event_get this -subject1]
 
 		set s1 [event_get this -subject1]
-		if {[obj_valid $s1] == 0} {
+		if { [obj_valid $s1] == 0 } {
 			return
 		}
 
@@ -2174,7 +1985,4 @@ if {[in_class_def]} {
 		prod_gnome_state this fight $s1
 		state_triggerfresh this work_dispatch
 	}
-
-
 }
-

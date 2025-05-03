@@ -23,11 +23,11 @@ def_class Raupe food material 0 {reproduces lives moves} {
 	def_event evt_timer0
 
 	call scripts/misc/aggr_events.tcl
-	
+
 	obj_init {
 
 		call scripts/misc/aggr_events.tcl
-		
+
 		set rtyp [irandom 1 13]
 		if {[string length $rtyp]<2} {set rtyp 0$rtyp}
 		set_anim this raupe$rtyp.standard 0 $ANIM_LOOP
@@ -44,7 +44,7 @@ def_class Raupe food material 0 {reproduces lives moves} {
 
 		set farmed 0
 		set step 0
-		
+
 		if {[land $rtyp {02 06 07 08}]==""} {
 			set attacktyp 0
 		} else {
@@ -56,7 +56,7 @@ def_class Raupe food material 0 {reproduces lives moves} {
 		set attackanim 5
 		set particledir {0 0 0}
 		set particlepos {0 0 0}
-		
+
 		set_roty this [random 6.28]
 
 		proc test_farmed {} {
@@ -79,7 +79,6 @@ def_class Raupe food material 0 {reproduces lives moves} {
 				wait 3
 			} else {
 				set_roty this [expr {[get_anglexz $rpos $place]-1.57}]
-				//log "$crot->$nrot->[expr {[get_anglexz $rpos $place]-1.57}]"
 				move $place
 			}
 		}
@@ -88,24 +87,13 @@ def_class Raupe food material 0 {reproduces lives moves} {
 			global farmed
 			set rpos [get_pos this]
 			set farmpos [get_pos $farmed]
-			set gnome [obj_query $farmed -class Zwerg -boundingbox {-3 -0.5 -5 3 0.5 5} -limit 1]
-			if {$gnome} {
-				set near $rpos
-				set center [get_pos $gnome]
-			} else {
-				set center $rpos
-			}
+			set center $rpos
 			set diffvec [vector_sub $farmpos $center]
 			set xn [expr {[lindex $diffvec 0]-2}]
 			set zn [expr {[lindex $diffvec 2]-3}]
 			set xp [expr {$xn+3.5}]
 			set zp [expr {$zn+6}]
-			//log "$xn $xp $zn $zp ($center) ($farmpos)"
-			if {$gnome} {
-				set place [get_place -center $center -rect $xn $zn $xp $zp -mindist 0.6 -nearpos $near -random 2]
-			} else {
-				set place [get_place -center $center -rect $xn $zn $xp $zp -mindist 0.6 -random 2]
-			}
+			set place [get_place -center $center -rect $xn $zn $xp $zp -mindist 0.6 -random 2]
 			if {[lindex $place 0]<1} {
 				wait 3
 			} else {
@@ -113,7 +101,7 @@ def_class Raupe food material 0 {reproduces lives moves} {
 				move $place
 			}
 		}
-		
+
 		proc find_plant {} {
 			global attack_plant attacktyp attack_counter
 			if {$attacktyp==0} {return 0}
@@ -130,13 +118,11 @@ def_class Raupe food material 0 {reproduces lives moves} {
 				if {[vector_dist3d $mpos $ppos]>5.0} {
 					set place [get_place -center [get_pos $plant] -circle 5.0 -mindist 2.0 -nearpos [get_pos this]]
 					if {[lindex $place 0] > 0} {
-						log "Raupe found plant, approaching: $place"
 						set attack_plant $plant
 						state_triggerfresh this plant_attack
 						return 1
 					}
 				} else {
-					log "Raupe found plant near"
 					set attack_plant $plant
 					state_triggerfresh this plant_attack
 					return 1
@@ -170,10 +156,8 @@ def_class Raupe food material 0 {reproduces lives moves} {
 		test_farmed
 		if {0==$farmed} {
 			state_triggerfresh this free
-//			log "new->free"
 		} else {
 			state_triggerfresh this farmed
-//			log "new->farmed"
 		}
 	}
 
@@ -190,7 +174,13 @@ def_class Raupe food material 0 {reproduces lives moves} {
 	}
 
 	method set_type {typ} {
+		global rtyp attacktyp
 		set rtyp $typ
+		if { [land $rtyp {02 06 07 08}] == "" } {
+			set attacktyp 0
+		} else {
+			set attacktyp 1
+		}
 	}
 
 	method Editor_Set_Info {ifo} {
@@ -203,13 +193,12 @@ def_class Raupe food material 0 {reproduces lives moves} {
 			}
 		}
 	}
-	
+
 	state free {
 		if {[is_contained this]} {
 			state_triggerfresh this contained
 			set_anim this raupe$rtyp.standard 0 $ANIM_STILL
 			set anim wait
-//			log "free->cont"
 		} else {
 			crawl_free
 		}
@@ -220,11 +209,9 @@ def_class Raupe food material 0 {reproduces lives moves} {
 			state_triggerfresh this contained
 			set_anim this raupe$rtyp.standard 0 $ANIM_STILL
 			set anim wait
-//			log "farmed->cont"
 		} else {
 			if {![obj_valid $farmed]||![get_buildupstate $farmed]} {
 				state_triggerfresh this free
-				//log "farmed->free"
 			} else {
 				if {rand()<0.05} {
 					wait 1
@@ -242,14 +229,12 @@ def_class Raupe food material 0 {reproduces lives moves} {
 			test_farmed
 			if {0==$farmed} {
 				state_triggerfresh this free
-//				log "cont->free"
 			} else {
 				state_triggerfresh this farmed
-//				log "cont->farmed"
 			}
 		}
 	}
-	
+
 	state plant_attack {
 		if {[get_attrib this atr_Hitpoints]<0.01} {
 			destruct this
@@ -271,7 +256,6 @@ def_class Raupe food material 0 {reproduces lives moves} {
 			set_anim this raupe$rtyp.kriechen 0 $ANIM_LOOP
 			return
 		}
-		log "Raupe attacking plant $attack_plant ($approached) ($attackanim)"
 		set ppos [get_pos $attack_plant]
 		set mpos [get_pos this]
 		set angle [get_anglexz $ppos $mpos]
@@ -306,7 +290,6 @@ def_class Raupe food material 0 {reproduces lives moves} {
 			}
 		} else {
 			if {abs([vector_dist3d $ppos $mpos]-0.55)<0.1} {
-				log "Raupe: approach finished"
 				set approached 1
 				return
 			}
@@ -314,7 +297,6 @@ def_class Raupe food material 0 {reproduces lives moves} {
 			set angle [get_anglexz $mpos $ppos]
 			set_roty this [expr {$angle-1.57}]
 			move $place
-			log "Raupe move to: $place"
 		}
 	}
 
