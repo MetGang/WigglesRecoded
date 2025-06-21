@@ -1,16 +1,13 @@
 call scripts/misc/utility.tcl
 call scripts/init/animinit.tcl
 
-// ACHTUNG: Kristall ist in story/lorelei.tcl definiert, da es entspr. Klassen voraussetzt! - David
-
+#
 def_class Gold metal material 0 {} {
 	class_defaultanim gold.standard
 	call scripts/misc/animclassinit.tcl
 	call scripts/classes/items/calls/resources.tcl
 	method change_owner {new_owner} {
-//		add_owner_attrib [get_owner this] [get_objclass this] -1
 		set_owner this $new_owner
-//		add_owner_attrib [get_owner this] [get_objclass this] 1
 	}
 	obj_init {
 		call scripts/classes/items/calls/resources.tcl
@@ -22,14 +19,13 @@ def_class Gold metal material 0 {} {
 	}
 }
 
+#
 def_class Eisen metal material 0 {} {
 	class_defaultanim eisen.standard
 	call scripts/misc/animclassinit.tcl
 	call scripts/classes/items/calls/resources.tcl
 	method change_owner {new_owner} {
-//		add_owner_attrib [get_owner this] [get_objclass this] -1
 		set_owner this $new_owner
-//		add_owner_attrib [get_owner this] [get_objclass this] 1
 	}
 	obj_init {
 		call scripts/classes/items/calls/resources.tcl
@@ -41,6 +37,7 @@ def_class Eisen metal material 0 {} {
 	}
 }
 
+#
 def_class Steinbrocken stone material 0 {} {
 	call scripts/misc/animclassinit.tcl
 	call scripts/classes/items/calls/brocken.tcl
@@ -50,14 +47,13 @@ def_class Steinbrocken stone material 0 {} {
 	}
 }
 
+#
 def_class Stein stone material 0 {} {
 	class_defaultanim stein_01.standard
 	call scripts/misc/animclassinit.tcl
 	call scripts/classes/items/calls/resources.tcl
 	method change_owner {new_owner} {
-//		add_owner_attrib [get_owner this] [get_objclass this] -1
 		set_owner this $new_owner
-//		add_owner_attrib [get_owner this] [get_objclass this] 1
 	}
 	obj_init {
 		call scripts/classes/items/calls/resources.tcl
@@ -69,6 +65,7 @@ def_class Stein stone material 0 {} {
 	}
 }
 
+#
 def_class Kohlebrocken stone material 0 {} {
 	call scripts/misc/animclassinit.tcl
 	call scripts/classes/items/calls/brocken.tcl
@@ -78,14 +75,13 @@ def_class Kohlebrocken stone material 0 {} {
 	}
 }
 
+#
 def_class Kohle stone material 0 {} {
 	call scripts/misc/animclassinit.tcl
 	call scripts/classes/items/calls/resources.tcl
 	class_defaultanim kohle_01.standard
 	method change_owner {new_owner} {
-//		add_owner_attrib [get_owner this] [get_objclass this] -1
 		set_owner this $new_owner
-//		add_owner_attrib [get_owner this] [get_objclass this] 1
 	}
 	obj_init {
 		call scripts/classes/items/calls/resources.tcl
@@ -97,6 +93,7 @@ def_class Kohle stone material 0 {} {
 	}
 }
 
+#
 def_class Kristallerzbrocken stone material 0 {} {
 	call scripts/misc/animclassinit.tcl
 	call scripts/classes/items/calls/brocken.tcl
@@ -106,14 +103,13 @@ def_class Kristallerzbrocken stone material 0 {} {
 	}
 }
 
+#
 def_class Kristallerz stone material 0 {} {
 	call scripts/misc/animclassinit.tcl
 	call scripts/classes/items/calls/resources.tcl
 	class_defaultanim kristallerz_01.standard
 	method change_owner {new_owner} {
-//		add_owner_attrib [get_owner this] [get_objclass this] -1
 		set_owner this $new_owner
-//		add_owner_attrib [get_owner this] [get_objclass this] 1
 	}
 	obj_init {
 		call scripts/classes/items/calls/resources.tcl
@@ -125,7 +121,7 @@ def_class Kristallerz stone material 0 {} {
 	}
 }
 
-
+#
 def_class Golderzbrocken stone material 0 {} {
 	call scripts/misc/animclassinit.tcl
 	call scripts/classes/items/calls/brocken.tcl
@@ -135,14 +131,13 @@ def_class Golderzbrocken stone material 0 {} {
 	}
 }
 
+#
 def_class Golderz stone material 0 {} {
 	call scripts/misc/animclassinit.tcl
 	call scripts/classes/items/calls/resources.tcl
 	class_defaultanim golderz_01.standard
 	method change_owner {new_owner} {
-//		add_owner_attrib [get_owner this] [get_objclass this] -1
 		set_owner this $new_owner
-//		add_owner_attrib [get_owner this] [get_objclass this] 1
 	}
 	obj_init {
 		call scripts/classes/items/calls/resources.tcl
@@ -154,7 +149,7 @@ def_class Golderz stone material 0 {} {
 	}
 }
 
-
+#
 def_class Eisenerzbrocken stone material 0 {} {
 	call scripts/misc/animclassinit.tcl
 	call scripts/classes/items/calls/brocken.tcl
@@ -164,14 +159,13 @@ def_class Eisenerzbrocken stone material 0 {} {
 	}
 }
 
+#
 def_class Eisenerz stone material 0 {} {
 	call scripts/misc/animclassinit.tcl
 	call scripts/classes/items/calls/resources.tcl
 	class_defaultanim eisenerz_01.standard
 	method change_owner {new_owner} {
-//		add_owner_attrib [get_owner this] [get_objclass this] -1
 		set_owner this $new_owner
-//		add_owner_attrib [get_owner this] [get_objclass this] 1
 	}
 	obj_init {
 		call scripts/classes/items/calls/resources.tcl
@@ -183,6 +177,7 @@ def_class Eisenerz stone material 0 {} {
 	}
 }
 
+#
 def_class Grillpilz food material 0 {} {
 	call scripts/misc/autodef.tcl
 	call scripts/classes/items/calls/resources.tcl
@@ -203,8 +198,7 @@ def_class Grillpilz food material 0 {} {
 	}
 }
 
-
-
+#
 def_class Grillhamster food material 1 {} {
 	call scripts/misc/autodef.tcl
 	call scripts/classes/items/calls/resources.tcl
@@ -225,19 +219,18 @@ def_class Grillhamster food material 1 {} {
 	}
 }
 
-
+#
 def_class Bier food material 1 {} {
 	call scripts/misc/autodef.tcl
 	call scripts/classes/items/calls/resources.tcl
+
 	class_defaultanim bier.standard
 
 	method set_animation {animname} {
-		if {$animname == "standard"} {
+		if { $animname == "standard" } {
 			set_anim this bier.standard 0 $ANIM_STILL
-		} elseif {$animname == "drink"} {
+		} elseif { $animname == "drink" } {
 			set_anim this bier.krug 0 $ANIM_STILL
-		} else {
-			log "Bier : set_animation : illegal Animation"
 		}
 	}
 
@@ -246,32 +239,32 @@ def_class Bier food material 1 {} {
 	}
 
 	method reaction {user} {
-		foreach entry $stt_Bier_reaction {
-			eval "add_attrib $user $entry"
-		}
+		add_attrib $user atr_Hitpoints -0.01
+		add_attrib $user atr_Mood 0.1
+		add_attrib $user atr_Nutrition 0.02
+		add_attrib $user atr_Alertness -0.1
 	}
 
 	obj_init {
 		call scripts/misc/autodef.tcl
 		call scripts/classes/items/calls/resources.tcl
+
 		set_anim this bier.standard 0 $ANIM_STILL
-		set sttsection_tocall "Bier"
-		call scripts/misc/sparetimetunes.tcl
 	}
 }
 
+#
 def_class Pilzschnaps food material 1 {} {
 	call scripts/misc/autodef.tcl
 	call scripts/classes/items/calls/resources.tcl
+
 	class_defaultanim pilzschnaps.standard
 
 	method set_animation {animname} {
-		if {$animname == "standard"} {
+		if { $animname == "standard" } {
 			set_anim this pilzschnaps.standard 0 $ANIM_STILL
-		} elseif {$animname == "drink"} {
+		} elseif { $animname == "drink" } {
 			set_anim this pilzschnaps.trinken 0 $ANIM_STILL
-		} else {
-			log "Pilzschnaps : set_animation : illegal Animation"
 		}
 	}
 
@@ -280,20 +273,21 @@ def_class Pilzschnaps food material 1 {} {
 	}
 
 	method reaction {user} {
-		foreach entry $stt_Schnaps_reaction {
-			eval "add_attrib $user $entry"
-		}
+		add_attrib $user atr_Hitpoints -0.05
+		add_attrib $user atr_Mood 0.4
+		add_attrib $user atr_Nutrition 0.02
+		add_attrib $user atr_Alertness -0.3
 	}
 
 	obj_init {
 		call scripts/misc/autodef.tcl
 		call scripts/classes/items/calls/resources.tcl
+
 		set_anim this pilzschnaps.standard 0 $ANIM_STILL
-		set sttsection_tocall "Pilzschnaps"
-		call scripts/misc/sparetimetunes.tcl
 	}
 }
 
+#
 def_class Raupensuppe food material 2 {} {
 	call scripts/misc/autodef.tcl
 	call scripts/classes/items/calls/resources.tcl
@@ -314,11 +308,11 @@ def_class Raupensuppe food material 2 {} {
 	}
 }
 
+#
 def_class Pilzbrot food material 2 {} {
 	call scripts/misc/autodef.tcl
 	call scripts/classes/items/calls/resources.tcl
 	class_defaultanim pilzbrot.standard
-
 
 	method get_toolclasses {} {
 		return pilzbrot
@@ -335,7 +329,7 @@ def_class Pilzbrot food material 2 {} {
 	}
 }
 
-
+#
 def_class Raupenschleimkuchen food material 2 {} {
 	call scripts/misc/autodef.tcl
 	call scripts/classes/items/calls/resources.tcl
@@ -356,7 +350,7 @@ def_class Raupenschleimkuchen food material 2 {} {
 	}
 }
 
-
+#
 def_class Gourmetsuppe food material 2 {} {
 	call scripts/misc/autodef.tcl
 	call scripts/classes/items/calls/resources.tcl
@@ -377,7 +371,7 @@ def_class Gourmetsuppe food material 2 {} {
 	}
 }
 
-
+#
 def_class Hamstershake food material 2 {} {
 	call scripts/misc/autodef.tcl
 	call scripts/classes/items/calls/resources.tcl
@@ -398,10 +392,6 @@ def_class Hamstershake food material 2 {} {
 	}
 }
 
-
-
-// Dummy_Objekte zum in die Hand nehmen
-
 foreach classname {Grillpilz Grillhamster Pilzbrot Gourmetsuppe Hamstershake} {
 	set tcn [call_method_static $classname get_toolclasses]
 	def_class Ess$tcn none dummy 0 {} "
@@ -413,6 +403,8 @@ foreach classname {Grillpilz Grillhamster Pilzbrot Gourmetsuppe Hamstershake} {
 		\}
 	"
 }
+
+#
 def_class Essraupensuppe_teller none dummy 0 {} {
 	call scripts/misc/autodef.tcl
 	class_defaultanim raupensuppe.teller
@@ -423,6 +415,8 @@ def_class Essraupensuppe_teller none dummy 0 {} {
 		set_anim this raupensuppe.teller 0 $ANIM_STILL
 	}
 }
+
+#
 def_class Essraupenschleimkuchen none dummy 0 {} {
 	call scripts/misc/autodef.tcl
 	class_defaultanim raupenschleimkuchen.essen
