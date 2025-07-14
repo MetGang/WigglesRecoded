@@ -1,5 +1,6 @@
-//z_work_strike.tcl
-if {[in_class_def]} {
+call scripts/debug.tcl
+
+if { [in_class_def] } {
 
 	state_enter strike {
 		strike_start
@@ -22,11 +23,11 @@ if {[in_class_def]} {
 		//falls ja runter gehen
 		if {[get_gnomeposition this] == 1} {
 			if {[walk_down_from_wall] == 1} {
-				log "WARNING: Zwerg kann an der Wand nich streiken, und freien Platz hat er auch nicht gefunden -> also Strike gleich beenden"
+				log WARN "WARNING: Zwerg kann an der Wand nich streiken, und freien Platz hat er auch nicht gefunden -> also Strike gleich beenden"
 				state_triggerfresh this work_idle
 			}
 		}
-		log "Zwerg '[get_objname this]' f�ngt an zu streiken"
+		log INFO "Zwerg '[get_objname this]' f�ngt an zu streiken"
 		tasklist_add this "change_tool Streikschild"
         do_strike
 		set_attrib this GnomeStrike 1
@@ -37,12 +38,12 @@ if {[in_class_def]} {
 		if { [tasklist_cnt this] > 0 } {
 			set command [tasklist_get this 0]
 			tasklist_rem this 0
-#			log "[get_objname this]-prodfill:$command remaining: [tasklist_cnt this]"
+			log INFO "[get_objname this]-prodfill:$command remaining: [tasklist_cnt this]"
 			eval $command
 			return
 		} else {
 			if {[get_attrib this atr_Mood] >= 0.35 || [get_remaining_sparetime this]>0.0} {
-				log "Zwerg '[get_objname this]' hat aufgehoert an zu streiken"
+				log INFO "Zwerg '[get_objname this]' hat aufgehoert an zu streiken"
 			//Stimmung verbessern und Status �ndern
 				state_triggerfresh this work_idle
 			} else {
