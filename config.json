@@ -1,0 +1,24 @@
+{
+  "author": "MetGang",
+  "description": {
+    "de": "...",
+    "en": "...",
+    "pl": "..."
+  },
+  "directories": [
+    {
+      "condition": {
+        "id": "null",
+        "type": "mod"
+      },
+      "path": "dev",
+      "type": "optional"
+    }
+  ],
+  "name": {
+    "de": "Wiggles Re:coded",
+    "en": "Diggles Re:coded",
+    "pl": "Wiggles Re:coded"
+  },
+  "version": "0.0"
+}

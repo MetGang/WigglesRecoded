@@ -1,21 +1,18 @@
+call scripts/debug.tcl
+
 def_class Zwerg none gnome 0 {reproduces lives moves} {
-	call scripts/misc/animclassinit.tcl	// anim members
-	call scripts/classes/zwerg/z_anims.tcl	// class anims
+	call scripts/misc/animclassinit.tcl
+	call scripts/classes/zwerg/z_anims.tcl
 	call scripts/misc/obj_attribs.tcl
-	call scripts/misc/genattribs.tcl   ;# define attribs for all characters
+	call scripts/misc/genattribs.tcl
+	call scripts/misc/generic_exp.tcl
 
 	class_fightdist 1.0
 
-	// states are:
-	// idle - idle
-	// task - idependent task
-	// work_dispatch - workplace assigned
-	// work_idle  - workplace assigned, no task
-	// work_active - workplace assigend, executing task
-	// work_breakable - workplace assigned, executing breakable task
-	// sparetime	- sparetime
-
+	#
 	obj_init {
+		call scripts/debug.tcl
+		call scripts/misc/generic_exp.tcl
 
 		set info_string ""
 		set logon 0
@@ -64,11 +61,11 @@ def_class Zwerg none gnome 0 {reproduces lives moves} {
 		set is_dying 0								;# Zwerg stirbt
 		set is_burning 0							;# Zwerg brennt
 		set is_underwater 0							;# Zwerg ist unter Wasser
-		set is_wearing_divingbell 0					;# Zwerg trägt eine Taucherglocke
-		set is_wearing_divingbell_by_usercommand 0	;# Zwerg trägt Taucherglocke auf Befehl (= kein autom. Absetzen!)
+		set is_wearing_divingbell 0					;# Zwerg trï¿½gt eine Taucherglocke
+		set is_wearing_divingbell_by_usercommand 0	;# Zwerg trï¿½gt Taucherglocke auf Befehl (= kein autom. Absetzen!)
 		set out_of_water_timer 0					;# Zwerg ist soviel Zeit (events...) aus dem Wasser raus
-		set MAX_AIR_UNDERWATER 15					;# Konstante: Luft für x Sekunden bevor Lebensabzug
-		set remainingair $MAX_AIR_UNDERWATER		;# tatsächlich übrige Atemluft
+		set MAX_AIR_UNDERWATER 15					;# Konstante: Luft fï¿½r x Sekunden bevor Lebensabzug
+		set remainingair $MAX_AIR_UNDERWATER		;# tatsï¿½chlich ï¿½brige Atemluft
 		set love_potion_taken 0						;# Zwerg hat einen Liebestrank genommen
 		set fertility_potion_taken 0				;# Zwerg hat einen Fruchtbarkeitstrank genommen
 		set trap_mode 0								;# Zwerg ist in Falle
@@ -93,8 +90,8 @@ def_class Zwerg none gnome 0 {reproduces lives moves} {
 		set event_repeat 0
 		set last_event ""
 		set last_userevent_time 0
-		set objghostlist 	 ""						;# Alphaobjekte, die gültig sind und nicht gelöscht werden sollen
-		set putdownitemslist ""						;# wird im Putdown-Event gebraucht
+		set objghostlist 	 ""
+		set putdownitemslist ""
 		set idle_action_list ""
 		set dig_versuche 4
 
@@ -111,11 +108,11 @@ def_class Zwerg none gnome 0 {reproduces lives moves} {
 		set muetzen_counter $muetzen_counter_start
 
 		set clothing xx
-        set ntNutrMessage -1 ;#newsTicker NutritionMeldung
-        set ntHitMessage -1  ;#newsTicker HitpointsMeldung
+        set ntNutrMessage -1
+        set ntHitMessage -1
         set ntAltMessage -1
 
-		// Idle anims für Sequenzen (Statistenrollen)
+		// Idle anims fï¿½r Sequenzen (Statistenrollen)
 		set seq_idle_anims [list]
 		lappend seq_idle_anims {10 {stand_anim_a}}
 		lappend seq_idle_anims {10 {stand_anim_b}}
@@ -136,13 +133,129 @@ def_class Zwerg none gnome 0 {reproduces lives moves} {
 		lappend seq_idle_anims {w1 {kletterstand_anim}}
 		lappend seq_idle_anims {3 {blicken_rechts_links}}
 
-		// lappend seq_idle_anims {1 {kletterstand_anim}}
 		call data/scripts/misc/seq_idle.tcl
 
-		set tttsection_tocall "Zwerg"
-		call scripts/misc/techtreetunes.tcl
-		set sttsection_tocall "Zwerg"
-		call scripts/misc/sparetimetunes.tcl
+		# This used to be in techtreetunes.tcl
+		// Pilzfï¿½llen
+		set tttgain_Pilz					{{exp_Holz 0.01}}
+		set tttinfluence_Pilz				10.0
+		// Graben
+		set tttgain_dig						{{exp_Stein 0.0008} {exp_Metall 0.00005}}
+		set tttinfluence_dig				10.0
+		set tttfailmax_dig					0.2
+		set tttexp_digbrush2				0.15
+		set tttexp_digbrush3				0.30
+		set tttexp_digbrush4				0.70
+		// bis zu diesem Wert der Steinerfahrung kann es zu Fehlschlï¿½gen kommen
+		// Transport
+		set tttgain_buildup					0.0018
+		set tttgain_supply					0.003
+		// Claneinstellungen
+		set ttt_clanexp						{}
+		set ttt_Voodoo_clanexp				{{exp_Nahrung 1.3} {exp_Holz 1.1} {exp_Kampf 0.9}}
+		set ttt_Knocker_clanexp				{{exp_Stein 1.2} {exp_Metall 1.1}}
+		set ttt_Brain_clanexp				{{exp_Energie 1.2} {exp_Service 1.1}}
+		set ttt_Vampir_clanexp				{{exp_Kampf 1.2} {exp_Nahrung 0.8}}
+
+		# This used to be in sparetimetunes.tcl
+		// Stï¿½rungen
+		set stt_dst_pilz						-0.01
+		set stt_dst_eatplace					0.05
+		set stt_wait_forseat					-0.005
+		set stt_dst_bett						-0.02
+		set stt_dst_work						-0.005
+		set stt_dst_idle						0.0
+		set stt_dst_spare						-0.01
+		set stt_dst_sex							-0.05
+		set stt_dst_talk						-0.02
+		// Schlafgewinne, 2-Sekunden-Abstand
+		set stt_slpgain_0						0.004
+		set stt_slpgain_Zelt					0.006
+		set stt_slpgain_Mittelalterschlafzimmer	0.008
+		set stt_slpgain_Industrieschlafzimmer	0.009
+		set stt_slpgain_Luxusschlafzimmer		0.010
+		// Startzivilisationsstufen
+		set stt_slpciv_0						-0.1
+		set stt_slpciv_Zelt						0.0
+		set stt_slpciv_Mittelalterschlafzimmer	0.20
+		set stt_slpciv_Industrieschlafzimmer	0.35
+		set stt_slpciv_Luxusschlafzimmer		0.50
+		set stt_eatciv_0						-0.1
+		set stt_eatciv_Feuerstelle				0.10
+		set stt_eatciv_Mittelalterkueche		0.30
+		set stt_eatciv_Industriekueche			0.40
+		set stt_eatciv_Luxuskueche				0.50
+		set stt_bthciv_0						-0.1
+		set stt_bthciv_Mittelalterbad			0.25
+		set stt_bthciv_Industriebad				0.40
+		set stt_bthciv_Luxusbad					0.55
+		set stt_homciv_0						0.0
+		set stt_homeciv_Mittelalterwohnzimmer	0.25
+		set stt_homeciv_Industriewohnzimmer		0.40
+		set stt_homeciv_Luxuswohnzimmer			0.55
+		// Essgewinne
+		set stt_eatgain_Grillpilz				0.19
+		set stt_eatgain_Grillhamster			0.24
+		set stt_eatgain_Raupensuppe				0.31
+		set stt_eatgain_Pilzsuppe				0.15 ;# is raus
+		set stt_eatgain_Raupenschleimkuchen		0.35
+		set stt_eatgain_Goulaschsuppe			0.28 ;# is raus
+		set stt_eatgain_Pilzbrot				0.14
+		set stt_eatgain_Hamstershake			0.27
+		set stt_eatgain_Gourmetsuppe			0.70
+		set stt_eatgain_Bier					0.02
+		// Geschmack							beefy	sweet	fluid	light
+		set stt_eattaste_Grillpilz				{0.01	0.05	0.00	0.05} ;#0.11
+		set stt_eattaste_Grillhamster			{0.10	0.00	0.02	0.00} ;#0.12
+		set stt_eattaste_Raupensuppe			{0.03	0.02	0.10	0.02} ;#0.17
+		set stt_eattaste_Pilzsuppe				{0.00	0.03	0.12	0.07} ;#0.22
+		set stt_eattaste_Raupenschleimkuchen	{0.05	0.10	0.03	0.05} ;#0.21
+		set stt_eattaste_Goulaschsuppe			{0.12	0.01	0.08	0.00} ;#0.21
+		set stt_eattaste_Pilzbrot				{0.00	0.12	0.00	0.06} ;#0.18
+		set stt_eattaste_Hamstershake			{0.08	0.04	0.05	0.05} ;#0.22
+		set stt_eattaste_Gourmetsuppe			{0.05	0.03	0.07	0.05} ;#0.20
+		// Fungewinne
+		set stt_fungain_Grillpilz				0.01
+		set stt_fungain_Grillhamster			0.03
+		set stt_fungain_Pilzbrot				0.02
+		set stt_fungain_Raupensuppe				0.00
+		set stt_fungain_Raupenschleimkuchen		0.01
+		set stt_fungain_Hamstershake			0.15
+		set stt_fungain_Gourmetsuppe			0.12
+		//
+		set stt_maxsearch_range					160.0 ;#darf nicht null sein!
+		set stt_disapp_factor					0.3
+		set stt_disapp_max						0.2
+		// Fun-Aktivitï¿½ten
+		// Vorzï¿½ge
+		set stt_exp_Nahrung						{dsc pub}
+		set stt_exp_Holz						{pub bwl}
+		set stt_exp_Stein						{pub fit}
+		set stt_exp_Metall						{bwl dsc}
+		set stt_exp_Transport					{dsc tht}
+		set stt_exp_Energie						{tht pub}
+		set stt_exp_Service						{tht fit}
+		set stt_exp_Kampf						{fit bwl}
+		// Gesprï¿½chsthemengewichtung
+		set stt_talk_issues						{wal asw ocw wtm npw fli ttp tlw ubw uqw wmm wti mnf}
+		set stt_talkweight_wal					0.1
+		set stt_talkweight_asw					0.05
+		set stt_talkweight_ocw					1.5
+		set stt_talkweight_wtm					0.02
+		set stt_talkweight_npw					0.03
+		set stt_talkweight_fli					0.2
+		set stt_talkweight_ttp					0.02
+		set stt_talkweight_tlw					0.05
+		set stt_talkweight_ubw					0.1
+		set stt_talkweight_uqw					0.2
+		set stt_talkweight_wmm					0.2
+		set stt_talkweight_wti					0.2
+		set stt_talkweight_mnf					0.1
+		// Fun-Absichten
+		set stt_fun_idleloss					0.0001
+		set stt_issue_relief					2.0
+		set stt_issue_reduce					0.7
+		set stt_fun_intentions					{str fli smo cmf tll lis dft snf cfc pub tht bth dsc fit bow brl}
 
 		auto_choose_workingtime this
 		set_weapon_class this 0
@@ -150,18 +263,18 @@ def_class Zwerg none gnome 0 {reproduces lives moves} {
 
 		set_texturevariation this [hf2i [random 4]] 0
 
-		set_anim this mann.standard 0 $ANIM_LOOP					;// set standard anim
+		set_anim this mann.standard 0 $ANIM_LOOP
 		set_objinfo . EinZwerg
-		set_fogofwar this 14 8										;// uncover fog of war area
+		set_fogofwar this 14 8
 		set_autolight this 1
-		set_collision this 1										;// turn on light at gnome position
+		set_collision this 1
 
 		set_attrib this carrycap 1
 		set_attrib this hitpoints 1
 
-		call scripts/misc/genericfight.tcl							;// must be before z_procs (contains virtual functions)
+		call scripts/misc/genericfight.tcl
 		call scripts/classes/zwerg/z_events.tcl
-		call scripts/classes/zwerg/z_procs.tcl		 				;// misc procs
+		call scripts/classes/zwerg/z_procs.tcl
 		call scripts/classes/zwerg/z_dignwalk.tcl
 		call scripts/classes/zwerg/z_faceanim.tcl
 		call scripts/classes/zwerg/z_work_states.tcl
@@ -183,8 +296,8 @@ def_class Zwerg none gnome 0 {reproduces lives moves} {
 		timer_event this evt_timer0 -repeat 1 -interval 1 -userid 1 -attime 3
 		timer_event this evt_zwerg_attribupdate -repeat -1 -interval 1 -userid 2
 		timer_event this evt_zwerg_workannounce -repeat -1 -interval 1 -userid 3
-		timer_event this evt_talkissue_update -repeat -1 -interval 5 -userid 4 -attime [expr {[gettime]+2}]
-		timer_event this evt_sparewish_update -repeat -1 -interval 10 -userid 5 -attime [expr {[gettime]+3}]
+		timer_event this evt_talkissue_update -repeat -1 -interval 5 -userid 4 -attime [expr {[gettime] + 2}]
+		timer_event this evt_sparewish_update -repeat -1 -interval 10 -userid 5 -attime [expr {[gettime] + 3}]
 	}
 
 	call scripts/classes/items/calls/takeitems.tcl
@@ -198,13 +311,14 @@ def_class Zwerg none gnome 0 {reproduces lives moves} {
 	call scripts/misc/genericfight.tcl
 	call scripts/classes/zwerg/z_work_strike.tcl
 
+	#
 	handle_event evt_timer0 {
 		call_method this init
 	}
 
-
+	#
 	state trapped {
-		if {$state_log} {log "[get_objname this] passing state code TRAPPED"}
+		log STATE "[get_objname this] passing state code TRAPPED"
 		if {$trap_mode==0} {
 			gnome_failed_work this
 			tasklist_clear this
@@ -233,7 +347,7 @@ def_class Zwerg none gnome 0 {reproduces lives moves} {
 				set_stoned_textures 1
 				set_physic this 1
 			} else {
-				log "trappedtostand still [gettime] $trap_time"
+				log STATE "trappedtostand still [gettime] $trap_time"
 				set_anim this trappedtostand 6 0
 			}
 			set trap_mode 2
@@ -242,7 +356,7 @@ def_class Zwerg none gnome 0 {reproduces lives moves} {
 			return
 		}
 		if {$trap_mode==2} {
-			log "trapped getup [gettime] $trap_time"
+			log STATE "trapped getup [gettime] $trap_time"
 			set_stoned_textures 0
 			set trap_mode 0
 			state_trigger this idle
@@ -259,99 +373,96 @@ def_class Zwerg none gnome 0 {reproduces lives moves} {
 			return
 		}
 	}
-	
+
+	#
 	state_leave trapped {
 		set_physic this 0
 		set trap_mode 0
 		//if {$trap_mode} {state_trigger this trapped}
 	}
 
-	state_leave idle {
-		gnome_idle this 0
-	}
-
+	#
 	state_enter idle {
+		log STATE "[get_objname this] enters state idle"
 		set idletimeout 0
 		gnome_idle this 1
 	}
 
+	#
 	state idle {
-		if {$state_log} {log "[get_objname this] passing state code IDLE"}
-		if {$state_shell} {print "[get_objname this] passing state code IDLE"}
-
+		log STATE "[get_objname this] is now idle"
 
 		incr idletimeout
+
 		if { $sparetime_current_place_ref > 0 } {
 			prod_guest guestremove $sparetime_current_place_ref [get_ref this]
 			set sparetime_current_place_ref 0
 			set sparetime_current_place 0
 		}
-		if {!$died_in_fight} {
 
-			if {$current_weapon_out != 0 || $current_shield_out != 0 } {
+		if { !$died_in_fight } {
+			# Hide weapon/shield if present
+			if { $current_weapon_out != 0 || $current_shield_out != 0 } {
 				weapon_putin
 				shield_putin
 				return
 			}
 
-	//		log "state:idle"
+			# SHRUG
 			if { [act_when_idle] } { return }
+
+			# Sparetime is over, go to work
 			if { [get_remaining_sparetime this] == 0.0 } {
-	//			log "change to work"
 				state_triggerfresh this work_dispatch
 				return
 			}
+
+			# SHRUG
 			if { $idletimeout > 5 } {
-	//			log "idletimeout = $idletimeout"
+				log STATE "[get_objname this] = idletimeout = $idletimeout"
 				if { [get_remaining_sparetime this] > 0.0 } {
-					log "change to sparetime----zwerg.tcl"
+					log STATE "[get_objname this] = change to sparetime----zwerg.tcl"
 					state_enable this
 					state_triggerfresh this sparetime_dispatch
 					return
 				} else {
-					if {$sparetime_is_on} {sparetime_state_end}
-					if {[get_gnomeposition this]&&[get_prodautoschedule this]} {walk_down_from_wall}
+					if { $sparetime_is_on } {
+						sparetime_state_end
+					}
+					if { [get_gnomeposition this] && [get_prodautoschedule this] } {
+						walk_down_from_wall
+					}
 				}
 			}
 		}
+
 		set_idle_anim
 		state_disable this
 		action this wait 1 { state_enable this }
 	}
 
+	#
+	state_leave idle {
+		log STATE "[get_objname this] leaves state idle"
+		gnome_idle this 0
+	}
+
+	# Invoked when gnome attempts to execute a task
 	state task {
-		if {$state_log} {log "[get_objname this] passing state code TASK"}
-		if {$state_shell} {print "[get_objname this] passing state code TASK"}
 		if { [tasklist_cnt this] == 0 } {
 			state_trigger this idle
 		} else {
 			set current_occupation "work"
 			set command [tasklist_get this 0]
 			tasklist_rem this 0
-//			log "[get_objname this]: Task to do:'$command'"
+			log STATE "[get_objname this] executes task \"$command\""
 			eval $command
 		}
 	}
 
-
-
+	# Invoked when all tasks from the tasklist are completed
 	state_leave task {
-		if {$state_log} {log "[get_objname this] leaving state TASK (state_leave code - unlock_item)"}
-		if {$state_shell} {print "[get_objname this] leaving state TASK (state_leave code - unlock_item)"}
+		log STATE "[get_objname this] finished task(s)"
 		unlock_item
 	}
-
-	handle_event evt_time_startwork {
-//		log "Go to work!"
-		set current_plan "work"
-		set current_time_plan "work"
-	}
-
-	handle_event evt_time_startsparetime {
-//		log "Go to sparetime!"
-		set current_plan "sparetime"
-		set current_time_plan "sparetime"
-	}
 }
-
-

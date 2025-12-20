@@ -1,32 +1,34 @@
-# unique templates and story events definition:
-call data/scripts/init/lgtools.tcl
+call scripts/init/lgtools.tcl
+call scripts/utility.tcl
 
-set_diplomacy	0 1 neutral			;# Voodoos
-set_diplomacy	1 0 neutral
-set_diplomacy	0 2 neutral			;# Knockers
-set_diplomacy	2 0 neutral
-set_diplomacy	0 3 neutral			;# Brains
-set_diplomacy	3 0 neutral
-set_diplomacy	0 4 enemy			;# Vampyres
-set_diplomacy	4 0 enemy
-set_diplomacy	7 0 neutral         ;#Drache
-set_diplomacy	0 7 neutral
+# 0 Wiggles, 1 Voodoos, 2 Knockers, 3 Brains, 4 Vampyres, 7 Drache
 
-set_ownerrace 	0 0
-set_ownerrace	1 1
-set_ownerrace	2 2
-set_ownerrace	3 3
-set_ownerrace	4 4
+# Diplomacy assignment
+set_diplomacy 0 1 neutral
+set_diplomacy 1 0 neutral
+set_diplomacy 0 2 neutral
+set_diplomacy 2 0 neutral
+set_diplomacy 0 3 neutral
+set_diplomacy 3 0 neutral
+set_diplomacy 0 4 enemy
+set_diplomacy 4 0 enemy
+set_diplomacy 7 0 neutral
+set_diplomacy 0 7 neutral
 
+# Race assignment
+set_ownerrace 0 [cfm_get_value_or "campaign.StartingClan" 0]
+set_ownerrace 1 1
+set_ownerrace 2 2
+set_ownerrace 3 3
+set_ownerrace 4 4
+
+# AI setup
 ai init 1 data/scripts/ai/std_ai.tcl
 ai enable 1
-
 ai init 2 data/scripts/ai/std_ai.tcl
 ai enable 2
-
 ai init 3 data/scripts/ai/std_ai.tcl
 ai enable 3
-
 ai init 4 data/scripts/ai/std_ai.tcl
 ai enable 4
 

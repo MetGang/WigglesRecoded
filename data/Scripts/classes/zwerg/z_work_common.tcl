@@ -1,38 +1,47 @@
-// ---------------------------------------------------------------------
-// z_work_common.tcl
-//
-// Dinge, die Zwerge in der Arbeitszeit tun :-)
-// ---------------------------------------------------------------------
+call scripts/debug.tcl
+call scripts/utility.tcl
 
+#
+proc prod_inventattribute {classname workplace} {
+	log PROCS "prod_inventattribute" $classname [get_objname $workplace]
 
-proc prod_inventattribute {type place} {
-	global myref
-	set ownerid [get_owner this]
-	set type [string trimright $type "_"]
-	for {set i 0} {$i<4} {incr i} {
-		add_owner_attrib $ownerid ${type}[string repeat "_" $i] 1
+	# If product is toggleable, switch it off
+	if { [get_prod_switchmode $workplace] } {
+		set_prod_slot_cnt $workplace [string range $classname 2 end] 0
 	}
-	set type [string range $type 2 30]
 
-	if {[net localid] == [get_owner this]} {
-		set id [newsticker new [get_owner this] -text "[lmsg $type] [lmsg erfunden]" -time [expr {3 * 60}]]
-		set page $type
-		// ein paar Special Hacks - items, die auf eine andere Seite als ihre eigene springen
-		if {$type == "Pilz"  ||  $type == "Raupe"  ||  $type == "Hamster"} {
+	set owner [get_owner this]
+
+	# Strip underscores from class name
+	set classname [string trimright $classname "_"]
+
+	for { set i 0 } { $i < 4 } { incr i } {
+		set attr ${classname}[string repeat "_" $i]
+		add_owner_attrib $owner $attr 1
+	}
+
+	# Remove "Bp" prefix
+	set classname [string range $classname 2 end]
+
+	# Create sticker message for local player
+	if { [net localid] == $owner } {
+		set id [newsticker new $owner -text "[lmsg $classname] [lmsg erfunden]" -time [expr {3 * 60}]]
+		set page $classname
+		
+		# Hack for Farm products
+		if { $classname == "Pilz" || $classname == "Raupe" || $classname == "Hamster" } {
 			set page "Farm"
 		}
 
+		# newsticker change $id -click "newsticker delete $id; twm_open_window info_invention $page"
 		newsticker change $id -click "newsticker delete $id; textwin run tt_$page.tcl"
 	}
 
-	if {[get_prod_switchmode $place]} {
-		set_prod_slot_cnt $place $type 0
-	}
 	return true
 }
 
 
-// verlegt ein Item aus dem Inventar des Zwerges in das der Produktionsstätte
+// verlegt ein Item aus dem Inventar des Zwerges in das der Produktionsstï¿½tte
 
 proc prod_transfertoprod {item prodplace pos} {
 	global current_lock_obj
@@ -60,9 +69,9 @@ proc prod_transfertoprod {item prodplace pos} {
 	exp_transp_increase
 }
 
-// bringt einen einzelnen Gegenstand (aus dem Inventar) zur Produktionsstätte,
-// d.h. sucht einen Platz zum Hinlegen, läuft hin und legt den Gegenstand ab
-// (und transportiert ihn ins Inventar der Produktionsstätte via prod_transfertoprod)
+// bringt einen einzelnen Gegenstand (aus dem Inventar) zur Produktionsstï¿½tte,
+// d.h. sucht einen Platz zum Hinlegen, lï¿½uft hin und legt den Gegenstand ab
+// (und transportiert ihn ins Inventar der Produktionsstï¿½tte via prod_transfertoprod)
 
 proc prod_bringtoprod {item prodplace} {
 	if {[check_method [get_objclass $prodplace] get_deliverypos]} {
@@ -415,7 +424,7 @@ proc prod_buildup {item} {
 	set pclass [get_objclass $item]
 	tasklist_add this "hide_obj_ghost $item"
     set_roty $item 0
-	# Schnellaufbau für Items ohne Aufbauanimation
+	# Schnellaufbau fï¿½r Items ohne Aufbauanimation
 
 	if {[lsearch {Abfluss Leiter Leiter_Kristall Leiter_Metall Plattmachfalle SteinfalleMedusa} $pclass]!=-1} {
 		tasklist_add this "get_beambackpos"
@@ -448,7 +457,7 @@ proc prod_builddown {item} {
 
 	set pclass [get_objclass $item]
 		log "PROD_BUILDDOWN item = $item"
-	// Schnellaufbau für Items ohne Aufbauanimation
+	// Schnellaufbau fï¿½r Items ohne Aufbauanimation
 
 	if {[lsearch {Abfluss Leiter Leiter_Kristall Leiter_Metall Plattmachfalle SteinfalleMedusa} $pclass]!=-1} {
 		tasklist_add this "get_beambackpos"
@@ -590,7 +599,7 @@ proc prod_repair_rep {item index} {
 proc conquer {building} {
 
 	set fahne_pos [get_flag_pos $building]
-	//einige Produktionsstätten haben buildup_step = 0 !!!!
+	//einige Produktionsstï¿½tten haben buildup_step = 0 !!!!
 	set buildup_step [call_method $building get_max_buildup_step]
 	if {$buildup_step == 0} {
 		log "WARNING!!! max_buildup_step bei [get_objname $building] = 0 "
@@ -609,7 +618,7 @@ proc conquer {building} {
 }
 
 proc conquer_callback {building offset} {
-	//die Zeit soll von building_step abhängig sein
+	//die Zeit soll von building_step abhï¿½ngig sein
 	set strength [get_prod_ownerstrength $building]
 	//log "building_conquer_callback: strength = $strength"
 	if {[get_owner $building] != [get_owner this]} {
@@ -618,7 +627,7 @@ proc conquer_callback {building offset} {
 		if {$strength > 0.01} {
 			tasklist_add this "prod_anim pullrope; set_prod_ownerstrength $building [fincr strength -$offset]"
 		} else {
-			// Gebäude erobert!!
+			// Gebï¿½ude erobert!!
 			//Newstickemeldung darf nur ein mal geschickt werden (im Mehrspielermodus werden attribute nicht so schnell aktualisiert)
 			if {[get_attrib $building nt_Message] == 0} {
 				set_attrib $building nt_Message 1
@@ -629,7 +638,7 @@ proc conquer_callback {building offset} {
 				set id [newsticker new [get_owner this] -text "[get_objclass $building] [lmsg wurdeerobert]" -time [expr {3 * 60}]]
 				newsticker change $id -click "newsticker delete $id; set_view [get_posx $building] [expr {[get_posy $building] -1}] 0 -0.35 0"
 			}
-			//alle Aufträge löschen
+			//alle Auftrï¿½ge lï¿½schen
 			foreach item [call_method $building prod_items] {
 				set_prod_slot_cnt $building $item 0
 			}
@@ -642,7 +651,7 @@ proc conquer_callback {building offset} {
 		 if {$strength < 0.9} {
 			tasklist_add this "prod_anim pullrope; set_prod_ownerstrength $building [fincr strength $offset]"
 		} else {
-			set_prod_ownerstrength $building 1.0 ;# damit strengt nicht größer als 1.0 wird
+			set_prod_ownerstrength $building 1.0 ;# damit strengt nicht grï¿½ï¿½er als 1.0 wird
 			if {[get_attrib $building atr_Hitpoints] > 0.85} {
 				set_attrib $building atr_Hitpoints 1
 			} else {
@@ -663,7 +672,7 @@ proc conquer_callback {building offset} {
 // ----------------------------------------------------------------------------------
 
 
-// wechselt die Mütze des Zwerges
+// wechselt die Mï¿½tze des Zwerges
 
 proc prod_change_muetze {category {auf_ab both} {animopt "nothing"}} {
 	global current_muetze_name current_muetze_ref is_wearing_divingbell is_counterwiggle
@@ -673,7 +682,7 @@ proc prod_change_muetze {category {auf_ab both} {animopt "nothing"}} {
 	}
 
 	if {$is_wearing_divingbell != 0} {
-		return true													;// Taucherglocke verhindert alle Mützenaktionen
+		return true													;// Taucherglocke verhindert alle Mï¿½tzenaktionen
 	}
 
 	//log "CHANGE_MUETZE: Category = $category"
@@ -697,7 +706,7 @@ proc prod_change_muetze {category {auf_ab both} {animopt "nothing"}} {
 
 
 
-// Mütze abnehmen
+// Mï¿½tze abnehmen
 
 proc muetze_ab {{animopt "nothing"}} {
 	global current_muetze_ref current_muetze_name
@@ -741,7 +750,7 @@ proc muetze_auf {muetze {animopt "nothing"}} {
 	global current_muetze_ref current_muetze_name is_wearing_divingbell
 
 	if {$is_wearing_divingbell != 0} {
-		return true													;// Taucherglocke verhindert alle Mützenaktionen
+		return true													;// Taucherglocke verhindert alle Mï¿½tzenaktionen
 	}
 
 //	log "Muetze $muetze wird aufgesetzt, Current_muetze_ref = $current_muetze_ref"
@@ -761,8 +770,8 @@ proc muetze_auf {muetze {animopt "nothing"}} {
 }
 
 
-// erzeugt eine Mütze und linkt sie an den Kopf; kann nach einer entsprechenden
-// Anim in die Tasklist gehängt werden
+// erzeugt eine Mï¿½tze und linkt sie an den Kopf; kann nach einer entsprechenden
+// Anim in die Tasklist gehï¿½ngt werden
 
 proc create_muetze {muetze_name} {
 	global current_muetze_ref current_muetze_name hatcolor
@@ -777,60 +786,71 @@ proc create_muetze {muetze_name} {
 	set_textureanimation $current_muetze_ref 0 $hatcolor 0 0
 }
 
+# Return name of the hat based on category, clan and gender
 proc get_nameofmuetze_proc {category {force 0}} {
-	;#nicht vergessen erfahrung und Geschlecht
 	global gnome_gender clanname
-	if {$gnome_gender == "male"} {
-		set endung a
+
+	if { $gnome_gender == "male" } {
+		set ending "a"
+	} elseif { $gnome_gender == "female" } {
+		set ending "b"
 	} else {
-		set endung b
+		set ending ""
 	}
 
-	if {$force == 0} {
-		//falls es kein Storymanager existiert
-		//bekommen alle andere Zwergeclans Standartmuetzen
-		if {![im_a_human]} {
-	//		log "Standardmuetze fuer: [get_objname this], ref: [get_ref this]"
-			set muetze Dummy_$clanname\Muetze_$endung
-			return $muetze
-		}
+	if { $force == 0 && ![im_a_human] } {
+		return "Dummy_$clanname\Muetze_$ending"
 	}
 
 	switch $category {
-	"sparetime"	{set muetze Dummy_$clanname\Muetze_$endung}
-	"service"	{set muetze Dummy_Muetze_dienstleistung_$endung}
-	"transport"	{set muetze Dummy_Muetze_dienstleistung_$endung}
-	"stone"		{set muetze Dummy_Muetze_stein_$endung}
-	"wood"		{set muetze Dummy_Muetze_holz_$endung}
-	"metal"		{set muetze Dummy_Muetze_metall_$endung}
-	"food"		{set muetze Dummy_Muetze_nahrung_$endung}
-	"energy"	{set muetze Dummy_Muetze_energiemagie_$endung}
-	"erfinden"	{set muetze Dummy_Muetze_energiemagie_$endung}
-	"fight"		{
-				set erfahrung [get_attrib this exp_Kampf]
-				if { $erfahrung < 0.15 } {
-					set erf 01
-				} elseif { $erfahrung < 0.30 } {
-					set erf 02
-				} else {
-					set erf 03
-				}
-				set muetze Dummy_Muetze_kampf_$erf\_$endung
-				}
-    "dive"		{set muetze taucherglocke_$endung}
-    "arbeitslos" {set muetze Dummy_Muetze_arbeitslos_$endung}
-    "pack" 		{set muetze Dummy_Muetze_dienstleistung_$endung}
-    "unpack" 	{set muetze Dummy_Muetze_dienstleistung_$endung}
-    "dig" 		{set muetze Dummy_Muetze_stein_$endung}
-    "harvest" 	{set muetze Dummy_Muetze_holz_$endung}
-	default		{
-					log "MuetzeWarning: Falsche category - $category"
-					set muetze Dummy_Muetze_$endung
-				}
+		"sparetime" {
+			return "Dummy_$clanname\Muetze_$ending"
+		}
+		"food" {
+			return "Dummy_Muetze_nahrung_$ending"
+		}
+		"wood" -
+		"harvest" {
+			return "Dummy_Muetze_holz_$ending"
+		}
+		"stone" -
+		"dig" {
+			return "Dummy_Muetze_stein_$ending"
+		}
+		"metal" {
+			return "Dummy_Muetze_metall_$ending"
+		}
+		"pack" -
+		"unpack" -
+		"service" -
+		"transport" {
+			return "Dummy_Muetze_dienstleistung_$ending"
+		}
+		"energy" -
+		"erfinden" {
+			return "Dummy_Muetze_energiemagie_$ending"
+		}
+		"fight" {
+			set exp [get_attrib this exp_Kampf]
+			if { $exp < 0.15 } {
+				return "Dummy_Muetze_kampf_01_$ending"
+			} elseif { $exp < 0.30 } {
+				return "Dummy_Muetze_kampf_02_$ending"
+			} else {
+				return "Dummy_Muetze_kampf_03_$ending"
+			}
+		}
+		"arbeitslos" {
+			return "Dummy_Muetze_arbeitslos_$ending"
+		}
+		"dive" {
+			return "taucherglocke_$ending"
+		}
+		default	{
+			return "Dummy_Muetze_$ending"
+		}
 	}
-	return $muetze
 }
-
 
 // ----------------------------------------------------------------------------------
 //								        Taucherglocke
@@ -874,7 +894,7 @@ proc wear_divingbell {{usercommand 0}} {
 
 // linkt eine im Inventar befindliche Taucherglocke an den Kopf des Zwerges und
 // setzt das entsprechende Flag
-// kann nach einer entsprechenden Anim in die Tasklist gehängt werden
+// kann nach einer entsprechenden Anim in die Tasklist gehï¿½ngt werden
 
 proc link_divingbell {} {
 	global is_wearing_divingbell gnome_gender
@@ -955,36 +975,31 @@ proc unlink_divingbell {} {
 //								        allgemeines Item-Benutzen
 // ----------------------------------------------------------------------------------
 
-// benutzt ein benutzbaren Gegenstand, der sich im Inventory des Zwerges befindet
-
+# Use and consume item
 proc use_item {item} {
-	if {![obj_valid $item]} {
-		return
-	}
-
-	if {[inv_find_obj this $item] < 0} {
-		return
-	}
-
-	tasklist_clear this						;// die Methode use des Items wird unsere Tasklist mit neuen Befehlen füllen
+	# Item is not valid
+	if { ![obj_valid $item] } { return }
+	# Item not found in the inventory
+	if { [inv_find_obj this $item] == -1 } { return }
+	# Clear any pending tasks
+	tasklist_clear this
+	# Finally use the item
 	call_method $item use [get_ref this]
 }
 
-
-// benutzt ein benutzbaren Gegenstand, der sich in der Welt befindet (und auch dort bleibt!)
-
+# Use and leave item in the world
 proc objaction_item {item} {
-	if {![obj_valid $item]} {
-		return
-	}
-
+	# Item is not valid
+	if { ![obj_valid $item] } { return }
+	# Early return based on standoff dist
 	set standoffdist [call_method $item get_standoff_dist]
-	if {$standoffdist >= 0} {
-		if {[vector_dist3d [get_pos this] [get_pos $item]] > [expr {$standoffdist + 0.3}]} {
+	if { $standoffdist >= 0 } {
+		if { [vector_dist3d [get_pos this] [get_pos $item]] > [expr {$standoffdist + 0.3}] } {
 			return
 		}
 	}
-
-	tasklist_clear this						;// die Methode use des Items wird unsere Tasklist mit neuen Befehlen füllen
+	# Clear any pending tasks
+	tasklist_clear this
+	# Finally use the item
 	call_method $item objaction [get_ref this]
 }

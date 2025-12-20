@@ -1,63 +1,49 @@
-// zwerg procs
-// walk und rotate wurden ausgelagert in dignwalk !!!
+call scripts/db/clans.tcl
+call scripts/debug.tcl
+call scripts/lib/list.tcl
+call scripts/utility.tcl
 
-// kill
-proc kill_item {item} {
-	global current_lock_obj
-
-	if {![obj_valid $item]} {
-		return
-	}
-
-	if { $current_lock_obj == $item } {
-		unlock_item
-	}
-	if {[get_owner $item]==-1} {set_owner $item [get_owner this]}
-	call_method $item die
-	set_lock $item 1
-	state_disable this;
-	action this wait 0.1 {state_enable this}
-}
-
+#
 proc im_in_campaign {} {
-	global is_campaign
-	return $is_campaign
+	if { [is_storymgr] } { return 1 } { return 0 }
 }
 
+#
 proc im_in_tutorial {} {
-	global is_tutorial
-	return $is_tutorial
+	if { [obj_query this -class {Trigger_Tutorial Trigger_Tournament} -limit 1] != 0 } { return 1 } { return 0 }
 }
 
+#
 proc im_a_human {} {
-	global is_human
-	return $is_human
+	if { [get_objownertype this] != 2 } { return 1 } { return 0 }
 }
 
-proc multi_exp_factor {} {
-	if {[im_in_campaign]} {
-		return 1.0
+#
+proc base_exp_factor {} {
+	if { [im_in_campaign] } {
+		return [cfm_get_value_or "campaign.AttrExpFactor" 1.0]
 	} else {
-		return 2.0
+		return [cfm_get_value_or "skirmish.AttrExpFactor" 2.0]
 	}
 }
 
-proc clan_exp_factor {genre} {
-	global clanname
-	global ttt_${clanname}clanexp
-	set factorlist [subst \$ttt_${clanname}clanexp]
-	set idx [lsearch -glob $factorlist "$genre *"]
-	if {$idx!=-1} {
-		set cfactor [lindex [lindex $factorlist $idx] 1]
+# Calculate experience factor for given attr based on gnome's clan
+proc clan_exp_factor {attr} {
+	set factors [db_clans_get_exp_factors [db_clans_race2key [get_objrace this]]]
+	set idx [lsearch -glob $factors "$attr *"]
+
+	if { $idx != -1 } {
+		set factor [lindex [lindex $factors $idx] 1]
 	} else {
-		set cfactor 1.0
+		set factor 1.0
 	}
-	return [expr {$cfactor*[multi_exp_factor]}]
+
+	return [expr $factor * [base_exp_factor]]
 }
 
+#
 proc exp_transp_increase {} {
-	global tttgain_supply
-	add_expattrib this exp_Transport [expr {$tttgain_supply*[clan_exp_factor exp_Transport]}]
+	add_expattrib this exp_Transport [expr 0.003 * [clan_exp_factor exp_Transport]]
 }
 
 proc lock_item {item} {
@@ -115,7 +101,7 @@ proc add_ghostlist {alist} {
 }
 
 
-// löscht alle Alphaobjekte, die nicht in der Ghostliste sind
+// lï¿½scht alle Alphaobjekte, die nicht in der Ghostliste sind
 
 proc kill_old_ghosts {} {
 	global objghostlist
@@ -284,8 +270,9 @@ proc beamto_inv {item} {
 	return true
 }
 
+#
 proc change_owner_fail {} {
-	log "SET_OWNER FAILED ([get_objname this]) [get_ref this]"
+	log PROCS "change_owner_fail" "FAILED" [get_objname this] [get_ref this]
 	evt_zwerg_break_proc
 }
 
@@ -315,7 +302,7 @@ proc beam_from_inv_to_pos {item pos} {
 	global current_lock_obj
 	inv_rem this $item
 	if {[get_objclass $item] == "Schatzbuch"} {
-	//Schatzbuch soll über dem Boden schweben
+	//Schatzbuch soll ï¿½ber dem Boden schweben
 		set pos [vector_add $pos "0 -0.15 0"]
 		call_method $item initiate $pos
 	} else {
@@ -328,7 +315,7 @@ proc beam_from_inv_to_pos {item pos} {
 	}
 	set_lock $item 0
 
-	// Container generell ausleeren, sonst können böse Bugs entstehen (Zwerg mit voller Kiepe hebt volle Kiepe auf...)
+	// Container generell ausleeren, sonst kï¿½nnen bï¿½se Bugs entstehen (Zwerg mit voller Kiepe hebt volle Kiepe auf...)
 	if {[get_class_type [get_objclass $item]] == "transport"} {
 		log "[inv_list $item]"
 		foreach invitem [inv_list $item] {
@@ -341,19 +328,86 @@ proc beam_from_inv_to_pos {item pos} {
 	}
 }
 
+#
+proc get_savable_items {} {
+	set excluded_classes [list]
+	set held_items_classes [list]
+	set items_to_save [list]
 
+	# Exclude tools
+	lappend excluded_classes Kettensaege Presslufthammer Kristallstrahl
 
-// leert das gesamte Inventory
+	# Exclude means of transport
+	lappend excluded_classes Reithamster Hoverboard
 
-proc beamto_world_all {} {
+	# Exclude transport containers
+	lappend excluded_classes Holzkiepe Grosse_Holzkiepe Schubkarren
+
+	# Search and remember items
 	foreach item [inv_list this] {
-		// zusätzliches inv_find_obj, weil beamto_world u.U. mehrere Items ablegt (bei Kiepen mit Inhalt z.B.)
-		if {[inv_find_obj this $item] >= 0} {
+		set obj_class [get_objclass $item]
+
+		if { [lsearch $excluded_classes $obj_class] > -1 } {
+			if { [lsearch $held_items_classes $obj_class] == -1 } {
+				# Find lower tier items
+				if { [lsearch {Reithamster} $obj_class] > -1 } {
+					# If the item is a Reithamster but inventory contains a Hoverboard
+					if { [inv_find this Hoverboard] > -1 } {
+						continue
+					}
+				} elseif { [lsearch {Holzkiepe} $obj_class] > -1 } {
+					# If the item is a Holzkiepe but inventory contains a Grosse_Holzkiepe
+					if { [inv_find this Grosse_Holzkiepe] > -1 } {
+						continue
+					}
+				}
+
+				# Remember item
+				lappend held_items_classes $obj_class
+				lappend items_to_save $item
+			}
+		}
+	}
+
+	# Remember best weapon
+	set best_weapon [lindex [get_best_weapon this 0] 0]
+	if { $best_weapon != -1 } {
+		lappend items_to_save $best_weapon
+	}
+
+	# Remember best shield
+	set best_shield [lindex [get_best_weapon this 0] 1]
+	if { $best_shield != -1 } {
+		lappend items_to_save $best_shield
+	}
+
+	# Remember best ballistic
+	set best_ballistic [lindex [get_best_weapon this 1] 0]
+	if { $best_ballistic != -1 } {
+		lappend items_to_save $best_ballistic
+	}
+
+	return $items_to_save
+}
+
+#
+proc get_droppable_items {} {
+	return [ldiff [inv_list this] [get_savable_items]]
+}
+
+# Drop given items from inventory
+proc drop_items {items} {
+	foreach item $items {
+		if { [inv_find_obj this $item] != -1 } {
 			beamto_world $item [get_roty this]
 		}
 	}
 }
 
+# Drop all items from inventory
+proc drop_all_items {} {
+	drop_items [inv_list this]
+}
 
 proc beamto_world {item args} {
 	unlock_item
@@ -400,7 +454,7 @@ proc beamto_world {item args} {
 	set_visibility $item 1
 	set_hoverable $item 1
 
-	// Container generell ausleeren, sonst können böse Bugs entstehen (Zwerg mit voller Kiepe hebt volle Kiepe auf...)
+	// Container generell ausleeren, sonst kï¿½nnen bï¿½se Bugs entstehen (Zwerg mit voller Kiepe hebt volle Kiepe auf...)
 	if {[get_class_type [get_objclass $item]] == "transport"} {
 		log "[inv_list $item]"
 		foreach invitem [inv_list $item] {
@@ -440,8 +494,8 @@ proc from_wall {item} {
 
 
 // Gegenstand wird aufgehoben (inklusive hinlaufen usw.)
-// - Hamster werden automatisch erschossen, wenn möglich
-// - funktioniert auch für Gegenstände im Lager
+// - Hamster werden automatisch erschossen, wenn mï¿½glich
+// - funktioniert auch fï¿½r Gegenstï¿½nde im Lager
 
 proc pickup {item} {
 	if {![obj_valid $item]} {
@@ -517,6 +571,7 @@ proc convert {item} {
 	return true
 }
 
+#
 proc set_item_owner {item owner} {
 	set_owner $item $owner {change_owner_fail}
 	return true
@@ -586,91 +641,83 @@ proc play_anim_pickup {item} {
 	return true
 }
 
-
-// Gegenstand aus der Welt ins Inventar des Zwerges befördern
-
+# Move an item (with checks) from the world to the gnome's inventory
 proc take_item {item} {
 	global current_worklist
 
-	if {![obj_valid $item] || ![inv_check this $item]} {
-		// Objekt ist ungültig oder kann nicht aufgehoben werden
+	# The item is somehow invalid to interact with
+	if { ![obj_valid $item] || ![inv_check this $item] } {
 		tasklist_clear this
-		if {[get_gnomeposition this] == 0} {
-			play_anim scout
-		}
 		gnome_failed_work this
 		return false
 	}
-	
-	set objclass [get_objclass $item]
-	set objtype  [get_class_type $objclass]
-	if {$objtype == "elevator"  ||  $objtype == "production"  ||  $objtype == "energy"  ||
-		$objtype == "store"     ||  $objtype == "protection"} {
-		
-		if {![get_boxed $item]} {
-			tasklist_clear this
-			gnome_failed_work this
-			return false
-		}
-	}
-	
-	set mypos [get_pos this]
-	set itempos [get_pos $item]
 
-	if {$objclass == "Hamster"} {
-		if {[get_attrib $item farmed]} {
-			// Hamster ist in der Farm - aufheben erfolgreich
+	# The item is actually a building that is no longer packed (not a box)
+	if { [is_building_by_id $item] && ![get_boxed $item] } {
+		set current_worklist {}
+		tasklist_clear this
+		gnome_failed_work this
+		return false
+	}
+
+	set pos [get_pos this]
+	set item_pos [get_pos $item]
+
+	# Special case for Hamster
+	if { [get_objclass $item] == "Hamster" } {
+		if { [get_attrib $item farmed] } {
+			# Hamster is on farm, continue
 			call_method $item catch_farmhamster
-			// weiterlaufen in die checks weiter unten
-		} elseif {[get_attrib $item paralyzed]} {
-			// Hamster ist tot
-			// weiterlaufen in die checks weiter unten
-		} elseif {[vector_dist3d $mypos $itempos] <= 1.0} {
-			// Hamster ist sehr nah
+		} elseif { [get_attrib $item paralyzed] } {
+			# Hamster is paralyzed, continue
+		} elseif { [vector_dist3d $pos $item_pos] <= 1.0 } {
+			# Hamster is caught
 			beamto_inv $item
 			return true
 		} else {
-			// nochmal versuchen!!!
+			# Hamster escaped, try again
 			pickup $item
 			return true
 		}
 	}
 
-	if {[get_gnomeposition this]} {
-		if {[lindex $mypos 2]>[lindex $itempos 2]+2||[vector_dist $mypos $itempos]>2.0} {
-			// Gewöhnlicher Gegenstand: zu weit weg an Wand!
+	if { [get_gnomeposition this] } {
+		# The item is too far away on the wall (also applies when someone else took it)
+		if { [lindex $pos 2] > [lindex $item_pos 2] + 2.0 || [vector_dist $pos $item_pos] > 2.0 } {
 			set current_worklist {}
-			//log "Cant take it: $item [get_gnomeposition this] ($mypos) ($itempos)"
 			tasklist_clear this
 			gnome_failed_work this
 			return false
 		}
-	} elseif {[vector_dist3d $mypos $itempos] > 3.0} {
-		// Gewöhnlicher Gegenstand: zu weit weg!
-		set current_worklist {}
-		tasklist_clear this
-		play_anim bowllose
-		gnome_failed_work this
-		return false
+	} else {
+		# The item is too far away on the ground (also applies when someone else took it)
+		if { [vector_dist3d $pos $item_pos] > 3.0 } {
+			set current_worklist {}
+			tasklist_clear this
+			play_anim dontknow
+			gnome_failed_work this
+			return false
+		}
 	}
 
+	# Transfer item
 	beamto_inv $item
 
-	// CaptureTheFlag-Hack
-	if {[get_objclass $item] == "Flagge"} {
+	# Hack for CaptureTheFlag
+	if { [get_objclass $item] == "Flagge" } {
 		link_obj $item this 7
 	}
 
 	return true
 }
 
-
+#
 proc putdown_anim {} {
-	if {[get_gnomeposition this]} {return putwall} {return bend}
+	if { [get_gnomeposition this] } { return "putwall" } { return "bend" }
 }
 
 
-// legt Gegenstand vor dem Zwerg ab bzw. legt Gegenstand an gewünschter Position ab
+// legt Gegenstand vor dem Zwerg ab bzw. legt Gegenstand an gewï¿½nschter Position ab
 
 proc putdown {item {pos 0}} {
 	if {![obj_valid $item]} {
@@ -701,8 +748,8 @@ proc putdown {item {pos 0}} {
 
 
 
-// legt Gegenstand vor dem Zwerg ab bzw. legt Gegenstand an gewünschter Position ab
-// diese Version trägt die Befehle am Anfang der Tasklist ein, so dass das
+// legt Gegenstand vor dem Zwerg ab bzw. legt Gegenstand an gewï¿½nschter Position ab
+// diese Version trï¿½gt die Befehle am Anfang der Tasklist ein, so dass das
 // Kommando in der Tasklist korrekt expandiert werden kann
 
 proc putdown_tasklist {item {pos 0}} {
@@ -732,36 +779,61 @@ proc putdown_tasklist {item {pos 0}} {
 	return true
 }
 
+#
+proc delete_shroom {obj} {
+	global current_lock_obj
 
+	log PROCS "delete_shroom" $obj [get_objname $obj]
 
-// Erntet den angegebenen Pilz
+	if { ![obj_valid $obj] } { return }
 
-proc harvest {item} {
+	if { $current_lock_obj == $obj } {
+		unlock_item
+	}
+
+	if { [get_owner $obj] == -1 } {
+		set_owner $obj [get_owner this]
+	}
+
+	call_method $obj die
+	set_lock $obj 1
+	state_disable this
+	action this wait 0.1 {state_enable this}
+}
+
+# Harvest mushroom
+proc harvest {obj} {
 	global tttgain_Pilz tttinfluence_Pilz
 
-	if {![obj_valid $item]} {
+	if { ![obj_valid $obj] } {
 		return false
 	}
 
-	lock_item $item
-	set fitness 2
-	foreach atr "atr_Hitpoints atr_Nutrition atr_Alertness atr_Mood" {
-		if {[get_attrib this $atr]<0.8} {
-			set fitness 1
+	lock_item $obj
+
+	switch [calc_fitness] {
+		0 {
+			set maxloops 9.4
+			set minloops 3
+			set maxexp $tttinfluence_Pilz
+			set ani "tired"
+		}
+		1 {
+			set maxloops 5.4
+			set minloops 1
+			set maxexp [expr {0.5 * $tttinfluence_Pilz}]
+			set ani ""
+		}
+		2 {
+			set maxloops 4.4
+			set minloops 1
+			set maxexp [expr {0.4 * $tttinfluence_Pilz}]
+			set ani "fit"
 		}
 	}
 
-	if {[get_attrib this atr_Alertness]<0.4} {
-		set fitness 0
-	}
-
-	switch $fitness {
-		0 {set maxloops 9.4; set minloops 3; set maxexp $tttinfluence_Pilz; set ani tired}
-		1 {set maxloops 5.4; set minloops 1; set maxexp [expr {0.5*$tttinfluence_Pilz}]; set ani ""}
-		2 {set maxloops 4.4; set minloops 1; set maxexp [expr {0.4*$tttinfluence_Pilz}]; set ani fit}
-	}
-	set abschlag [expr {(1+[get_attrib $item PilzAge])*0.25}]
-	set cur_HP [get_attrib $item atr_Hitpoints]
+	set abschlag [expr {(1+[get_attrib $obj PilzAge])*0.25}]
+	set cur_HP [get_attrib $obj atr_Hitpoints]
 
 	set cur_exp [hmin $maxexp [get_attrib this exp_Holz]]
 	if {[inv_find this Kettensaege] < 0} {
@@ -772,10 +844,7 @@ proc harvest {item} {
 	set exp_incr [lindex [lindex $tttgain_Pilz 0] 1]
 	set exp_incr [expr {$exp_incr * $cur_HP * [clan_exp_factor exp_Holz] / $loops}]
 
-	set damage [expr {-$cur_HP / $loops}]
-	set ppos [get_pos $item]
-	set cpos [get_pos this]
-	set roty [get_roty $item]
+	set roty [get_roty $obj]
 	if {abs($roty)>0.5} {
 		if {$roty<0.0} {
 			set targetdummy 1
@@ -788,94 +857,93 @@ proc harvest {item} {
 		} else {
 			set targetdummy 0
 		}
-	} elseif {abs([get_posy $item]-[get_posy this])>5} {
+	} elseif {abs([get_posy $obj]-[get_posy this])>5} {
 		set targetdummy 0
 	} else {
 		set cposx [get_posx this]
-		set pposx [get_posx $item]
+		set pposx [get_posx $obj]
 		if {$cposx-$pposx<-5} {
 			set targetdummy 0
 		} elseif {$cposx-$pposx>5} {
 			set targetdummy 4
 		} else {
-			set angle [vector_angle [get_pos $item] [get_pos this]]
+			set angle [vector_angle [get_pos $obj] [get_pos this]]
 			set targetdummy 4
 			for {set tryangle -2.749} {$tryangle<$angle} {fincr tryangle 0.7853} {incr targetdummy -1}
 			if {$targetdummy<0} {incr targetdummy 8}
-			if {$targetdummy==2} {incr targetdummy -1}
-			if {$targetdummy==6} {incr targetdummy}
 		}
 	}
-	//log "walking to Pilz $item dummy $targetdummy ($roty)"
 
-	if {[inv_find this Kettensaege] < 0} {
-		// Pilz fällen ohne Kettensäge (also mit der Axt)
+	log PROCS "Walking to Pilz $obj dummy $targetdummy ($roty)"
+
+	if { [call_method this has_acquired_skill QuickHarvest] } {
+		set loops 1
+	}
+	if { [chm_cheat_enabled InstantHarvest] } {
+		set loops 1
+	}
+
+	if { [inv_find this Kettensaege] == -1 } {
+		# Axe
+		set damage [expr {-$cur_HP / $loops}]
 
 		tasklist_add this "change_tool Axt"
-		tasklist_add this "walk_dummy $item $targetdummy"
-		tasklist_add this "check_valid $item"
-		tasklist_add this "check_lockedbyother $item"
+		tasklist_add this "walk_dummy $obj $targetdummy"
+		tasklist_add this "check_valid $obj"
+		tasklist_add this "check_lockedbyother $obj"
 		tasklist_add this "play_anim standstill"
-		tasklist_add this "rotate_towards $item"
+		tasklist_add this "rotate_towards $obj"
 		tasklist_add this "play_anim hack${ani}start"
 
 		tasklist_add this "change_particlesource this 8 26 {0 0 0.5} {0 0 0} 24 5 0 1"
 
-		for {set i 1} {$i<=$loops} {incr i} {
-			if {$loops>15*rand()&&$loops!=$i} {
-				tasklist_add this "play_anim hackaccidenta;check_pilz_valid $item"
+		for { set i 1 } { $i <= $loops } { incr i } {
+			if { $i < $loops && [random 1.0] < 0.25 } {
+				tasklist_add this "play_anim hackaccidenta; check_pilz_valid $obj"
 			} else {
-				tasklist_add this "play_anim hack${ani}loop;check_pilz_valid $item"
+				tasklist_add this "play_anim hack${ani}loop; check_pilz_valid $obj"
 				tasklist_add this "set_particlesource this 8 5"
 			}
-			if {$i==$loops} {
-				set cmd add_expattrib
-			} else {
-				set cmd add_attrib
-			}
-			tasklist_add this "call_method $item attr_add atr_Hitpoints $damage;$cmd this exp_Holz $exp_incr"
+
+			tasklist_add this "call_method $obj attr_add atr_Hitpoints $damage; add_expattrib this exp_Holz $exp_incr"
 		}
+
 		tasklist_add this "play_anim hack${ani}end"
 		tasklist_add this "play_anim standstill"
-		tasklist_add this "free_particlesource this 8"		;// wird möglicherweise nicht ausgeführt, still better than nothing
-		tasklist_add this "kill_item $item"
+		tasklist_add this "free_particlesource this 8"
+		tasklist_add this "delete_shroom $obj; call_method this gain_exp_points 2; stm_incr_stat_value MushroomsHarvested 1; am_trigger_achv_step FirstCut; am_trigger_achv_step FastChopping"
 		tasklist_add this "change_tool 0"
 	} else {
-		// Pilz fällen mit Kettensäge
+		# Chainsaw
+		set damage [expr {-[get_attrib $obj atr_Hitpoints]}]
 
 		tasklist_add this "change_tool Kettensaege"
-		tasklist_add this "walk_dummy $item $targetdummy"
-		tasklist_add this "check_valid $item"
-		tasklist_add this "check_lockedbyother $item"
+		tasklist_add this "walk_dummy $obj $targetdummy"
+		tasklist_add this "check_valid $obj"
+		tasklist_add this "check_lockedbyother $obj"
 		tasklist_add this "play_anim standstill"
-		tasklist_add this "rotate_towards $item"
-		tasklist_add this "change_tool_finish_in; play_anim sawhorstart"		;// Saege ist in Anim schon drin
+		tasklist_add this "rotate_towards $obj"
+		tasklist_add this "change_tool_finish_in; play_anim sawhorstart"
 
-		tasklist_add this "change_particlesource this 8 17 {0 0 0.7} \{[vector_roty {0 0 0.1} [get_roty this]]\} 64 8 0 1"
+		tasklist_add this "change_particlesource this 8 17 {0 0 0.7} {[vector_roty {0 0 0.1} [get_roty this]]} 64 8 0 1"
 
-		for {set i 1} {$i<=$loops} {incr i} {
-			tasklist_add this "set_particlesource this 8 1"
-			tasklist_add this "play_anim sawhorloop"
-			tasklist_add this "set_particlesource this 8 0;check_pilz_valid $item"
-			if {$i==$loops} {
-				set cmd add_expattrib
-			} else {
-				set cmd add_attrib
-			}
-			tasklist_add this "call_method $item attr_add atr_Hitpoints $damage;$cmd this exp_Holz $exp_incr"
-		}
+		tasklist_add this "set_particlesource this 8 1"
+		tasklist_add this "play_anim sawhorloop"
+		tasklist_add this "set_particlesource this 8 0; check_pilz_valid $obj"
+		tasklist_add this "call_method $obj attr_add atr_Hitpoints $damage; add_expattrib this exp_Holz $exp_incr"
+
 		tasklist_add this "play_anim sawhorend"
 		tasklist_add this "play_anim standstill"
-		tasklist_add this "free_particlesource this 8"		;// wird möglicherweise nicht ausgeführt, still better than nothing
-		tasklist_add this "kill_item $item"
+		tasklist_add this "free_particlesource this 8"
+		tasklist_add this "delete_shroom $obj; call_method this gain_exp_points 2; stm_incr_stat_value MushroomsHarvested 1; am_trigger_achv_step FirstCut; am_trigger_achv_step FastChopping"
 	}
 
 	return true
 }
 
-proc check_pilz_valid {item} {
-	if {![obj_valid $item]} {
-		log "Pilz $item was already invalid ([get_objname this])"
+#
+proc check_pilz_valid {obj} {
+	if { ![obj_valid $obj] } {
 		tasklist_clear this
 		free_particlesource this 8
 	}
@@ -931,40 +999,33 @@ proc mine_rep {item cnt} {
 	}
 }
 
-proc open_box {item} {
+# Open container (like barrel, chest) or read book
+proc open_box {obj} {
 	global own
-	lock_item $item
-//	log "Open_Box wurde aufgerufen item = $item"
-	if {[get_objclass $item]=="Schatzbuch"} {
-		if {[inv_find_obj this $item] == -1} {
-			set_owner $item $own {change_owner_fail}
-			tasklist_add this "walk_pos \{[vector_add [get_pos $item] {0 0 -1.6}]\}"
+
+	lock_item $obj
+
+	if { [get_objclass $obj] == "Schatzbuch" } {
+		if { [inv_find_obj this $obj] == -1 } {
+			set_owner $obj $own {change_owner_fail}
+			tasklist_add this "walk_pos { [vector_add [get_pos $obj] {0 0 -1.6}] }"
 			tasklist_add this "rotate_tofront"
 		} else {
 			tasklist_add this "rotate_tofront"
 			tasklist_add this "play_anim [putdown_anim]"
-			set opt2 ""
-			tasklist_add this "beamto_world $item $opt2"
+			set empty_str ""
+			tasklist_add this "beamto_world $obj $empty_str"
 		}
-		tasklist_add this "call_method $item set_standartanim"
+		tasklist_add this "call_method $obj set_standartanim"
 		tasklist_add this "play_anim read"
-		tasklist_add this "read_book $item"
+		tasklist_add this "read_book $obj; am_trigger_achv_step Enlightenment; stm_incr_stat_value BooksRead 1"
 	} else {
-		tasklist_add this "walk_near_item $item 0.6 0.2"
-		tasklist_add this "rotate_towards $item"
-		tasklist_add this "if {\[get_attrib $item PilzAge\]} {tasklist_clear this}"
-		tasklist_add this "check_switcher_dist \{[get_pos $item]\}"
-		//if {[random 1.0] < 0.5} {
-			tasklist_add this "play_anim kickb"   ;#treten
-			tasklist_add this "call_method $item release_content [get_owner this]"
-		//} else {
-		//	tasklist_add this "change_tool Axt"
-		//	tasklist_add this "play_anim hammerstart"
-		//	tasklist_add this "play_anim hammerloopholz"
-		//	tasklist_add this "play_anim hammerend"
-		//	tasklist_add this "call_method $item release_content [get_owner this]"
-		//	tasklist_add this "change_tool 0"
-		//}
+		tasklist_add this "walk_near_item $obj 0.6 0.2"
+		tasklist_add this "rotate_towards $obj"
+		tasklist_add this "if { \[get_attrib $obj PilzAge\] } { tasklist_clear this }"
+		tasklist_add this "check_switcher_dist { [get_pos $obj] }"
+		tasklist_add this "play_anim kickb"
+		tasklist_add this "call_method $obj release_content [get_owner this]; am_trigger_achv_step Scavenger; stm_incr_stat_value ContainersLooted 1"
 	}
 }
 
@@ -1044,6 +1105,10 @@ proc drinkpotion {potion_ref} {
 		return 0
 	}
 
+	if { [get_objclass $potion_ref] == "Jungbrunnentrank" } {
+		am_trigger_achv_step YoungAgain
+	}
+
 	inv_rem this $idx
 	link_obj $potion_ref this 0
 	set_hoverable $potion_ref 0
@@ -1057,7 +1122,7 @@ proc drinkpotion {potion_ref} {
 }
 
 
-// Zwerg wird liebestoll (vom Liebestrank ausgelöst)
+// Zwerg wird liebestoll (vom Liebestrank ausgelï¿½st)
 
 proc become_lovecrazed {} {
 	global love_potion_taken
@@ -1066,7 +1131,7 @@ proc become_lovecrazed {} {
 }
 
 
-// Zwerg wird fruchtbar (vom Fruchtbarkeitstrank ausgelöst)
+// Zwerg wird fruchtbar (vom Fruchtbarkeitstrank ausgelï¿½st)
 
 proc become_fertile {} {
 	global fertility_potion_taken
@@ -1076,7 +1141,7 @@ proc become_fertile {} {
 
 // beam_back:
 // mit get_beambackpos kann die aktuelle Position des Zwerges gespeichert werden (z.B. bevor er etwas aufbaut)
-// mit beam_back wird er an eine passende Stelle in der Nähe der gespeichetern Pos zurückgebeamt (z.B. nach dem Aufbauen)
+// mit beam_back wird er an eine passende Stelle in der Nï¿½he der gespeichetern Pos zurï¿½ckgebeamt (z.B. nach dem Aufbauen)
 
 proc get_beambackpos {} {
 	global beam_backto
@@ -1387,11 +1452,10 @@ proc shield_putin {} {
     }
 }
 
-
-// alle Werkzeuge weg
-
+#
 proc hide_tools {} {
-	global current_tool_item current_tool_class current_lefttool_item current_lefttool_class
+	global current_tool_item current_tool_class current_lefttool_item current_lefttool_clas
+
 	if { $current_tool_item != 0 } {
 		link_obj $current_tool_item
 		set_visibility $current_tool_item 0
@@ -1399,6 +1463,7 @@ proc hide_tools {} {
 		set current_tool_item 0
 		set current_tool_class 0
 	}
+
 	if { $current_lefttool_item != 0 } {
 		link_obj $current_lefttool_item
 		set_visibility $current_lefttool_item 0
@@ -1432,7 +1497,7 @@ proc fight_hat_out {} {
 	}
 
 	if {$is_wearing_divingbell != 0} {
-		return 1													;// Taucherglocke verhindert alle Mützenaktionen
+		return 1													;// Taucherglocke verhindert alle Mï¿½tzenaktionen
 	}
 
 	if { [get_objclass this] == "Zwerg" } {
@@ -1598,7 +1663,16 @@ proc change_tool_finish_inout {outobj {hand 0}} {
 
 // Werkzeug wechseln
 // change_tool <Werkzeugklassenname / 0=Weglegen> [Hand re=0; li=1] [Animation abspielen 0/1]
-
+# 0 - right hand
+# 1 - left hand
+# 2 - right foot
+# 3 - left foot
+# 4 - head
+# 5 - neck
+# 6 - chest
+# 7 - back
+# 8 - ass
+# 10 - face
 proc change_tool {toolclass {hand 0} {playanim 1}} {
 	if {$hand} {
 		global current_lefttool_class
@@ -1678,7 +1752,7 @@ proc change_tool {toolclass {hand 0} {playanim 1}} {
 }
 
 
-// Verändert das Aussehen eines Tool (vorausgesetzt, das Tool unterstützt dies)
+// Verï¿½ndert das Aussehen eines Tool (vorausgesetzt, das Tool unterstï¿½tzt dies)
 
 proc change_tool_look {look} {
 	global current_tool_item current_tool_class
@@ -1691,27 +1765,29 @@ proc change_tool_look {look} {
 	return false
 }
 
-
+#
 proc set_idle_anim {} {
 	if { [get_diedinfight this] } {
 		return
 	}
+
 	if { [get_gnomeposition this] == 0 } {
-			switch [hf2i [random 4]] {
-				0 	{set_anim this mann.stand_anim_a 0 2 ;#set idle anim}
-				1	{set_anim this mann.stand_anim_b 0 2 ;#set idle anim}
-				2	{set_anim this mann.stand_anim_c 0 2 ;#set idle anim}
-				3	{set_anim this mann.stand_anim_d 0 2 ;#set idle anim}
-			}
+		switch [hf2i [random 4]] {
+			0 { set_anim this mann.stand_anim_a 0 2 }
+			1 { set_anim this mann.stand_anim_b 0 2 }
+			2 { set_anim this mann.stand_anim_c 0 2 }
+			3 { set_anim this mann.stand_anim_d 0 2 }
+		}
 	} else {
-		if {abs([get_roty this]-3.14)>0.1} {set_roty this 3.14}
-		set_anim this mann.kletterstand_anim 0 2 ;#set idle anim
+		if { abs([get_roty this] - 3.14) > 0.1 } {
+			set_roty this 3.14
+		}
+		set_anim this mann.kletterstand_anim 0 2
 	}
 }
 
-proc check_valid {item} {
-	if {![obj_valid $item]} {
-		log "Objekt $item ist nicht mehr gültig!"
+proc check_valid {obj} {
+	if { ![obj_valid $obj] } {
 		tasklist_clear this
 		return 0
 	}
@@ -1837,7 +1913,7 @@ proc set_stoned_textures {bool} {
 // alle Items freisetzen
 
 proc inv_rem_all {} {
-	// Container generell zuerst ausleeren, sonst können böse Bugs entstehen
+	// Container generell zuerst ausleeren, sonst kï¿½nnen bï¿½se Bugs entstehen
 	foreach item [inv_list this] {
 		if {[get_class_type [get_objclass $item]] == "transport"} {
 			foreach invitem [inv_list $item] {

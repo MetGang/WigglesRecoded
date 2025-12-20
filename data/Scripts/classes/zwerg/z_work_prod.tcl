@@ -1,8 +1,6 @@
-// ---------------------------------------------------------------------
-// z_work_prod.tcl
-//
-// Alle Procs, die nur von Produktionsstätten aus aufgerufen werden.
-// ---------------------------------------------------------------------
+call scripts/debug.tcl
+
+# Used in: Bar
 proc prod_setworkdummy {dummy} {
 	global current_workplace
 	set pos [vector_add [get_pos $current_workplace] [get_linkpos $current_workplace $dummy]]
@@ -10,26 +8,27 @@ proc prod_setworkdummy {dummy} {
 	return true
 }
 
+# Used in: Schule
 proc prod_switch_schedule {status} {
 	global current_workplace
-	call_method $current_workplace announce_worker [expr {!$status*[get_ref this]}]
+	call_method $current_workplace announce_worker [expr {!$status * [get_ref this]}]
 	set_prod_schedule $current_workplace $status
 	return true
 }
 
-
+# Used in: Labor
 proc prod_putdown {itemtype} {
 	set idx [inv_find this $itemtype]
 	if { $idx != -1 } {
 		putdown [inv_get this $idx]
 	} else {
-		log "WARNING:prod_putdown $itemtype fails ([inv_list this])"
+		log WARN "prod_putdown $itemtype fails ([inv_list this])"
 		return false
 	}
 	return true
 }
 
-
+# Unused!
 proc prod_putdown_obj {obj} {
 	set idx [inv_find this $itemtype]
 	if { $idx != -1 } {
@@ -37,53 +36,58 @@ proc prod_putdown_obj {obj} {
 		putdown $obj
 		return $obj
 	} else {
-		log "WARNING:prod_putdown_obj $itemtype fails ([inv_list this])"
+		log WARN "prod_putdown_obj $itemtype fails ([inv_list this])"
 		return false
 	}
 	return 0;
 }
 
-
-proc prod_log {text} {
-	log "$text"
-	return true
-}
-
+# Used in: Farm
 proc prod_pickup_item {item} {
 	pickup $item
 	return true
 }
 
+# Unused!
 proc prod_putdown_item {item} {
 	putdown $item
 	return true
 }
 
+# Used in many
 proc prod_goworkdummy {dummyid {speed 0}} {
 	global current_workplace
 	walk_dummy $current_workplace $dummyid $speed
 	return true
 }
 
+# Used in many
 proc prod_goworkdummy_with_box {dummyid {speed 0}} {
 	global current_workplace
 	walk_dummy_with_box $current_workplace $dummyid $speed
 	return true
 }
 
+# Used in: Wachhaus
 proc prod_gopos {pos} {
 	walk_pos $pos
 	return true
 }
 
-proc prod_anim {animname} {play_anim $animname; return true }
+# Used in many
+proc prod_anim {animname} {
+	play_anim $animname
+	return true
+}
 
+# Unused!
 proc prod_setanim {animname} {
 	global ANIM_LOOP
 	set_anim this $animname 0 $ANIM_LOOP
 	return true
 }
 
+# Used in: Bar
 proc prod_anim_exp {animnames exp_infls minreps maxreps args} {
 	if {1==[llength $args]} {
 		set exper [get_attrib this $exp_infls]
@@ -103,7 +107,7 @@ proc prod_anim_exp {animnames exp_infls minreps maxreps args} {
 		}
 	}
 	set reps [expr {$maxreps - ($maxreps - $minreps) * $exper - 0.1}]
-//		log "prod_anim_exp: exp_infls($exp_infls) min($minreps) max($maxreps) exper($exper) reps($reps) exp_incrs($exp_incrs)"
+	log PROCS "prod_anim_exp: exp_infls($exp_infls) min($minreps) max($maxreps) exper($exper) reps($reps) exp_incrs($exp_incrs)"
 	for {set i 0} {$i<$reps} {incr i} {
 		foreach animname $animnames {
 			if [string match "blow*" $animname] {
@@ -128,38 +132,71 @@ proc prod_anim_exp {animnames exp_infls minreps maxreps args} {
 	return true
 }
 
+# Unused!
 proc prod_blowleft {} {
 	global current_workplace
 	blow_particlesource $current_workplace 0 {-0.1 0 0}
 	return true
 }
 
+# Used in: Feuerstelle
 proc prod_blowright {} {
 	global current_workplace
 	blow_particlesource $current_workplace 0 {0.1 0 0}
 	return true
 }
 
+# Unused!
 proc prod_blowback {} {
 	global current_workplace
 	blow_particlesource $current_workplace 0 {0 0 -0.1}
 	return true
 }
 
+# Unused!
 proc prod_blowfront {} {
 	global current_workplace
 	blow_particlesource $current_workplace 0 {0 0 0.1}
 	return true
 }
 
+# Used in many
+proc prod_turnleft {} {
+	rotate_toleft
+	return true
+}
 
-proc prod_turnleft {} {rotate_toleft; return true }
-proc prod_turnright {} {rotate_toright; return true }
-proc prod_turnfront {} {rotate_tofront; return true }
-proc prod_turnback {} {rotate_toback; return true }
-proc prod_turnclock {clock} {rotate_toclock $clock; return true }
-proc prod_turnangle {angle {anim ""}} {rotate_toangle $angle $anim; return true }
+# Used in many
+proc prod_turnright {} {
+	rotate_toright
+	return true
+}
 
+# Used in many
+proc prod_turnfront {} {
+	rotate_tofront
+	return true
+}
+
+# Used in many
+proc prod_turnback {} {
+	rotate_toback
+	return true
+}
+
+# Used in: Dampfhammer
+proc prod_turnclock {clock} {
+	rotate_toclock $clock
+	return true
+}
+
+# Used in: Bar, Farm
+proc prod_turnangle {angle {anim ""}} {
+	rotate_toangle $angle $anim
+	return true
+}
+
+# Used in: Labor
 proc prod_createproduct_inv {type} {
 	global current_workplace
 	sel /obj
@@ -173,6 +210,7 @@ proc prod_createproduct_inv {type} {
 	return true
 }
 
+# Used in many
 proc prod_createproduct_inv_boxed {type args} {
 	global current_workplace
 	sel /obj
@@ -196,7 +234,7 @@ proc prod_createproduct_inv_boxed {type args} {
 	return true;
 }
 
-
+# Used in: Schleiferei
 proc prod_createproduct_box {type} {
 	global current_workplace
 	sel /obj
@@ -234,8 +272,7 @@ proc prod_createproduct_box {type} {
 	return true
 }
 
-
-
+# Used in many
 proc prod_createproduct_rndrot {type {relpos 0}} {
 	global current_workplace
 	sel /obj
@@ -243,7 +280,7 @@ proc prod_createproduct_rndrot {type {relpos 0}} {
 	set_visibility $item 0
 	set_owner $item [get_owner this]
 	set_roty $item [expr {[random 3.0] - 1.5}]
-	call_method $current_workplace job_finished	
+	call_method $current_workplace job_finished
 	if {[inv_check this $item] == 1} {
 		inv_add this $item
 	} else {
@@ -251,7 +288,7 @@ proc prod_createproduct_rndrot {type {relpos 0}} {
 		set_visibility $item true
 		return true
 	}
-	
+
 	if {$relpos == 0} {
 		set itempos [get_place -center [get_pos $current_workplace] -rect -10 [hmin 1 [expr {11-[get_posz $current_workplace]}]] 10 [expr {13-[get_posz $current_workplace]}] -mindist 1.5 -random 2 -nearpos [get_pos this]]
 		if {[lindex $itempos 0]<0} {
@@ -261,9 +298,9 @@ proc prod_createproduct_rndrot {type {relpos 0}} {
 		set itempos [get_place -center [vector_add [get_pos $current_workplace] $relpos] -circle 10 -random 2 -nearpos [get_pos this]]
 		if {[lindex $itempos 0]<0} {
 			set itempos [get_place -center [vector_add [get_pos $current_workplace] $relpos] -circle 10 -random 2 -nearpos [get_pos this] -materials false]
-		}		
+		}
 	}
-	
+
 	if {[lindex $itempos 0]<0} {
 		set itempos [get_pos this]
 		return true
@@ -276,6 +313,7 @@ proc prod_createproduct_rndrot {type {relpos 0}} {
 	return true
 }
 
+# Used in: Farm
 proc prod_laydown_infrontof_farm {item} {
 	global current_workplace
 	set cpos [vector_add [get_pos $current_workplace] {0 0 4}]
@@ -297,6 +335,7 @@ proc prod_laydown_infrontof_farm {item} {
 	return true
 }
 
+# Used in: Farm
 proc prod_sowparticles {type onoff} {
 	switch $type {
 		"Pilz" {set pt 17}
@@ -312,44 +351,49 @@ proc prod_sowparticles {type onoff} {
 	return true
 }
 
+# Unused!
 proc prod_harvest {item} {
 	harvest $item
 	wait_time 0.5
 	return true
 }
 
+# Used in many
 proc prod_waittime {seconds} {
 	wait_time $seconds
 	return true
 }
 
+# Unused!
 proc prod_workidle {} {
 	wait_time 5
 	return true
 }
 
+# Used in many
 proc prod_changetool {tool {hand 0} {playanim 1}} {
 	change_tool $tool $hand $playanim
 	return true
 }
 
+# Used in: Bar
 proc prod_changetoollook {look} {
 	return [change_tool_look $look]
 }
 
-
+# Unused!
 proc prod_set_materialneed_off {ref} {
 	set_prod_materialneed $ref 0
 	return true
 }
 
+# Unused!
 proc prod_set_schedule_off {ref} {
 	set_prod_schedule $ref 0
 	return true
 }
 
-// erhöht den Energiespeicher einer Energiequelle um incval, maxvalue ist aber Obergrenze
-
+# Used in: Dampfmaschine, Laufrad, Reaktor
 proc energy_inc_energystore {incval maxvalue} {
 	global current_workplace
 	set e [expr {[get_energystore $current_workplace] + $incval}]
@@ -361,7 +405,7 @@ proc energy_inc_energystore {incval maxvalue} {
 }
 
 
-// Hilfsfunktion: liefert nächstes (oder: args'tes) Item vom Typ in der Produktionsstätte
+// Hilfsfunktion: liefert nï¿½chstes (oder: args'tes) Item vom Typ in der Produktionsstï¿½tte
 // oder -1 wenn nicht gefunden
 
 proc get_next_item_of_itemtype {itemtype args} {
@@ -386,7 +430,7 @@ proc get_next_item_of_itemtype {itemtype args} {
 	if {$idx < 0} {
 		return -1
 	}
-	
+
 	set n [expr $n - 1]
 	set maxidx [expr [inv_cnt $current_workplace] - 1]
 
@@ -403,27 +447,22 @@ proc get_next_item_of_itemtype {itemtype args} {
 			}
 		}
 	}
-	
+
 	return -1
 }
 
-
-// Zwerg läuft zu nächstem Gegenstand von geg. Typ in der Produktionsstätte
-
+# Used in: Saegewerk, Schmiede, Waffenschmiede
 proc prod_walk_itemtype {itemtype args} {
 	set obj [get_next_item_of_itemtype $itemtype $args]
-	if {$obj < 0} { 
-		return true 
+	if {$obj < 0} {
+		return true
 	}
-	
+
 	tasklist_add this "walk_pos \{[get_pos $obj]\}"
 	return true
 }
 
-
-// nächster Gegenstand des Typs wird aus der Produktionsstätte gelöscht
-// oder aus dem inventar des Zwerges
-
+# Unused!
 proc prod_consume {itemtype} {
 	set idx [inv_find this $itemtype]
 	if { $idx != -1 } {
@@ -447,11 +486,7 @@ proc prod_consume {itemtype} {
 	return true
 }
 
-
-// rückt das erste gefundene Item dieses Types ans Ende des Prod.stätten - Inventars
-// d.h. falls mehr als ein Objekt dieses Types in der PS ist, wird der nächste Aufruf
-// für diesen itemtype auf ein anderes item gehen
-
+# Used in: Tempel
 proc next_item_of_itemtype {itemtype} {
 	global current_workplace
 	set idx [inv_find $current_workplace $itemtype]
@@ -467,9 +502,7 @@ proc next_item_of_itemtype {itemtype} {
 	return true
 }
 
-
-// nächster Gegenstand des Typs wird aus der Produktionsstätte gelöscht
-
+# Used in many
 proc prod_consume_from_workplace {itemtype} {
 	global current_workplace
 	set idx [inv_find $current_workplace $itemtype]
@@ -484,46 +517,33 @@ proc prod_consume_from_workplace {itemtype} {
 	return true
 }
 
-
-// nächster Gegenstand des Typs in der Produnktionsstätte wird gedreht
-
+# Used in many
 proc prod_set_item_rotation {itemtype rx ry rz args} {
 	set obj [get_next_item_of_itemtype $itemtype $args]
-	if {$obj < 0} { 
-		return true 
+	if {$obj < 0} {
+		return true
 	}
 
 	tasklist_add this "set_rot $obj $rx $ry $rz"
 	return true
 }
 
-
-
-// Gegenstand vom Typ wird unsichtbar gemacht
-// (Sinnvoll in Verbindung mit prod_attach_itemtype_to_dummy)
-// Optionaler Paramerter: Nummer des Items (z.B. 2 = 2. Inventar)
-
+# Used in: Dampfhammer, Schmiede, Schreinerei
 proc prod_hide_itemtype {itemtype args} {
 	set obj [get_next_item_of_itemtype $itemtype $args]
-	if {$obj < 0} { 
-		return true 
+	if {$obj < 0} {
+		return true
 	}
-	
+
 	set_visibility $obj 0
 	return true
 }
 
-
-
-// Zwerg läuft zu nächstem Gegenstand von geg. Typ, bückt sich und der
-// Gegenstand wird unsichtbar gemacht
-// (Sinnvoll in Verbindung mit prod_attach_itemtype_to_dummy)
-// Optionaler Paramerter: Nummer des Items (z.B. 2 = 2. Inventar)
-
+# Used in many
 proc prod_walk_and_hide_itemtype {itemtype args} {
 	set obj [get_next_item_of_itemtype $itemtype $args]
-	if {$obj < 0} { 
-		return true 
+	if {$obj < 0} {
+		return true
 	}
 
 	set walkpos [get_place -center [get_pos $obj] -circle 2 -mindist 0.7 -except this -nearpos [get_pos this] -materials false]
@@ -540,21 +560,14 @@ proc prod_walk_and_hide_itemtype {itemtype args} {
 	return true
 }
 
-
-// ruft die Methode entsprechende Methode der Arbeitsstelle auf
-
+# Used in many
 proc prod_call_method {name args} {
 	global current_workplace
 	eval "call_method $current_workplace $name $args"
 	return true;
 }
 
-
-
-// Animation wird geloopt, mindestens minreps mal, maximal maxreps mal
-// die genaue Anzahl hängt von exp_infl ab (bei 0.0 wird maximal wiederholt,
-// bei 1.0 minimal)
-
+# Used in many
 proc prod_anim_loop_expinfl {animname minreps maxreps exp_infl} {
 	set reps [expr round((($maxreps - $minreps) * (1.0 - $exp_infl)) + $minreps)]
 	while {$reps > 0} {
@@ -564,11 +577,7 @@ proc prod_anim_loop_expinfl {animname minreps maxreps exp_infl} {
 	return true;
 }
 
-
-// Code wird geloopt, mindestens minreps mal, maximal maxreps mal
-// die genaue Anzahl hängt von exp_infl ab (bei 0.0 wird maximal wiederholt,
-// bei 1.0 minimal)
-
+# Unused!
 proc prod_code_loop_expinfl {code minreps maxreps exp_infl} {
 	set reps [expr round((($maxreps - $minreps) * (1.0 - $exp_infl)) + $minreps)]
 	while {$reps > 0} {
@@ -578,12 +587,7 @@ proc prod_code_loop_expinfl {code minreps maxreps exp_infl} {
 	return true;
 }
 
-
-// Zwerg bekommt Erfahrung dazu
-// Parameter: exp_incrs wird von prod_item_exp_incr <zu prod. item> geliefert
-//            part ist der Anteil der Gesamterfahrung, der jetzt vergeben werden
-//            soll; z.B. 0.5 für die Hälfte; dann sind also 2 Aufrufe nötig
-
+# Used in many
 proc prod_exp {exp_incrs part} {
 	foreach exp_incr $exp_incrs {
 		set genre [lindex $exp_incr 0]
@@ -597,16 +601,12 @@ proc prod_exp {exp_incrs part} {
 	return true;
 }
 
-
-// Gegenstand von geg. Typ aus der Produktionsstätte wird um einen
-// bestimmten Vektor bewegt
-// Optionaler Paramerter: Nummer des Items (z.B. 2 = 2. Inventar)
-
+# Used in: Saegewerk
 proc prod_move_item {itemtype vx vy vz args} {
 	global current_workplace
 	set obj [get_next_item_of_itemtype $itemtype $args]
-	if {$obj < 0} { 
-		return true 
+	if {$obj < 0} {
+		return true
 	}
 
 	set newpos [vector_add [get_pos $obj] [vector_pack $vx $vy $vz]]
@@ -617,17 +617,12 @@ proc prod_move_item {itemtype vx vy vz args} {
 	return true
 }
 
-
-
-// Gegenstand von geg. Typ wird an den geg. Dummy der Produktionsstätte
-// gelinkt und sichtbar gemacht
-// (normalerweise macht man ihn vorher unsichtbar...)
-
+# Used in: Kristallschmiede, Labor
 proc prod_link_itemtype_to_dummy {itemtype dummy args} {
 	global current_workplace
 	set obj [get_next_item_of_itemtype $itemtype $args]
-	if {$obj < 0} { 
-		return true 
+	if {$obj < 0} {
+		return true
 	}
 
 	link_obj $obj $current_workplace $dummy
@@ -635,17 +630,12 @@ proc prod_link_itemtype_to_dummy {itemtype dummy args} {
 	return true
 }
 
-
-// Gegenstand von geg. Typ wird an die Position eines Dummys der Produktionsstätte
-// gepackt (nicht gelinkt!) und sichtbar gemacht
-// (normalerweise macht man ihn vorher unsichtbar...)
-// Optionaler Paramerter: Nummer des Items (z.B. 2 = 2. Inventar)
-
+# Used in many
 proc prod_beam_itemtype_to_dummypos {itemtype dummy args} {
 	global current_workplace
 	set obj [get_next_item_of_itemtype $itemtype $args]
-	if {$obj < 0} { 
-		return true 
+	if {$obj < 0} {
+		return true
 	}
 
 	set newpos [vector_add [get_linkpos $current_workplace $dummy] [get_pos $current_workplace]]
@@ -657,13 +647,7 @@ proc prod_beam_itemtype_to_dummypos {itemtype dummy args} {
 	return true
 }
 
-
-
-// Gegenstand von geg. Typ wird relativ zur Position eines Dummys der Produktionsstätte
-// gepackt (nicht gelinkt!) und sichtbar gemacht
-// (normalerweise macht man ihn vorher unsichtbar...)
-// Optionaler Paramerter: Nummer des Items (z.B. 2 = 2. Inventar)
-
+# Used in many
 proc prod_beam_itemtype_near_dummypos {itemtype dummy rx ry rz args} {
 	global current_workplace
 	if {[string first "." $args]!=-1} {
@@ -675,10 +659,10 @@ proc prod_beam_itemtype_near_dummypos {itemtype dummy rx ry rz args} {
 	}
 
 	set obj [get_next_item_of_itemtype $itemtype $args]
-	if {$obj < 0} { 
-		return true 
+	if {$obj < 0} {
+		return true
 	}
-	
+
 	set newpos [vector_add [get_linkpos $current_workplace $dummy] [get_pos $current_workplace]]
 	set newpos [vector_add $newpos "$rx $ry $rz"]
 //  log "prod_beam_itemtype_near_dummypos: obj: $obj newpos: $newpos"
@@ -690,18 +674,11 @@ proc prod_beam_itemtype_near_dummypos {itemtype dummy rx ry rz args} {
 	return true
 }
 
-
-
-
-
-// Zwerg läuft zu nächstem Gegenstand von geg. Typ, bückt sich und
-// löscht den Gegenstand (d.h. simuliert(!) ein Aufheben)
-// Optionaler Paramerter: Nummer des Items (z.B. 2 = 2. Inventar)
-
+# Used in many
 proc prod_walk_and_consume_itemtype {itemtype args} {
 	set obj [get_next_item_of_itemtype $itemtype $args]
-	if {$obj < 0} { 
-		return true 
+	if {$obj < 0} {
+		return true
 	}
 
 	set walkpos [get_place -center [get_pos $obj] -circle 2 -mindist 0.7 -except this -nearpos [get_pos this] -materials false]
@@ -719,15 +696,7 @@ proc prod_walk_and_consume_itemtype {itemtype args} {
 	return true
 }
 
-
-
-
-// setzt die Animation für die aktuelle Arbeitsstelle
-// mögliche Schalter:
-// once  - Animation wird nur einmal abgespielt (default: loop)
-// start - activate_anim_timer wird bei der Arbeitsstelle aufgerufen
-// stop  - stop_anim_timer wird bei der Arbeitsstelle aufgerufen
-
+# Used in many
 proc prod_machineanim {animname args} {
 	global current_workplace
 	global ANIM_ONCE
@@ -747,11 +716,7 @@ proc prod_machineanim {animname args} {
 	return true
 }
 
-
-
-// Erzeugt ein neues Item vom angeg. Typ, packt es versteckt ins Inventar
-// der Produktionsstätte
-
+# Used in many
 proc prod_create_itemtype_ppinv_hidden {itemtype} {
 	global current_workplace
 	set obj [new $itemtype]
@@ -763,15 +728,11 @@ proc prod_create_itemtype_ppinv_hidden {itemtype} {
 	return true
 }
 
-
-
-// Verändert das Aussehen eines Halbzeuges
-// Optionaler Paramerter: Nummer des zu verändernden Items
-
+# Used in many
 proc prod_itemtype_change_look {itemtype look args} {
 	set obj [get_next_item_of_itemtype $itemtype $args]
-	if {$obj < 0} { 
-		return true 
+	if {$obj < 0} {
+		return true
 	}
 
 	if {[check_method $itemtype change_look]} {
@@ -780,22 +741,17 @@ proc prod_itemtype_change_look {itemtype look args} {
 	return true
 }
 
-
-// Zwerg dreht sich in Richtung des geg. Itemtype
-
+# Unused!
 proc prod_turn_towards_itemtype {itemtype args} {
 	set obj [get_next_item_of_itemtype $itemtype $args]
-	if {$obj < 0} { 
-		return true 
+	if {$obj < 0} {
+		return true
 	}
-	
+
 	tasklist_add this "rotate_towards $obj"
 }
 
-
-// Zwerg läuft in die Nähe eines Dummies, d.h. Position des Dummies
-// plus delta x, y ,z
-
+# Used in many
 proc prod_go_near_workdummy {dummyid dx dy dz} {
 	global current_workplace
 
@@ -807,25 +763,18 @@ proc prod_go_near_workdummy {dummyid dx dy dz} {
 	return true
 }
 
-
-
-// linkt einen gegenstand an die Hand des Zwerges
-
+# Used in many
 proc prod_link_itemtype_to_hand {itemtype args} {
 	set obj [get_next_item_of_itemtype $itemtype $args]
-	if {$obj < 0} { 
-		return true 
+	if {$obj < 0} {
+		return true
 	}
 
 	link_obj $obj this 0
 	return true
 }
 
-
-// genau wie createproduct_box, aber: es wird davon ausgegangen, daß der Zwerg eine (Halbzeug-)box
-// in der Hand hat, also andere Walkactions und andere Anims braucht und natürlich muß die Dummybox
-// im richtigen Moment gelöscht werden
-
+# Used in many
 proc prod_createproduct_box_with_dummybox {type} {
 	global current_workplace
 	sel /obj
@@ -868,12 +817,7 @@ proc prod_createproduct_box_with_dummybox {type} {
 	return true
 }
 
-
-// ein lustiger Unfall mit Feuer; Zwerg rennt zum angegebenen Dummy, um sich dort am Boden
-// zu wälzen
-// ACHTUNG: in genericprod werden die beiden Partikelquellen (4 und 5) sicherheitshalber beim
-// Ende der Produktion (Abruch?) ebenfalls gelöscht
-
+# Used in: Dampfhammer, Dampfmaschine, Hochofen, Schmelze, Waffenschmiede
 proc prod_fireaccident {dummyid} {
 	global current_workplace
 	tasklist_add this "change_particlesource this 4 27 {0 0 0} {0 0 0} 256 16 0 0 0 1; set_particlesource this 4 1"
@@ -895,12 +839,9 @@ proc prod_fireaccident {dummyid} {
 	return true
 }
 
-
-
-// Zwerg setzt Sonnenbrille auf oder ab
-
+# Used in: Dreherei, Moebeltischlerei
 proc prod_sunglasses {bool} {
-	if {$bool == 0} {
+	if { $bool == 0 } {
 		enable_auto_fanim
 	} else {
 		set_fanim {eyes 11}
@@ -914,7 +855,7 @@ proc prod_sunglasses {bool} {
 // ----------------------------------------------------------------------------------
 
 
-// liefert ein zufälliges Element der übergebenen Liste
+// liefert ein zufï¿½lliges Element der ï¿½bergebenen Liste
 
 proc get_random_element {liste} {
 	set max [expr [llength $liste] - 1]
@@ -1027,7 +968,7 @@ proc school_knowledge_transfer {baby} {
 	lappend attrlog [string range $attr 4 20] [string range $logg 0 6]
 	set transum [expr {$transum + $logg}]
 	set teachcap [expr {$teachcap + [get_attrib this $attr]}]
-	log "[string range [expr {$transum*100/[hmax $teachcap 0.1]}] 0 3]\% von [get_objname this] auf [get_objname $baby] übertragen."
+	log "[string range [expr {$transum*100/[hmax $teachcap 0.1]}] 0 3]\% von [get_objname this] auf [get_objname $baby] ï¿½bertragen."
 	log $attrlog
 }
 
@@ -1052,18 +993,15 @@ proc prod_school_checkrows {slst taskcnt} {
 //								        	Lager
 // ----------------------------------------------------------------------------------
 
-
-// veranlasst die aktuelle Produktionsstätte (ein Lager :-)) dazu, sich in der Nähe Gegenstände zum Lagern zu suchen
-
+# Makes store to look for items nearby
 proc prod_find_items {} {
 	global current_workplace
-
 	call_method $current_workplace find_items_to_store
 	return true
 }
 
 
-// sammelt alle Gegenstände, die das Lager angefordert hat
+// sammelt alle Gegenstï¿½nde, die das Lager angefordert hat
 // bzw. sammelt jeweils einen Gegenstand auf und setzt sich selbst wieder in die Tasklist, falls noch mehr geht
 
 proc prod_store_collect_all_items {} {
@@ -1074,7 +1012,7 @@ proc prod_store_collect_all_items {} {
 		return true
 	}
 
-	// nächstgelegenes Item suchen
+	// nï¿½chstgelegenes Item suchen
 
 	set mypos [get_pos this]
 	set next_item [lindex $itemlist 0]
@@ -1100,7 +1038,7 @@ proc prod_store_collect_all_items {} {
 	call_method $current_workplace set_storage_list $itemlist
 
 	if {[inv_check this $next_item] == 0} {
-		// item passt nicht in die Tasche --> fertig"
+		// item passt nicht in die Tasche --> fertig
 		return true
 	}
 
@@ -1113,7 +1051,7 @@ proc prod_store_collect_all_items {} {
 
 	// erstmal hinlaufen und dann nochmal checken
 	tasklist_add this "state_disable this; walk_action \"-target \{[get_pos $next_item]\} \" {state_enable this}"
-	tasklist_add this "store_pickup_item $next_item" 
+	tasklist_add this "store_pickup_item $next_item"
 
 	return true
 }
@@ -1121,51 +1059,51 @@ proc prod_store_collect_all_items {} {
 
 
 // wird aufgerufen, nachdem der Zwerg zu einem aufzusammelnden Item hingelaufen ist
-// hier wird nochmals gecheckt, sollte irgend etwas schiefgelaufen sein, wird 
-// beim nächsten Item weitergemacht
+// hier wird nochmals gecheckt, sollte irgend etwas schiefgelaufen sein, wird
+// beim nï¿½chsten Item weitergemacht
 
 proc store_pickup_item {item} {
 	global current_workplace
-	
+
 	set ok 1
-	
+
 	if {![obj_valid $item]} {
 		set ok 0
 		set pos {-100 -100 -100}
 	} else {
 		set pos [get_pos $item]
 	}
-	
+
 	if {$ok} {
 		set objtype [get_objtype $item]
-		if {$objtype == "production"  ||  $objtype == "energy"  ||  $objtype == "store"  ||  
+		if {$objtype == "production"  ||  $objtype == "energy"  ||  $objtype == "store"  ||
 			$objtype == "protection"  ||  $objtype == "elevator" } {
-	
+
 			if {[get_prod_unpack $item]} {
 				set ok 0
 			}
 		}
 	}
-	
+
 	if {$ok} {
 		if {[vector_dist3d [get_pos this] $pos] > 1.0} {
-			set ok 0	
+			set ok 0
 		}
 	}
-	
+
 	if {$ok} {
 		set owner [get_owner $item]
 		if {$owner != [get_owner this]  &&  $owner != -1} {
 			set ok 0
 		}
 	}
-	
+
 	if {$ok == 0} {
 		// Item existiert nicht mehr oder ist nicht erreicht worden oder sonstwas
 		log "store: failed to pick up item $item, continuing with next item"
 		tasklist_clear this
 		tasklist_add this "prod_store_collect_all_items"
-		return 
+		return
 	}
 
 	// alles okay, weitermachen!
@@ -1188,7 +1126,7 @@ proc prod_beam_to_store_slot {item slotidx} {
 
 
 // packt alle gesammelten Items ins Lager
-// erhöht ausserdem die Erfahrung des Zwerges
+// erhï¿½ht ausserdem die Erfahrung des Zwerges
 
 proc prod_store_collected_items {exp_incr {lastdummy -1}} {
 	global current_workplace
@@ -1207,7 +1145,7 @@ proc prod_store_collected_items {exp_incr {lastdummy -1}} {
 	log "Lager: Bringe $next_item in Slot $slotidx"
 	if {$slotidx == -1} {
 		log "WARNING: prod_store_collected_items: Zwerg hat Gegenstand $next_item gesammelt, es ist aber kein Platz!"
-		tasklist_add this "prod_beam_to_store_slot $next_item $slotidx"		;// Lager fängt Slotidx -1 selbst ab
+		tasklist_add this "prod_beam_to_store_slot $next_item $slotidx"		;// Lager fï¿½ngt Slotidx -1 selbst ab
 		return true
 	}
 
@@ -1264,7 +1202,7 @@ proc pickup_from_store {item} {
 
 proc prod_get_patient {k_haus_ref} {
 #returned Zwergereferenz oder -1
-///	;#der nächste Patient soll zurückgegeben werden
+///	;#der nï¿½chste Patient soll zurï¿½ckgegeben werden
 	set nextindex [prod_guest nextorder $k_haus_ref]
 	if {$nextindex == -1} {return -1}
 	set nextorder [prod_guest getorder $k_haus_ref $nextindex]
@@ -1430,7 +1368,7 @@ proc prod_bewachen_trigger {} {
 	return true
 }
 
-#Diese Proc gehört nur zu den "prod_bewachen_trigger" proc
+#Diese Proc gehï¿½rt nur zu den "prod_bewachen_trigger" proc
 proc trigger_ausloeser_vernichten {} {
 
 //--------------
@@ -1483,13 +1421,13 @@ proc prod_check_wall {} {
 // ----------------------------------------------------------------------------------
 
 // Wiederbelebung eines Zwerges (an Position $pos)
-// damit das funktioniert, muss im inventar der Produktionsstätte eine Zipfelmütze sein, in der die
-// Attribute des Zwerges gespeichert werden. Die Mütze wird NICHT gelöscht
+// damit das funktioniert, muss im inventar der Produktionsstï¿½tte eine Zipfelmï¿½tze sein, in der die
+// Attribute des Zwerges gespeichert werden. Die Mï¿½tze wird NICHT gelï¿½scht
 
 proc prod_ressurection {pos} {
 	set cap [get_next_item_of_itemtype Zipfelmuetze]
-	if {$cap < 0} { 
-		return true 
+	if {$cap < 0} {
+		return true
 	}
 
 	set zwerg [new Zwerg]
@@ -1497,7 +1435,7 @@ proc prod_ressurection {pos} {
 	set_owner $zwerg [get_owner this]
 	call_method $zwerg ressurection [call_method $cap get_gender] [call_method $cap get_name] [call_method $cap get_worktime] [call_method $cap get_expmax] [call_method $cap get_attribs] [expr {[call_method $cap get_age]-900}]
 	set_pos $zwerg $pos
-	create_particlesource 14 $pos {0 -0.2 0} 3 3  
+	create_particlesource 14 $pos {0 -0.2 0} 3 3
 
 	return true
 }
