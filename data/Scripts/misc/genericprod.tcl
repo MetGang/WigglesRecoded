@@ -1,11 +1,14 @@
-// genericprod.tcl
+call scripts/lib/list.tcl
+call scripts/debug.tcl
+call scripts/utility.tcl
 
-if {[in_class_def]} {
-// class definition part
+if { [in_class_def] } {
 
     set BOXED_CLASSES "production energy store elevator protection"
 	member BOXED_CLASSES
 	set noitemclasses "ZeltGrabsteinMittelalterschlafzimmerMittelalterwohnzimmerMittelalterbadIndustrieschlafzimmerIndustriewohnzimmerIndustriebadLuxusschlafzimmerLuxuswohnzimmerLuxusbad"
+
+	def_attrib [get_class_name] 0 10000 0
 
 	def_event evt_timer_delete
 	handle_event evt_timer_delete {
@@ -13,70 +16,59 @@ if {[in_class_def]} {
 		del this
 	}
 
-
 	def_event evt_timer_init
 	handle_event evt_timer_init {
-		if {[get_boxed this] == 0} {
-			if {[check_method [get_objclass this] init] == 1} {
+		if { ![get_boxed this] } {
+			if { [check_method [get_objclass this] init] } {
 			    call_method this init
 			} else {
-				log "WARNING: no init method for class [get_objclass this]"
+				log WARN "No init method for class [get_objclass this]"
 			}
 		}
 	}
 
-
-
-	// Event: Produktionsbuttons geklickt
-
 	def_event evt_btn_on
     handle_event evt_btn_on {
-		if {$current_itemtype != 0  &&  $current_worker != 0} {
-			if {![obj_valid $current_worker]} {
-				log "WARNING: genericprod.tcl : current_worker is != 0 but object invalid!"
+		if { $current_itemtype != 0 && $current_worker != 0 } {
+			if { ![obj_valid $current_worker] } {
+				log WARN "current_worker is != 0 but it is invalid"
 				set current_worker 0
 				return
 			}
-			if {[get_prod_slot_cnt this $current_itemtype] == 0} {
-				log "genericprod.tcl : production breaked; current worker is [get_objname $current_worker]"
+			if { ![get_prod_slot_cnt this $current_itemtype] } {
+				log WARN "Production broken in [get_objname this]; Current worker is [get_objname $current_worker]"
 				set_event $current_worker evt_zwerg_break -target $current_worker
 			}
-			if {[get_prod_pack this] == 1} {
-				log "genericprod.tcl : packing scheduled, breaking production; current worker is [get_objname $current_worker]"
+			if { [get_prod_pack this] } {
+				log WARN "Packing scheduled for [get_objname this], breaking production; Current worker is [get_objname $current_worker]"
 				set_event $current_worker evt_zwerg_break -target $current_worker
-				set_prod_pack this 1 		;// weil der Zwerg stop_prod sagt :-)
+				set_prod_pack this 1
 			}
 		} else {
 			free_unneeded_items
 		}
 	}
 
-
-	// Event: Gegenstand aus der nahen Umgebung als Material in die PS aufnehmen
-
 	def_event evt_prodplace_transferprod
 	handle_event evt_prodplace_transferprod {
-		//log "Prodplace [get_objname this] getting event evt_prodplace_tranferprod"
-
     	set item [event_get this -subject1]
 
-    	if {![obj_valid $item]} {
+    	if { ![obj_valid $item] } {
     		return
     	}
 
-    	if {[inv_find_obj this $item] >= 0} {
+    	if { [inv_find_obj this $item] != -1 } {
     		return
     	}
 
-		if {[is_contained $item]  ||  [get_lock $item]} {
-			log "genericprod.tcl : evt_prodplace_tranferprod : cannot take item $item !"
+		if { [is_contained $item] || [get_lock $item] } {
+			log WARN "[get_objname this] cannot take [get_objname $item]"
 			return
 		}
 
 		take_item $item
 	}
 
-	// Event: Zwerg zuweisen
 	def_event evt_task_workprod_prefer
 	handle_event evt_task_workprod_prefer {
 		prod_gnome_preferred_workplace [event_get this -subject1] [get_ref this]
@@ -87,17 +79,9 @@ if {[in_class_def]} {
 		sound play [event_get this -text1] 1.0 [get_pos this]
 	}
 
-	;# definition von productionscommandos der classe
-	proc add_prod_item item {
-		def_attrib Bp$item 0 1 0
-		def_attrib At$item 0 1 0
-	}
-
-
-	def_attrib [get_class_name] 0 10000 0
-
 	set classname [get_class_name]
-	if {[string first [get_class_type $classname] "productionstoreenergyprotection"]!=-1&&[string first $classname $noitemclasses]==-1} {
+
+	if { [string first [get_class_type $classname] "productionstoreenergyprotection"] != -1 && [string first $classname $noitemclasses] == -1 } {
 		set tttsection_tocall $classname
 		call scripts/misc/techtreetunes.tcl
 		method prod_items {} "return \{[subst \$tttitems_$classname]\}"
@@ -110,10 +94,7 @@ if {[in_class_def]} {
 		}
 		append meth_def "\}"
 		method prod_item_materials {item} $meth_def
-		//method prod_item_materials {item} "
-		//	global tttmaterial_$item
-		//	return [subst \$tttmaterial_$item]
-		//}
+
 		method prod_item_tools {item} {
 			return [list]
 		}
@@ -137,13 +118,20 @@ if {[in_class_def]} {
 				return 1
 			}
 		}
-		catch {unset classname tttmaterial_$classname tttinvent_$classname tttgain_$classname tttinfluence_$classname tttpreinv_$classname tttitems_$classname}
-	} else {unset classname}
+		catch {
+			unset classname tttmaterial_$classname tttinvent_$classname tttgain_$classname tttinfluence_$classname tttpreinv_$classname tttitems_$classname
+		}
+	} else {
+		unset classname
+	}
+
 	set itemlst [call_method_static [get_class_name] prod_items]
 	set firstitem [lindex $itemlst 0]
 	foreach itemtype $itemlst {
-		add_prod_item $itemtype
+		def_attrib Bp$itemtype 0 1 0
+		def_attrib At$itemtype 0 1 0
 	}
+
 	if { [check_method [get_class_name] prod_preinvented] } {
 		set itemlst [call_method_static [get_class_name] prod_preinvented]
 		foreach itemtype $itemlst {
@@ -155,68 +143,67 @@ if {[in_class_def]} {
 //		log " Christoph *****: - $firstitem"
 	}
 
-	;# classen destructor
 	obj_exit {
 		add_owner_attrib [get_owner this] [get_objclass this] -1
 		stop_production 1
 	}
 
-	method change_owner {new_owner } {
+	method change_owner {new_owner} {
 		set_owner this $new_owner
 	}
 
-
-    // gibt alle Partikelquellen frei, damit sie während der Abbauanimation
-    // nicht stören
-    // evtl. noch für andere Sachen nützlich???
-
     method prepare_packtobox {} {
-		set_light this 0			;# abschalten eventuell vorhandener lichtquellen
-		;# gib alle partikelquellen frei
-		for {set index 0} {$index<16} {incr index} { free_particlesource this $index }
+		set_light this 0
+		for { set i 0 } { $i < 16 } { incr i } {
+			free_particlesource this $i
+		}
     }
 
+	# Building -> box
 	method packtobox {} {
-		// falls classe eine Methode local_packtobox besitzt
-       log "PACKTOBOX - [get_ref this]: [get_objname this]"
-		if {[check_method [get_objclass this] local_packtobox] == 1} {
+		if { [check_method [get_objclass this] local_packtobox] } {
 		    call_method this local_packtobox
 		} else {
 			stop_production	1
 		}
-		set_fogofwar this -1 -1		;# die maschine deckt den fog of war nicht mehr auf
-		set_light this 0			;# abschalten eventuell vorhandener lichtquellen
-		;# gib alle partikelquellen frei
-		for {set index 0} {$index<16} {incr index} { free_particlesource this $index }
+
+		set_fogofwar this -1 -1
+
+		set_light this 0
+		for { set i 0 } { $i < 16 } { incr i } {
+			free_particlesource this $i
+		}
+
 		set_boxed this 1
 	}
 
+	# Box -> building
 	method unpackfrombox {} {
 		set_rot this {0 0 0}
-		//set_fogofwar this 8 8
-		if {[info exist tttfow_x] && [info exist tttfow_y]} {
-			log "FOW fuer [get_objclass [get_ref this]] mit x = $tttfow_x und y = $tttfow_y wird aufgedeckt"
+
+		if { [info exist tttfow_x] && [info exist tttfow_y] } {
 			set_fogofwar this $tttfow_x $tttfow_y
 		}
 
 		tasklist_clear this
 		set_boxed this 0
 		hide_obj_ghost this
-		if {[check_method [get_objclass this] init] == 1} {
+
+		if { [check_method [get_objclass this] init] } {
 		    call_method this init
 		} else {
-			log "WARNING: no init method for class [get_objclass this]"
+			log WARN "No init method for class [get_objclass this]"
 		}
 	}
 
 	method set_buildupstep {val} {
-		global buildup_step max_buildup_step
+		global buildup_step
 		if { $val == "max" } {
-			set buildup_step [expr $max_buildup_step + 1]
+			set buildup_step [expr [get_max_buildup_step] + 1]
 		} else {
 			set buildup_step $val
 		}
-		info_progress_prod this $buildup_step [expr {$max_buildup_step+1}]
+		info_progress_prod this $buildup_step [expr {[get_max_buildup_step] + 1}]
 		set_buildupanim
 	}
 
@@ -234,15 +221,15 @@ if {[in_class_def]} {
 
 		delete_transportlogic this
 		call_method this prepare_packtobox
-		call_method this show_damage			;# nochmal, weil prepare_packtobox die Partikel löscht
-		
+		call_method this show_damage			;# nochmal, weil prepare_packtobox die Partikel lï¿½scht
+
 		foreach item [inv_list this] {
 			release_item $item
 			if {[get_posx $item] <= 0  ||  [get_posy $item] <= 0} {
 				set_pos $item [get_pos this]
 			}
 		}
-		
+
 		set_selectable this 0
 		set_hoverable this 0
 		if {[get_selectedobject] == [get_ref this]} {
@@ -260,11 +247,12 @@ if {[in_class_def]} {
 
 
 	method show_damage {} {
-		global damage_dummys maxhitpoints
+		global maxhitpoints
 		set hitpoints [get_attrib this atr_Hitpoints]
-		if {$damage_dummys != 0} {
-			set mindummy [lindex $damage_dummys 0]
-			set maxdummy [lindex $damage_dummys 1]
+		set damage_dummies [get_damage_dummies]
+		if {$damage_dummies != 0} {
+			set mindummy [lindex $damage_dummies 0]
+			set maxdummy [lindex $damage_dummies 1]
 			set maxfires [expr $maxdummy - $mindummy + 1]
 			set nroffires [expr int((1 - ($hitpoints / $maxhitpoints)) * $maxfires)]
 			//log "[get_objname this] hp: $hitpoints maxhp:$maxhitpoints mind:$mindummy maxd:$maxdummy"
@@ -288,54 +276,44 @@ if {[in_class_def]} {
 		eval_info $ifo
 	}
 
+	# Unused!
 	method get_attackapproach_range {} {
 		return 2.0
 	}
-
-
-	// Gegenstand in der PS als Material hinzufügen
 
 	method take_item {item} {
 		take_item $item
 	}
 
-
 	method get_buildupstep {} {
 		global buildup_step
 		if {$buildup_step == "max"} {
-			set buildup_step [expr $max_buildup_step + 1]
+			set buildup_step [expr [get_max_buildup_step] + 1]
 		}
 		return $buildup_step
 	}
 
-
 	method get_maxbuildupstep {} {
-		global max_buildup_step
-		return $max_buildup_step
+		return [get_max_buildup_step]
 	}
-
 
 	method get_buildupanim {} {
 		global buildup_step
 		if { $buildup_step == 0 } {
-			//beim Aufzug darf er nicht stehen
-			if {[lsearch "Aufzug Dampfaufzug Kristallaufzug" [get_objclass this]] != -1} {
+			if { [lsearch "Aufzug Dampfaufzug Kristallaufzug" [get_objclass this]] != -1 } {
 				return oben_rechtsstein
 			}
 			return digdownstone
 		}
-		global buidup_anis
-		return [lindex $buidup_anis [expr $buildup_step - 1]]
+		return [lindex [get_buildup_anis] [expr {$buildup_step - 1}]]
 	}
 
 	method get_repairanim {step} {
-		global buidup_anis
 		if { $step == 0 } {
 			return digdownstone
 		}
-		return [lindex $buidup_anis [expr $step - 1]]
+		return [lindex [get_buildup_anis] [expr {$step - 1}]]
 	}
-
 
 	method inc_buildupstep {val 1} {
 		global buildup_step
@@ -344,8 +322,6 @@ if {[in_class_def]} {
 		set_buildupanim
 		return $buildup_step
 	}
-
-	// default implementations
 
 	method get_itemtasklist {itemtype gnomeref} {
 		set current_worker $gnomeref
@@ -369,13 +345,12 @@ if {[in_class_def]} {
 		info_progress_prod this $prod_currentstep $prod_maxsteps
 	}
 
-
 	method finish_itemprod {itemtype} {
 		global job_finished
-		
+
 		info_end_prod this
 		set job_finished 0
-		 
+
 		stop_production
 	}
 
@@ -388,68 +363,91 @@ if {[in_class_def]} {
 		return [list]
 	}
 
-
+	#
 	method get_current_worker {} {
-		global current_worker
-		return $current_worker
+		return [get_current_worker]
 	}
 
-	method get_build_dummy {index} {
-		global build_dummys
-		return [lindex $build_dummys [expr {$index-1}]]
+	#
+	method get_energy_consumption {} {
+		return [get_energy_consumption]
 	}
 
-	//method get_max_buildup_step {} {
-	//	global max_buildup_step
-	//	return $max_buildup_step
-	//}
-
-	method get_energyclass {} {
-		return $myenergyclass
+	#
+	method get_energy_store {} {
+		return [get_energy_store]
 	}
 
-	method_const  get_max_buildup_step {} {
-		global max_buildup_step
-		return $max_buildup_step
+	#
+	method get_energy_max_store {} {
+		return [get_energy_max_store]
 	}
 
+	#
+	method get_energy_yield {} {
+		return [get_energy_yield]
+	}
+
+	#
+	method get_energy_class {} {
+		return [get_energy_class]
+	}
+
+	#
+	method get_energy_range {} {
+		return [get_energy_range]
+	}
+
+	#
+	method get_build_dummy {idx} {
+		return [get_build_dummy $idx]
+	}
+
+	#
+	method get_max_buildup_step {} {
+		return [get_max_buildup_step]
+	}
+
+	#
 	method nt_conquer {} {
 		set id [newsticker new [get_owner this] -text "[lmsg [get_objclass this]] [lmsg wirdangegriffen]" -time [expr {3 * 60}]]
 		newsticker change $id -click "newsticker delete $id; set_view [get_posx this] [expr {[get_posy this] -1}] 0 -0.35 0"
 	}
 
+	#
 	method nt_conquer_inform {} {
 		set id [newsticker new [get_owner this] -text "[lmsg [get_objclass this]] [lmsg anfeindverloren]" -time [expr {3 * 60}]]
 		newsticker change $id -click "newsticker delete $id; set_view [get_posx this] [expr {[get_posy this] -1}] 0 -0.35 0"
 	}
 
-	//Wird nur für Aufzüge verwendet
+	#
 	method letfalldown {} {
-		if {[lsearch "Aufzug Dampfaufzug Kristallaufzug" [get_objclass this]] != -1} {
-			log "LETFALLDOWN: [get_objname this]"
+		# Special case for elevators
+		if { [lsearch "Aufzug Dampfaufzug Kristallaufzug" [get_objclass this]] != -1 } {
 			set_posy this [expr [get_posy this] + 2]
 		}
 	}
-	
-	
-	// Aufruf teilt der PS mit, das dieser Auftrag ab sofort als erledigt anzusehen ist, auch wenn er später
-	// noch abgebrochen wird
-	
+
+	#
 	method job_finished {} {
 		global job_finished
 		set job_finished 1
 	}
 
+	#
+	method get_object_groups {} {
+		return [get_object_groups]
+	}
 
 } else {
 
-	set_physic this 1				;# die punktphysik einschalten
-	set_viewinfog this 1
-	set_selectable this 1
-	set_hoverable this 1
-	set_placesnapmode this 0
 	set_buildupstate this 1
-#	set_collision this 1
+	set_hoverable this 1
+	set_physic this 1
+	set_placesnapmode this 0
+	set_selectable this 1
+	set_viewinfog this 1
+
 	add_owner_attrib [get_owner this] [get_objclass this] 1
 
 	set maxhitpoints 1
@@ -462,7 +460,7 @@ if {[in_class_def]} {
 	set damage_dummys 		0
 	set current_worker 		0
 	set current_itemtype 	0
-	set job_finished		0				;// wird gesetzt, wenn die Aufgabe eigentlich erledigt ist, Produktion aber noch läuft
+	set job_finished		0				;// wird gesetzt, wenn die Aufgabe eigentlich erledigt ist, Produktion aber noch lï¿½uft
 	set info_string 		""
 
 	set myclassname [get_objclass this]
@@ -485,8 +483,6 @@ if {[in_class_def]} {
 	if {[info exist tttfow_x] && [info exist tttfow_y]} {
 		set_fogofwar this $tttfow_x $tttfow_y
 	}
-
-	set myenergyclass [subst \$tttenergyclass_$myclassname]
 
 	// nimmt das item als Material in diese PS auf
 
@@ -513,13 +509,9 @@ if {[in_class_def]} {
 		return true
 	}
 
-
-
-	// wirft ein item aus der PS heraus (d.h. macht es für andere wieder verfügbar)
-
+	#
 	proc release_item {item} {
-
-		if {![obj_valid $item]} {
+		if { ![obj_valid $item] } {
 			return false
 		}
 
@@ -536,8 +528,7 @@ if {[in_class_def]} {
 		return true
 	}
 
-	// wirft ein item einer bestimmten Klasse aus der PS heraus (d.h. macht es für andere wieder verfügbar)
-
+	#
 	proc release_itemtype {itemclass} {
 		set idx [inv_find this $itemclass]
 
@@ -550,64 +541,51 @@ if {[in_class_def]} {
 		return true
 	}
 
-
-	// liefert eine Liste meines Inventorys, als Klassennamenliste (z.B. "Pilzstamm Pilzstamm Pilzstamm Stein")
-
-	proc get_inv_class_list {} {
-		set result ""
-		foreach item [inv_list this] {
-			lappend result [get_objclass $item]		}
-		return $result
+	#
+	proc get_inv_list {} {
+		return [inv_list this]
 	}
 
+	#
+	proc get_inv_class_list {} {
+		set rlst [list]
+		foreach item [get_inv_list] {
+			lappend rlst [get_objclass $item]
+		}
+		return $rlst
+	}
 
-	// gibt items, die im Moment nicht benötigt werden, wieder frei
-
+	#
 	proc free_unneeded_items {} {
 		global current_worker
 
-		if {[get_boxed this]} {
-			return
-		}
+		if { [get_boxed this] } { return }
 
-		if {$current_worker != 0} {
-			return
-		}
+		if { $current_worker != 0 } { return }
 
-		if {[get_objclass this] == "Lager"} {
-			return
-		}
+		if { [get_objclass this] == "Lager" } { return }
 
-		// feststellen, was wir überhaupt brauchen
-		set itemneedlist ""
-		set myowner [get_owner this]
+		# List of items required for production
+		set required_items [list]
+
+		# Check every slot
 		foreach slot [call_method this prod_items] {
-			if {[get_owner_attrib $myowner Bp$slot] > 0} {
-				set i [get_prod_slot_cnt this $slot]
-				if {$i > 0} {
-					set materiallist [call_method this prod_item_materials $slot]
-					while {$i > 0} {
-						set itemneedlist [concat $itemneedlist $materiallist]
-						incr i -1
+			# Include only when invented
+			if { [get_owner_attrib [get_owner this] Bp$slot] > 0 } {
+				set cnt [get_prod_slot_cnt this $slot]
+				if { $cnt > 0 } {
+					set materials [call_method this prod_item_materials $slot]
+					while { $cnt > 0 } {
+						set required_items [concat $required_items $materials]
+						incr cnt -1
 					}
 				}
 			}
 		}
 
-		set itemhavelist [get_inv_class_list]
-		//if {$itemneedlist!=""} {log "[get_objname this] - items needed: $itemneedlist"}
-		//if {$itemhavelist!=""} {log "[get_objname this] - items I have: $itemhavelist"}
-
-		// von den vorhandenen die benötigten abziehen
-		foreach item $itemneedlist {
-			set idx [lsearch $itemhavelist $item]
-			if {$idx >= 0} {
-				lrem itemhavelist $idx
-			}
-		}
-
-		if {$itemhavelist!=""} {log "[get_objname this] - items to throw out: $itemhavelist"}
-		foreach item $itemhavelist {
+		# Release items that are not actually required
+		set items_to_free [ldiff [get_inv_class_list] $required_items]
+		foreach item $items_to_free {
 			release_itemtype $item
 		}
 	}
@@ -624,7 +602,7 @@ if {[in_class_def]} {
 		}
 		set job_finished 0
 
-		// Partikelquellen am Zwerg löschen (Feuerunfall?)
+		// Partikelquellen am Zwerg lï¿½schen (Feuerunfall?)
 
 		if {$current_worker != 0} {
 			if {[obj_valid $current_worker]} {
@@ -641,7 +619,7 @@ if {[in_class_def]} {
 			set_buildupanim
 		}
 
-		// Evtl. Aufräum-Procs der Produktionsstätte aufrufen (Partikel löschen etc.)
+		// Evtl. Aufrï¿½um-Procs der Produktionsstï¿½tte aufrufen (Partikel lï¿½schen etc.)
 
 		if {[check_method [get_objclass this] stop_anim_timer]} {
 			call_method this stop_anim_timer
@@ -651,8 +629,8 @@ if {[in_class_def]} {
 			call_method this deinit_production
 		}
 
-		// alle Halbzeuge löschen, evtl. unsichtbare Items sichtbar machen
-		// arg "deplazierte" Gegenstände auf vernünftige Positionen am Boden zurückholen
+		// alle Halbzeuge lï¿½schen, evtl. unsichtbare Items sichtbar machen
+		// arg "deplazierte" Gegenstï¿½nde auf vernï¿½nftige Positionen am Boden zurï¿½ckholen
 		// muss und darf nicht mit dem Lager gemacht werden!
 
 		if {[get_objclass this] != "Lager"} {
@@ -679,7 +657,7 @@ if {[in_class_def]} {
 			}
 		}
 
-		// nicht mehr benötigte Gegenstände freigeben
+		// nicht mehr benï¿½tigte Gegenstï¿½nde freigeben
 
 		free_unneeded_items
 
@@ -738,10 +716,10 @@ if {[in_class_def]} {
 
 
 
-    // liefert eine Zahl zwischen 0.0 und 1.0 abhängig von den geforderten Erfahrungen
-    // für eine Aufgabe (exp_infls) und den tatsächlichen des Zwerges
+    // liefert eine Zahl zwischen 0.0 und 1.0 abhï¿½ngig von den geforderten Erfahrungen
+    // fï¿½r eine Aufgabe (exp_infls) und den tatsï¿½chlichen des Zwerges
     // 0.0 - Minimalpunktzahl: der Zwerg hat keine der geforderten Erfahrungen
-    // 1.0 - Maximalpunktzahl: der Zwerg erfüllt die Anforderungen vollkommen
+    // 1.0 - Maximalpunktzahl: der Zwerg erfï¿½llt die Anforderungen vollkommen
 
    	proc prod_getgnomeexper {ref exp_infls} {
 		set exp_infls [lindex $exp_infls 0]
@@ -761,27 +739,25 @@ if {[in_class_def]} {
         return [expr $exper*0.7+[get_attrib $ref atr_Mood]*0.3]
 	}
 
-
+	# Unused!
 	proc eval_info {ifo} {
 		foreach item $ifo {
 			set nam [lindex $item 0]
 			set val [lindex $item 1]
 			switch $nam {
-				hitpoints {set_attrib this atr_Hitpoints $val}
+				hitpoints { set_attrib this atr_Hitpoints $val }
 			}
 		}
 		call_method this show_damage
 	}
 
+	#
 	proc set_buildupanim {} {
-		global buildup_step max_buildup_step standard_anim
+		global buildup_step standard_anim
 
-		if {[get_boxed this]} {
-			return
-		}
+		if { [get_boxed this] } { return }
 
-
-		if { $buildup_step > $max_buildup_step } {
+		if { $buildup_step > [get_max_buildup_step] } {
 			set ani standard
 		} else {
 			switch $buildup_step {
@@ -800,16 +776,105 @@ if {[in_class_def]} {
 		}
 
 		set cname [string tolower [get_objclass this]]
-		catch {set cname [lindex [split $standard_anim "."] 0]}
-		if {$cname=="grabstein"&&$ani=="standard"} {set ani [lindex [split $standard_anim "."] 1]}
-		//log "genprod banim: $cname $ani $buildup_step $max_buildup_step"
-		if { [catch {	set_anim this $cname.$ani 0 0	}] } {
-			log "[get_objname this]: buildup-anim not found: $ani"
+		catch { set cname [lindex [split $standard_anim "."] 0] }
+
+		# Awful hack for Grabstein
+		if { $cname == "grabstein" && $ani == "standard" } {
+			set ani [lindex [split $standard_anim "."] 1]
 		}
-		if {$buildup_step == "max"} {
-			set buildup_step [expr $max_buildup_step + 1]
+
+		if { [catch { set_anim this $cname.$ani 0 0 }] } {
+			log WARN "[get_objname this]: buildup-anim not found: $ani"
 		}
-		set buildinprogress [expr $buildup_step > $max_buildup_step]
-		set_buildupstate this $buildinprogress
+
+		if { $buildup_step == "max" } {
+			set buildup_step [expr {[get_max_buildup_step] + 1}]
+		}
+
+		set_buildupstate this [expr {$buildup_step > [get_max_buildup_step]}]
+	}
+
+	#
+	proc get_ttt {ttt fallback} {
+		set classname [get_objclass this]
+		global $ttt\_$classname
+		if { [info exist $ttt\_$classname] } {
+			return [subst \$$ttt\_$classname]
+		} else {
+			return $fallback
+		}
+	}
+
+	#
+	proc get_current_worker {} {
+		global current_worker
+		return $current_worker
+	}
+
+	#
+	proc get_energy_consumption {} {
+		return [get_ttt tttenergycons 0]
+	}
+
+	#
+	proc get_energy_store {} {
+		if { [get_objtype this] == "energy" } {
+			return [get_energystore this]
+		} else {
+			return 0
+		}
+	}
+
+	#
+	proc get_energy_max_store {} {
+		return [get_ttt tttenergymaxstore 0]
+	}
+
+	#
+	proc get_energy_yield {} {
+		return [get_ttt tttenergyyield 0]
+	}
+
+	#
+	proc get_energy_class {} {
+		return [get_ttt tttenergyclass 0]
+	}
+
+	#
+	proc get_energy_range {} {
+		return [get_ttt tttenergyrange 0]
+	}
+
+	#
+	proc get_build_dummies {} {
+		global build_dummys
+		return $build_dummys
+	}
+
+	#
+	proc get_build_dummy {idx} {
+		return [lindex [get_build_dummies] [expr {$idx - 1}]]
+	}
+
+	#
+	proc get_max_buildup_step {} {
+		return [llength [get_build_dummies]]
+	}
+
+	#
+	proc get_buildup_anis {} {
+		global buidup_anis
+		return $buidup_anis
+	}
+
+	#
+	proc get_damage_dummies {} {
+		global damage_dummys
+		return $damage_dummys
+	}
+
+	#
+	proc get_object_groups {} {
+		return {}
 	}
 }

@@ -1,8 +1,6 @@
-//# STOPIFNOT FULL
 def_class _Offen fight material 1 {} {}
 def_class _Verschlossen fight material 1 {} {}
 def_class _Automatisch fight material 1 {} {}
-
 
 def_class Holztuer metal protection 2 {} {
 	call scripts/misc/animclassinit.tcl
@@ -35,19 +33,34 @@ def_class Holztuer metal protection 2 {} {
 		set_prod_exclusivemode this 1
 		set_prod_enabled this 0
 
-		;// Flüssigkeitseinfluss
+		;// Flï¿½ssigkeitseinfluss
 		set_fstopper this {0 -2} {0 1} 0
 
-		;// verzögerte Initialisierungen
+		;// verzï¿½gerte Initialisierungen
 		timer_event this evt_timer0 -repeat 0 -userid 0 -attime [expr [gettime]+1]
 
 		set infostring ""
 		set undefined undefined
 
-		set build_dummys [list 27 27 24 19]
-		set max_buildup_step [llength $build_dummys]
-		set buidup_anis {unten_rechtsholz unten_linksholz oben_linksholz oben_rechtsholz}
-		set damage_dummys {26 16}
+		# Override!
+		proc get_build_dummies {} {
+			return {27 27 24 19}
+		}
+
+		# Override!
+		proc get_buildup_anis {} {
+			return {unten_rechtsholz unten_linksholz oben_linksholz oben_rechtsholz}
+		}
+
+		# Override!
+		proc get_damage_dummies {} {
+			return {26 16}
+		}
+
+		# Override!
+		proc get_object_groups {} {
+			return {door}
+		}
 	}
 }
 
@@ -82,19 +95,34 @@ def_class Steintuer metal protection 2 {} {
 		set_prod_exclusivemode this 1
 		set_prod_enabled this 0
 
-		;// Flüssigkeitseinfluss
+		;// Flï¿½ssigkeitseinfluss
 		set_fstopper this {0 -2} {0 1} 0
 
-		;// verzögerte Initialisierungen
+		;// verzï¿½gerte Initialisierungen
 		timer_event this evt_timer0 -repeat 0 -userid 0 -attime [expr [gettime]+1]
 
 		set infostring ""
 		set undefined undefined
 
-		set build_dummys [list 27 27 24 19]
-		set max_buildup_step [llength $build_dummys]
-		set buidup_anis {unten_rechtsstein unten_linksstein oben_linksstein oben_rechtsstein}
-		set damage_dummys {26 16}
+		# Override!
+		proc get_build_dummies {} {
+			return {27 27 24 19}
+		}
+
+		# Override!
+		proc get_buildup_anis {} {
+			return {unten_rechtsstein unten_linksstein oben_linksstein oben_rechtsstein}
+		}
+
+		# Override!
+		proc get_damage_dummies {} {
+			return {26 16}
+		}
+
+		# Override!
+		proc get_object_groups {} {
+			return {door}
+		}
 	}
 }
 
@@ -129,19 +157,34 @@ def_class Metalltuer metal protection 2 {} {
 		set_prod_exclusivemode this 1
 		set_prod_enabled this 0
 
-		;// Flüssigkeitseinfluss
+		;// Flï¿½ssigkeitseinfluss
 		set_fstopper this {0 -2} {0 1} 0
 
-		;// verzögerte Initialisierungen
+		;// verzï¿½gerte Initialisierungen
 		timer_event this evt_timer0 -repeat 0 -userid 0 -attime [expr [gettime]+1]
 
 		set infostring ""
 		set undefined undefined
 
-		set build_dummys [list 27 27 24 19]
-		set max_buildup_step [llength $build_dummys]
-		set buidup_anis {unten_rechtsmetall unten_linksmetall oben_linksmetall oben_rechtsmetall}
-		set damage_dummys {26 16}
+		# Override!
+		proc get_build_dummies {} {
+			return {27 27 24 19}
+		}
+
+		# Override!
+		proc get_buildup_anis {} {
+			return {unten_rechtsmetall unten_linksmetall oben_linksmetall oben_rechtsmetall}
+		}
+
+		# Override!
+		proc get_damage_dummies {} {
+			return {26 16}
+		}
+
+		# Override!
+		proc get_object_groups {} {
+			return {door}
+		}
 	}
 }
 
@@ -176,18 +219,33 @@ def_class Kristalltuer metal protection 2 {} {
 		set_prod_exclusivemode this 1
 		set_prod_enabled this 0
 
-		;// Flüssigkeitseinfluss
+		;// Flï¿½ssigkeitseinfluss
 		set_fstopper this {0 -2} {0 1} 0
 
-		;// verzögerte Initialisierungen
+		;// verzï¿½gerte Initialisierungen
 		timer_event this evt_timer0 -repeat 0 -userid 0 -attime [expr [gettime]+1]
 
 		set infostring ""
 		set undefined undefined
 
-		set build_dummys [list 27 27 24 19]
-		set max_buildup_step [llength $build_dummys]
-		set buidup_anis {unten_rechtsstein unten_linksstein oben_linksstein oben_rechtsstein}
-		set damage_dummys {26 16}
+		# Override!
+		proc get_build_dummies {} {
+			return {27 27 24 19}
+		}
+
+		# Override!
+		proc get_buildup_anis {} {
+			return {unten_rechtsstein unten_linksstein oben_linksstein oben_rechtsstein}
+		}
+
+		# Override!
+		proc get_damage_dummies {} {
+			return {26 16}
+		}
+
+		# Override!
+		proc get_object_groups {} {
+			return {door}
+		}
 	}
 }
