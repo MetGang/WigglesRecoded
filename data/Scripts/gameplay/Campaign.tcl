@@ -1,26 +1,29 @@
-// ######################### Campaign load ##########################
+call scripts/debug.tcl
+
+log INIT "Campaign.tcl started"
+
 map create 512 640
 sm_draw_stone -border
 sm_draw_stone -funnel
 
 generate_color_variation 0 0 512 640 0
-#set_fow_begin 133
+
 set_light_begin 33
 set_view_begin 23
-set_view 246.7 28.8 1.478 -0.29 0.05		;# set inital camera view (x y zoom)
+set_view 246.335266113 29.1184692382 1.34999990463 -0.250000029803 0.0
 
 set temppos {208 0};call templates/tcl/urw_unq_start.tcl
 set temppos {30 23};call templates/tcl/urw_unq_hoehlenmalerei.tcl
-//MapTemplateSet 40 30
+
 map_setlayer2 30 23 data/templates/urw_unq_hoehlenmalerei.l2m
 
-//adaptive_sound marker start {294 30 10}
-//adaptive_sound marker cave {294 45 10}
+# ?
+# adaptive_sound marker start {294 30 10}
+# adaptive_sound marker cave {294 45 10}
 
 sm_set_temp {{urw_unq_start 208 0} {urw_unq_hoehlenmalerei 30 23}}
 
 proc first_level {startx starty} {
-
 	# Templates fuer Hoehlen
 	set cavelist {}
 	lappend cavelist {urw_hol_001_a 20 4}
@@ -173,8 +176,6 @@ proc first_level {startx starty} {
 		lappend temp_list [list $tempname [expr {$vodo_x+$xoffset}] [expr {$vodo_y+$yoffset}]]
 	}
 
-	log $temp_list
-
 	foreach nexttemp $temp_list {
 
     	set template [lindex $nexttemp 0]
@@ -190,28 +191,20 @@ proc first_level {startx starty} {
     }
 }
 
-
-
+# ?
 first_level 208 0
-//sm_map_set
 
-set wl [obj_query 0 -class Wuker]
-if { $wl != 0 } {
-	foreach item $wl {
-		del $item
-	}
-}
-
+# For remover for the starter base
 sel /obj
 set FR [new FogRemover]
 set_undeletable $FR 1
 set_pos $FR {239 14 15}
 call_method $FR fog_remove 0 46 22
 
+# Hack to load campaign even faster
+gametime factor 16.0
 
+# Hide loading screen
 show_loading 0
 
-#set_brightness 2
-
-log "Campaign.tcl loaded..."
-
+log INIT "Campaign.tcl finished"
