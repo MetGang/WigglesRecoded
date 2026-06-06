@@ -1,0 +1,29 @@
+[
+  {
+    "name": "get_objclass",
+    "arguments": [],
+    "description": "Returns the class (name) of the object."
+  },
+  {
+    "name": "get_objname",
+    "arguments": [],
+    "description": "Returns the name of the object."
+  },
+  {
+    "name": "get_objtype",
+    "arguments": [],
+    "description": "Returns the type of the object."
+  },
+  {
+    "name": "get_selectedboject",
+    "arguments": [],
+    "description": "Returns the numeric id of the selected object. If multiple objects are selected, only one is returned - usually the one with the lowest id."
+  },
+  {
+    "name": "set_selectedobject",
+    "arguments": [
+      "id"
+    ],
+    "description": "Selects the object designated by the given id."
+  }
+]

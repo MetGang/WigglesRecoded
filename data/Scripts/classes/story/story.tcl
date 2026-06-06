@@ -1,26 +1,8 @@
-
-proc load {} {
-	call GameScripts/single_CampaignX.tcl
-}
-
-proc delz {} {
-	foreach item [obj_query this "-class Zwerg"] {
-		del $item
-	}
-}
-
-proc delt {} {
-	foreach item [obj_query this "-class Troll"] {
-		del $item
-	}
-}
-
-
-
 def_class StoryMgr none info 0 {} {
 	obj_init {
-		// Bitte löscht mich nicht !!!
+
 		set_undeletable this 1
+
 		proc get_next_areas {} {
 			global act_sort_x act_sort_y resolution
 			set zlist [obj_query this "-class Zwerg"]
@@ -510,13 +492,13 @@ def_class StoryMgr none info 0 {} {
 				log "Warning newsticker entry not found: $ent !"
 			}
 			set text [gettext $ent]
-			set text "[parse_text $text $trg] [lmsg \"erfuellt\"]"
+			set text "[parse_text $text $trg] [lmsg erfuellt]"
 
 			newsticker delete $id
 			log "******** newsticker delete fulfilled $id"
 		}
 
-/// Übergang Weltverschiebung
+/// ï¿½bergang Weltverschiebung
 		proc newsticker_spec {ent param trg {click ""}} {
 			global UR_WarningCnt_0 UR_WarningCnt_1 UR_WarningCnt_2 Generate_enabled UR_WarningTimer_0 UR_WarningTimer_1 UR_WarningTimer_2 last_newsticker_warning_id
 
@@ -581,7 +563,7 @@ def_class StoryMgr none info 0 {} {
 				set ofsy [lindex [map getoffset] 1]
 
 				send_trigger "Uebergang_Lava_Ende"
-				
+
             	reset_map [expr 0 + $ofsx] [expr 0 + $ofsy] [expr $ofsx + 10000] [expr $ofsy + 10000]
 				call templates/unq_ende.tcl
 				MapTemplateSet [expr $ofsx + 16] [expr $ofsy + 16]
@@ -676,10 +658,10 @@ def_class StoryMgr none info 0 {} {
     				foreach item $pl {
     					set ry [get_posy $item]
     					if { $ry < [lindex $MPos1 1] && ![is_contained $item] } {
-    						// Zurückgelassene PS -> Del
+    						// Zurï¿½ckgelassene PS -> Del
     						lappend DelList $item
     					} elseif { $ry == [lindex $MPos1 1] } {
-    						// Gleiche Höhe PS -> Verschieben
+    						// Gleiche Hï¿½he PS -> Verschieben
     						call_method $item packtobox
     						lappend RelocList $item
     					}
@@ -688,7 +670,7 @@ def_class StoryMgr none info 0 {} {
     				foreach item $ml {
     					set ry [get_posy $item]
     					if { $ry <= [lindex $MPos1 1] + 1 && ![is_contained $item] } {
-    						// Zurückgelassene Materials -> Del
+    						// Zurï¿½ckgelassene Materials -> Del
     						lappend DelList $item
     					}
     				}
@@ -696,7 +678,7 @@ def_class StoryMgr none info 0 {} {
 					// Ruckelwarnung
                 	//gamedelayannounce 100
 
-					// Zwerg für Sequenz beamen
+					// Zwerg fï¿½r Sequenz beamen
 					foreach item $zl {
 						if { [get_objclass $item] == "Zwerg" } {
 							set_pos $item $MPos1
@@ -956,7 +938,7 @@ def_class StoryMgr none info 0 {} {
 		set newsdata [list]
 		set undefined -10000
 
-		# obj-count für Mateirialvorkommen !!
+		# obj-count fï¿½r Mateirialvorkommen !!
 		set oc_list { Kohle Kristallerz Golderz Eisenerz Pilz }
 		set mingen_list { Wuker }
 
@@ -1035,7 +1017,7 @@ def_class StoryMgr none info 0 {} {
 			return
 		}
 
-		// Savegame Kompatiblität
+		// Savegame Kompatiblitï¿½t
 		catch { sm_add_event GameOverCheck }
 
 		incr CheckCnt
@@ -1053,7 +1035,7 @@ def_class StoryMgr none info 0 {} {
 			show_loading 1 0.0
 			load_info "."
 
-			// Ringe könnten in zurückgelassenen Schatzkisten sein ...
+			// Ringe kï¿½nnten in zurï¿½ckgelassenen Schatzkisten sein ...
 			global_inv_rem $RelocList
 
 			foreach item $RelocList {
@@ -1068,7 +1050,7 @@ def_class StoryMgr none info 0 {} {
 
 			foreach item $DelList {
 				if { [obj_valid $item] } {
-					log "StoryMgr:[get_objclass $item] gelöscht ([get_objname $item])"
+					log "StoryMgr:[get_objclass $item] gelï¿½scht ([get_objname $item])"
 					del $item
 				}
 			}

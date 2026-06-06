@@ -1,0 +1,163 @@
+id	energyclass	gain	energymaxstore	energycons	energyrange	energyyield	preinv	material	items	influence	fow_y	number2produce	fow_x	invent
+Feuerstelle	0	{{exp_Holz 0.01} {exp_Stein 0.01}}	-	0	-	-	{Grillpilz Zelt Feuerstelle}	{Pilzstamm Pilzstamm Stein Stein}	{Grillpilz Grillhamster Zelt Hauklotz Steinmetz Feuerstelle}	{{exp_Holz 0.5} {exp_Nahrung 0.5} {exp_Stein 0.5}}	15	-	15	{}
+Hauklotz	0	{{exp_Holz 0.03}}	-	0	-	-	{Leiter}	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzhut}	{Holzkiepe Leiter Farm}	{{exp_Holz 0.2}}	12	-	12	{{exp_Holz 0.008}}
+Steinmetz	0	{{exp_Holz 0.01} {exp_Stein 0.03}}	-	0	-	-	{Grenzstein}	{Stein Stein Stein Stein Pilzstamm Pilzstamm}	{Grenzstein Steinschleuder}	{{exp_Holz 0.1} {exp_Stein 0.2}}	12	-	12	{{exp_Stein 0.026}}
+Farm	-	{{exp_Holz 0.04}}	-	-	-	-	{Hamster}	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm}	{Hamster Pilz Raupe}	{{exp_Holz 0.3} {exp_Nahrung 0.1}}	12	-	12	{{exp_Holz 0.049} {exp_Nahrung 0.029}}
+Brauerei	0	{{exp_Holz 0.05}}	-	0	-	-	{Bier}	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm}	{Bier Kleiner_Heiltrank Heiltrank}	{{exp_Holz 0.2} {exp_Nahrung 0.3}}	12	-	12	{{exp_Holz 0.069} {exp_Nahrung 0.15}}
+Schreinerei	0	{{exp_Holz 0.06}}	-	0	-	-	{Laufrad}	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm}	{Aufzug Bar}	{{exp_Holz 0.4}}	12	-	12	{{exp_Holz 0.129}}
+Schmiede	0	{{exp_Stein 0.03}}	-	0	-	-	{Schild}	{Pilzstamm Pilzstamm Pilzstamm Stein Stein Eisen}	{Schild Streitaxt Taucherglocke Leiter_Metall Waffenschmiede Dampfhammer Dampfmaschine}	{{exp_Stein 0.4} {exp_Metall 0.1}}	12	-	12	{{exp_Stein 0.069} {exp_Metall 0.049}}
+Schmelze	1	{{exp_Stein 0.04} {exp_Energie 0.02}}	-	10	-	-	{Eisen}	{Pilzstamm Pilzstamm Stein Stein Stein Stein Stein}	{Eisen}	{{exp_Stein 0.3} {exp_Metall 0.1}}	12	-	12	{{exp_Stein 0.19} {exp_Metall 0.019}}
+Laufrad	1	{{exp_Energie 0.03}}	400	-	20	200	{Energie}	{Pilzstamm Pilzstamm Pilzstamm Hamster}	{Energie}	{{exp_Holz 0.3}}	20	-	20	{}
+Wachhaus	-	{{exp_Holz 0.03}}	-	-	-	-	{_Bewachen_nah _Bewachen_mittel _Bewachen_weit}	{Pilzstamm Pilzstamm}	{_Bewachen_nah _Bewachen_mittel _Bewachen_weit}	{{exp_Holz 0.4}}	30	-	30	{{exp_Holz 0.049} {exp_Kampf 0.009}}
+Dampflore	-	{}	-	-	-	-	{_Weiche_1 _Weiche_2 _Weiche_3 _Weiche_4 _Kamera}	{}	{_Weiche_1 _Weiche_2 _Weiche_3 _Weiche_4 _Kamera}	{}	-	-	-	{}
+Lager	-	{{exp_Holz 0.1}}	-	-	-	-	{_Kisten_einlagern _Nahrung_einlagern _Pilze_einlagern _Rohmineralien_einlagern _Mineralien_einlagern}	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzhut}	{_Kisten_einlagern _Nahrung_einlagern _Pilze_einlagern _Rohmineralien_einlagern _Mineralien_einlagern}	{{exp_Holz 0.3}}	20	-	20	{{exp_Holz 0.179} {exp_Transport 0.109}}
+Saegewerk	1	{{exp_Holz 0.12} {exp_Metall 0.02}}	-	80	-	-	{Wasserrad}	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Stein Eisen Eisen}	{Grosse_Holzkiepe Kettensaege Wasserrad Schule Dojo Theater Dreherei Bordell}	{{exp_Holz 0.6}}	20	-	20	{{exp_Holz 0.3}}
+Bar	-	{{exp_Holz 0.1}}	-	-	-	-	{Barbetrieb}	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzhut Pilzhut}	{Barbetrieb}	{{exp_Holz 0.4} {exp_Nahrung 0.2}}	20	-	20	{{exp_Holz 0.25} {exp_Nahrung 0.05}}
+Dojo	-	{{exp_Holz 0.1}}	-	-	-	-	{_Kungfu _Schwertkampf _Zweihandkampf _Schusswaffen _Verteidigung}	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Stein Stein Stein}	{_Kungfu _Schwertkampf _Zweihandkampf _Schusswaffen _Verteidigung}	{{exp_Holz 1.0} {exp_Kampf 0.5}}	12	-	12	{{exp_Holz 0.35} {exp_Kampf 0.1}}
+Tischlerei	1	{{exp_Holz 0.12}}	-	100	-	-	{Mittelalterkueche Mittelalterbad Mittelalterwohnzimmer Mittelalterschlafzimmer}	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Stein Pilzhut}	{Mittelalterkueche Mittelalterbad Mittelalterwohnzimmer Mittelalterschlafzimmer Industriekueche Industriebad Industriewohnzimmer Industrieschlafzimmer Luxuskueche Luxusbad Luxuswohnzimmer Luxusschlafzimmer }	{{exp_Holz 0.5}}	12	-	12	{{exp_Holz 0.17}}
+Waffenschmiede	1	{{exp_Metall 0.05}}	-	50	-	-	{Schwert}	{Pilzstamm Pilzstamm Stein Stein Eisen Eisen Eisen Eisen Eisen}	{Schwert PfeilUndBogen Metallschild Waffenfabrik}	{{exp_Metall 0.2}}	12	-	12	{{exp_Metall 0.05} {exp_Kampf 0.1}}
+Dampfhammer	2	{{exp_Metall 0.07}}	-	100	-	-	{Abfluss}	{Pilzstamm Pilzstamm Pilzstamm Stein Stein Stein Eisen Eisen Eisen Eisen}	{Abfluss Dampfaufzug Hochofen Schleiferei Metalltuer Kristallschmiede}	{{exp_Metall 0.3}}	12	-	12	{{exp_Metall 0.15}}
+Schule	-	{{exp_Holz 0.12}}	-	-	-	-	{_Unterricht}	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzhut Pilzhut Stein}	{_Unterricht}	{{exp_Holz 0.5}}	20	-	20	{{exp_Holz 0.3} {exp_Service 0.05}}
+Theater	-	{{exp_Holz 0.1}}	-	-	-	-	{_Theatervorstellung}	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzhut Pilzhut Pilzhut Hamster Hamster}	{_Theatervorstellung}	{{exp_Holz 0.3}}	20	-	20	{{exp_Holz 0.27} {exp_Service 0.03}}
+Dreherei	2	{{exp_Holz 0.03} {exp_Metall 0.05}}	-	200	-	-	{Presslufthammer}	{Stein Stein Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Eisen Eisen Eisen Eisen}	{Presslufthammer Hoverboard Labor Krankenhaus Tempel Bowlingbahn Disco Fitnessstudio}	{{exp_Holz 0.2} {exp_Metall 0.1}}	12	-	12	{{exp_Holz 0.1} {exp_Metall 0.08} {exp_Energie 0.02}}
+Fitnessstudio	-	{{exp_Metall 0.05}}	-	-	-	-	{}	{Stein Stein Eisen Eisen Eisen Eisen Eisen Pilzstamm Pilzstamm}	{}	{{exp_Metall 0.2}}	20	-	20	{{exp_Metall 0.05} {exp_Service 0.15}}
+Wasserrad	1	{{exp_Energie 0.05}}	400	-	60	0.5	{Energie_}	{Pilzstamm Pilzstamm Pilzstamm Stein Stein Stein}	{Energie_}	{{exp_Holz 0.2}}	20	-	20	{}
+Mittelalterkueche	1	{{exp_Holz 0.1}}	-	10	-	-	{Grillpilz_ Feuerstelle}	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Stein Stein Stein}	{Grillpilz_ Grillhamster_ Raupensuppe_ Feuerstelle}	{{exp_Holz 0.4}}	20	-	20	{}
+Industriekueche	2	{{exp_Holz 0.15}}	-	20	-	-	{Grillpilz__}	{Pilzstamm Pilzstamm Stein Stein Stein Stein Eisen Eisen}	{Grillpilz__ Grillhamster__ Raupensuppe__ Pilzbrot__ Raupenschleimkuchen__ }	{{exp_Holz 0.5}}	24	-	24	{{exp_Holz 0.4} {exp_Nahrung 0.15}}
+Luxuskueche	3	{{exp_Holz 0.15}}	-	20	-	-	{}	{Stein Eisen Eisen Eisen Eisen Gold Gold Gold Gold Kristall Kristall Kristall Kristall}	{Raupensuppe___ Pilzbrot___  Raupenschleimkuchen___ Gourmetsuppe___ Hamstershake___}	{{exp_Holz 0.5}}	24	-	24	{{exp_Service 0.15} {exp_Energie 0.05} {exp_Nahrung 0.25}}
+Dampfmaschine	2	{{exp_Metall 0.05} {exp_Energie 0.05}}	2000	-	60	400	{Energie__}	{Stein Stein Eisen Eisen Eisen Eisen Eisen Pilzstamm Pilzstamm}	{Energie__}	{{exp_Metall 0.3}}	24	-	24	{{exp_Metall 0.1}}
+Hochofen	2	{{exp_Metall 0.1} {exp_Energie 0.05}}	-	20	-	-	{Eisen_}	{Eisen Eisen Eisen Eisen Eisen Stein Stein Stein Stein Pilzstamm Pilzstamm}	{Eisen_ Gold}	{{exp_Metall 0.3}}	20	-	20	{{exp_Metall 0.25} {exp_Energie 0.05}}
+Schleiferei	2	{{exp_Metall 0.12}}	-	30	-	-	{Kristall}	{Eisen Eisen Eisen Eisen Eisen Eisen Eisen Stein Stein Gold}	{Kristall}	{{exp_Metall 0.3}}	20	-	20	{{exp_Stein 0.4} {exp_Metall 0.2}}
+Waffenfabrik	3	{{exp_Metall 0.15} {exp_Stein 0.05}}	-	100	-	-	{Buechse}	{Kohle Eisen Kohle Eisen Eisen Eisen Eisen Eisen Eisen Eisen Gold Gold Gold Gold}	{Buechse Lichtschwert Kristallschild}	{{exp_Metall 1.0} {exp_Kampf 0.5}}	24	-	24	{{exp_Metall 0.2} {exp_Kampf 0.3}}
+Kristallschmiede	2	{{exp_Metall 0.15}}	-	150	-	-	{Kristalltuer}	{Eisen Eisen Eisen Eisen Stein Stein Kristall Kristall Kristall Kristall}	{Kristalltuer Leiter_Kristall Kristallstrahl SteinfalleMedusa Reaktor Kristallaufzug}	{{exp_Metall 0.2}}	20	-	20	{{exp_Stein 0.4} {exp_Metall 0.25}}
+Reaktor	3	{{exp_Energie 0.1} {exp_Metall 0.05}}	4000	-	100	500	{Energie___}	{Stein Stein Eisen Eisen Eisen Eisen Kristall Kristall Kristall Kristall Kristall Gold Gold Gold Gold}	{Energie___}	{{exp_Stein 0.3}}	24	-	24	{{exp_Stein 0.55} {exp_Energie 0.1}}
+Labor	3	{{exp_Energie 0.15}}	-	100	-	-	{Pilzschnaps}	{Eisen Eisen Eisen Eisen Stein Stein Gold Gold Gold Kristall Kristall Kristall Kristall Kristall Kristall Kristall}	{Pilzschnaps Grosser_Heiltrank Liebestrank Unverwundbarkeitstrank}	{{exp_Metall 0.1}}	20	-	20	{{exp_Energie 0.15} {exp_Metall 0.1} {exp_Service 0.07}}
+Krankenhaus	-	{{exp_Metall 0.07} {exp_Service 0.03}}	-	-	-	-	{_Heilen}	{Stein Stein Stein Eisen Eisen Eisen Kristall Kristall Kristall Gold}	{_Heilen}	{{exp_Metall 0.2}}	24	-	24	{{exp_Service 0.17} {exp_Nahrung 0.2}}
+Tempel	3	{{exp_Stein 0.05} {exp_Energie 0.03}}	-	100	-	-	{Unsichtbarkeitstrank}	{Kristall Kristall Stein Stein Stein Stein Stein Gold Gold Gold Gold Gold Gold}	{Unsichtbarkeitstrank Jungbrunnentrank Fruchtbarkeitstrank Wiederbelebung}	{{exp_Stein 0.3}}	20	-	20	{{exp_Service 0.2} {exp_Energie 0.2}}
+Bowlingbahn	-	{{exp_Stein 0.07}}	-	-	-	-	{}	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Stein Stein Stein Kristall Kristall}	{}	{{exp_Stein 0.5}}	20	-	20	{{exp_Stein 0.4} {exp_Service 0.11}}
+Bordell	-	{{exp_Holz 0.05}}	-	-	-	-	{_Liebesdienst}	{Pilzstamm Pilzstamm Eisen Eisen Eisen Gold Gold Gold Hamster Hamster Hamster}	{_Liebesdienst}	{{exp_Holz 0.3}}	20	-	20	{{exp_Holz 0.23} {exp_Service 0.06}}
+Disco	3	{{exp_Metall 0.08}}	-	3	-	-	{_Auflegen}	{Eisen Eisen Eisen Gold Gold Gold Gold Kristall Kristall Kristall Kristall}	{_Auflegen}	{{exp_Metall 0.2}}	20	-	20	{{exp_Metall 0.13} {exp_Service 0.13} {exp_Energie 0.13}}
+TitanicPumpe	0	{{exp_Holz 0.03}}	-	-	-	-	{Titanic_abpumpen}	{}	{Titanic_abpumpen}	{{exp_Holz 0.5}}	-	-	-	{{exp_Holz 0.008}}
+Schwefelbruecke	0	{}	-	-	-	-	{}	{}	{}	{}	-	-	-	{}
+Grillpilz	-	{{exp_Nahrung 0.012}}	-	-	-	-	-	{Pilzhut}	-	{{exp_Nahrung 0.2}}	-	2	-	{}
+Grillhamster	-	{{exp_Nahrung 0.018}}	-	-	-	-	-	{Hamster}	-	{{exp_Nahrung 0.2}}	-	2	-	{{exp_Nahrung 0.039}}
+Pilzbrot	-	{{exp_Nahrung 0.008}}	-	-	-	-	-	{Pilzhut}	-	{{exp_Nahrung 0.25}}	-	4	-	{{exp_Nahrung 0.25}}
+Raupensuppe	-	{{exp_Nahrung 0.015}}	-	-	-	-	-	{Raupe}	-	{{exp_Nahrung 0.4}}	-	2	-	{{exp_Nahrung 0.099}}
+Raupenschleimkuchen	-	{{exp_Nahrung 0.02}}	-	-	-	-	-	{Raupe}	-	{{exp_Nahrung 0.4}}	-	2	-	{{exp_Nahrung 0.3}}
+Gourmetsuppe	-	{{exp_Nahrung 0.03}}	-	-	-	-	-	{Hamster Raupe Pilzhut}	-	{{exp_Nahrung 0.4}}	-	3	-	{{exp_Nahrung 0.35}}
+Hamstershake	-	{{exp_Nahrung 0.03}}	-	-	-	-	-	{Hamster}	-	{{exp_Nahrung 0.4}}	-	4	-	{{exp_Nahrung 0.3} {exp_Service 0.1}}
+Grillpilz_	-	{{exp_Nahrung 0.015}}	-	-	-	-	-	{Pilzhut}	-	{{exp_Nahrung 0.3}}	-	3	-	{}
+Grillhamster_	-	{{exp_Nahrung 0.02}}	-	-	-	-	-	{Hamster}	-	{{exp_Nahrung 0.3}}	-	3	-	{{exp_Nahrung 0.039}}
+Pilzbrot_	-	{{exp_Nahrung 0.015}}	-	-	-	-	-	{Pilzhut}	-	{{exp_Nahrung 0.3}}	-	4	-	{{exp_Nahrung 0.25}}
+Raupensuppe_	-	{{exp_Nahrung 0.022}}	-	-	-	-	-	{Raupe}	-	{{exp_Nahrung 0.3}}	-	2	-	{{exp_Nahrung 0.139}}
+Raupenschleimkuchen_	-	{{exp_Nahrung 0.015}}	-	-	-	-	-	{Raupe Pilzhut}	-	{{exp_Nahrung 0.3}}	-	2	-	{{exp_Nahrung 0.3}}
+Gourmetsuppe_	-	{{exp_Nahrung 0.015}}	-	-	-	-	-	{Hamster Raupe Pilzhut}	-	{{exp_Nahrung 0.3}}	-	3	-	{{exp_Nahrung 0.35}}
+Hamstershake_	-	{{exp_Nahrung 0.015}}	-	-	-	-	-	{Hamster}	-	{{exp_Nahrung 0.3}}	-	2	-	{{exp_Nahrung 0.4}}
+Grillpilz__	-	{{exp_Nahrung 0.015}}	-	-	-	-	-	{Pilzhut}	-	{{exp_Nahrung 0.4}}	-	3	-	{}
+Grillhamster__	-	{{exp_Nahrung 0.02}}	-	-	-	-	-	{Hamster}	-	{{exp_Nahrung 0.4}}	-	3	-	{{exp_Nahrung 0.039}}
+Pilzbrot__	-	{{exp_Nahrung 0.01}}	-	-	-	-	-	{Pilzhut}	-	{{exp_Nahrung 0.4}}	-	4	-	{{exp_Nahrung 0.25}}
+Raupensuppe__	-	{{exp_Nahrung 0.02}}	-	-	-	-	-	{Raupe}	-	{{exp_Nahrung 0.4}}	-	2	-	{{exp_Nahrung 0.139}}
+Raupenschleimkuchen__	-	{{exp_Nahrung 0.02}}	-	-	-	-	-	{Raupe Pilzhut}	-	{{exp_Nahrung 0.4}}	-	2	-	{{exp_Nahrung 0.3}}
+Gourmetsuppe__	-	{{exp_Nahrung 0.015}}	-	-	-	-	-	{Hamster Raupe Pilzhut}	-	{{exp_Nahrung 0.4}}	-	3	-	{{exp_Nahrung 0.35}}
+Hamstershake__	-	{{exp_Nahrung 0.015}}	-	-	-	-	-	{Hamster}	-	{{exp_Nahrung 0.4}}	-	2	-	{{exp_Nahrung 0.4}}
+Grillpilz___	-	{{exp_Nahrung 0.01}}	-	-	-	-	-	{Pilzhut}	-	{{exp_Nahrung 0.2}}	-	3	-	{}
+Grillhamster___	-	{{exp_Nahrung 0.015}}	-	-	-	-	-	{Hamster}	-	{{exp_Nahrung 0.2}}	-	3	-	{{exp_Nahrung 0.039}}
+Pilzbrot___	-	{{exp_Nahrung 0.01}}	-	-	-	-	-	{Pilzhut}	-	{{exp_Nahrung 0.5}}	-	4	-	{{exp_Nahrung 0.25}}
+Raupensuppe___	-	{{exp_Nahrung 0.015}}	-	-	-	-	-	{Raupe}	-	{{exp_Nahrung 0.5}}	-	2	-	{{exp_Nahrung 0.139}}
+Raupenschleimkuchen___	-	{{exp_Nahrung 0.015}}	-	-	-	-	-	{Raupe Pilzhut}	-	{{exp_Nahrung 0.5}}	-	2	-	{{exp_Nahrung 0.3}}
+Gourmetsuppe___	-	{{exp_Nahrung 0.03}}	-	-	-	-	-	{Hamster Raupe Pilzhut Golderz}	-	{{exp_Nahrung 0.5}}	-	3	-	{{exp_Nahrung 0.35}}
+Hamstershake___	-	{{exp_Nahrung 0.015}}	-	-	-	-	-	{Hamster}	-	{{exp_Nahrung 0.5}}	-	2	-	{{exp_Nahrung 0.4}}
+Zelt	-	{{exp_Holz 0.02}}	-	-	-	-	-	{Pilzstamm Pilzstamm Pilzhut}	-	{{exp_Holz 0.2}}	6	-	6	{}
+Leiter	-	{{exp_Holz 0.02}}	-	-	-	-	-	{Pilzstamm Pilzstamm}	-	{{exp_Holz 0.2}}	6	-	6	{}
+Leiter_Metall	-	{{exp_Metall 0.02}}	-	-	-	-	-	{Eisen}	-	{{exp_Metall 0.2}}	6	-	6	{{exp_Metall 0.099} {exp_Transport 0.049}}
+Leiter_Kristall	-	{{exp_Stein 0.01}}	-	-	-	-	-	{Kristall}	-	{{exp_Stein 0.4}}	6	-	6	{{exp_Stein 0.30} {exp_Transport 0.149}}
+Holzkiepe	-	{{exp_Holz 0.012}}	-	-	-	-	-	{Pilzstamm}	-	{{exp_Holz 0.2}}	-	-	-	{{exp_Holz 0.059} {exp_Transport 0.059}}
+Grosse_Holzkiepe	-	{{exp_Holz 0.02}}	-	-	-	-	-	{Pilzstamm Pilzstamm}	-	{{exp_Holz 0.3}}	-	-	-	{{exp_Holz 0.15} {exp_Transport 0.15}}
+Steinschleuder	-	{{exp_Stein 0.01}}	-	-	-	-	-	{Pilzstamm Stein}	-	{{exp_Stein 0.2}}	-	-	-	{{exp_Stein 0.039}}
+Grabstein	-	{{exp_Stein 0.03}}	-	-	-	-	{}	{Stein Stein Stein Zipfelmuetze}	{}	{{exp_Stein 0.3}}	24	-	24	{}
+Grenzstein	-	{{exp_Stein 0.005}}	-	-	-	-	{}	{Stein}	{}	{{exp_Stein 0.2}}	24	-	24	{}
+Plattmachfalle	-	{{exp_Stein 0.02}}	-	-	-	-	{}	{Stein Stein Stein Stein Stein Pilzstamm}	{}	{{exp_Stein 0.3}}	6	-	6	{{exp_Stein 0.089} {exp_Kampf 0.019}}
+Pilz	-	{{exp_Nahrung 0.001}}	-	-	-	-	-	{Pilzhut}	-	{{exp_Nahrung 0.5} {exp_Transport 0.5}}	-	-	-	{{exp_Holz 0.119} {exp_Nahrung 0.089}}
+Hamster	-	{{exp_Nahrung 0.002}}	-	-	-	-	-	{Hamster Hamster}	-	{{exp_Nahrung 0.5}}	-	-	-	{}
+Reithamster	-	{{exp_Holz 0.01} {exp_Nahrung 0.005}}	-	-	-	-	-	{Hamster Pilzhut Pilzstamm}	-	{{exp_Holz 0.3}}	-	-	-	{{exp_Holz 0.109} {exp_Transport 0.119}}
+Raupe	-	{{exp_Nahrung 0.002}}	-	-	-	-	-	{Raupe}	-	{{exp_Nahrung 0.5}}	-	-	-	{{exp_Nahrung 0.179}}
+Bier	-	{{exp_Nahrung 0.003} {exp_Service 0.002}}	-	-	-	-	-	{Pilzhut Pilzhut Pilzstamm}	-	{{exp_Nahrung 0.3}}	-	-	-	{}
+Pilzschnaps	-	{{exp_Nahrung 0.015} {exp_Service 0.005}}	-	-	-	-	-	{Pilzhut Pilzhut Raupe Hamster}	-	{{exp_Nahrung 0.5}}	-	-	-	{}
+Kleiner_Heiltrank	-	{{exp_Energie 0.005}}	-	-	-	-	-	{Pilzhut Pilzhut Raupe Pilzstamm}	-	{{exp_Nahrung 0.2}}	-	-	-	{{exp_Nahrung 0.08} {exp_Kampf 0.05}}
+Heiltrank	-	{{exp_Energie 0.01}}	-	-	-	-	-	{Raupe Raupe Pilzhut Golderz}	-	{{exp_Nahrung 0.3}}	-	-	-	{{exp_Nahrung 0.2} {exp_Service 0.05} {exp_Kampf 0.05}}
+Grosser_Heiltrank	-	{{exp_Energie 0.02}}	-	-	-	-	-	{Raupe Raupe Raupe Bier Gold Gold}	-	{{exp_Nahrung 0.3}}	-	-	-	{{exp_Energie 0.2} {exp_Service 0.09} {exp_Kampf 0.25}}
+Unsichtbarkeitstrank	-	{{exp_Energie 0.05} {exp_Service 0.02}}	-	-	-	-	-	{Hamster Kristall Kristall Kristall Gold Gold Gold Gold Gold}	-	{{exp_Service 0.5}}	-	-	-	{{exp_Service 0.4} {exp_Kampf 0.05}}
+Jungbrunnentrank	-	{{exp_Energie 0.06}}	-	-	-	-	-	{Hamster Kristall Eisenerz Gold Gold}	-	{{exp_Energie 0.3}}	-	-	-	{{exp_Nahrung 0.29} {exp_Energie 0.17}}
+Wiederbelebung	-	{{exp_Energie 0.05} {exp_Service 0.02}}	-	-	-	-	-	{Zipfelmuetze Hamster Gold Gold Gold Gold Kristallerz Kristallerz}	-	{{exp_Energie 0.1} {exp_Service 0.1}}	-	-	-	{{exp_Energie 0.35} {exp_Service 0.2} {exp_Transport 0.15}}
+Liebestrank	-	{{exp_Nahrung 0.02} {exp_Energie 0.05}}	-	-	-	-	-	{Raupe Raupe Raupe Bier}	-	{{exp_Service 0.4}}	-	-	-	{{exp_Nahrung 0.16} {exp_Service 0.3}}
+Fruchtbarkeitstrank	-	{{exp_Nahrung 0.02} {exp_Energie 0.05}}	-	-	-	-	-	{Raupe Hamster Gold Gold}	-	{{exp_Energie 0.4}}	-	-	-	{{exp_Nahrung 0.24} {exp_Energie 0.14} {exp_Service 0.34}}
+Unverwundbarkeitstrank	-	{{exp_Nahrung 0.02} {exp_Energie 0.06}}	-	-	-	-	-	{Kristall Kristall Eisen Eisen Gold Gold Gold Gold Hamster}	-	{{exp_Energie 0.3}}	-	-	-	{{exp_Energie 0.1} {exp_Kampf 0.5}}
+Aufzug	-	{{exp_Holz 0.04}}	-	-	-	-	-	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm}	-	{{exp_Holz 0.3}}	6	-	6	{{exp_Holz 0.25} {exp_Transport 0.1}}
+Taucherglocke	-	{{exp_Metall 0.03}}	-	-	-	-	-	{Eisen Eisen Pilzstamm Hamster}	-	{{exp_Metall 0.2}}	-	-	-	{{exp_Metall 0.15} {exp_Transport 0.05}}
+Abfluss	-	{{exp_Metall 0.04}}	-	-	-	-	{}	{Eisen Eisen}	{}	{{exp_Metall 0.3}}	-	-	-	{}
+Hoverboard	-	{{exp_Metall 0.03}}	-	-	-	-	-	{Kristall Eisen Kristall Eisen Pilzstamm}	-	{{exp_Metall 0.3}}	-	-	-	{{exp_Transport 0.54} {exp_Energie 0.14}}
+Kristallstrahl	-	{{exp_Stein 0.02} {exp_Energie 0.02}}	-	-	-	-	-	{Eisen Eisen Kristall Kristall Kristall}	-	{{exp_Stein 0.5}}	-	-	-	{{exp_Stein 0.7} {exp_Energie 0.1}}
+Presslufthammer	-	{{exp_Metall 0.05}}	-	-	-	-	-	{Eisen Eisen Stein}	-	{{exp_Metall 0.2}}	-	-	-	{}
+Kettensaege	-	{{exp_Metall 0.03}}	-	-	-	-	-	{Pilzstamm Eisen Eisen}	-	{{exp_Holz 0.1} {exp_Metall 0.2}}	-	-	-	{{exp_Holz 0.4} {exp_Metall 0.1} {exp_Energie 0.05}}
+Eisen	-	{{exp_Metall 0.016} {exp_Energie 0.004}}	-	-	-	-	-	{Pilzstamm Pilzstamm Pilzstamm Eisenerz Eisenerz}	-	{{exp_Metall 0.2}}	-	-	-	{}
+Eisen_	-	{{exp_Metall 0.02} {exp_Energie 0.006}}	-	-	-	-	-	{Kohle Kohle Eisenerz Eisenerz Eisenerz}	-	{{exp_Metall 0.3}}	-	3	-	{}
+Gold	-	{{exp_Metall 0.02} {exp_Energie 0.015}}	-	-	-	-	-	{Golderz Golderz Kohle}	-	{{exp_Metall 0.35}}	-	-	-	{{exp_Metall 0.3} {exp_Energie 0.04}}
+Mittelalterwohnzimmer	-	{{exp_Holz 0.12}}	-	-	-	-	-	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzhut Pilzhut}	-	{{exp_Holz 0.3}}	10	-	10	{}
+Mittelalterschlafzimmer	-	{{exp_Holz 0.1}}	-	-	-	-	-	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Pilzhut Hamster Hamster}	-	{{exp_Holz 0.3}}	10	-	10	{}
+Mittelalterbad	-	{{exp_Holz 0.07}}	-	-	-	-	-	{Pilzstamm Pilzstamm Pilzstamm Stein Stein}	-	{{exp_Holz 0.3}}	10	-	10	{}
+Industriewohnzimmer	-	{{exp_Holz 0.15}}	-	-	-	-	-	{Pilzstamm Pilzstamm Pilzstamm Stein Stein Stein Stein Eisen Pilzhut Pilzhut}	-	{{exp_Holz 0.4}}	14	-	14	{{exp_Holz 0.4} {exp_Service 0.05}}
+Industrieschlafzimmer	-	{{exp_Holz 0.15}}	-	-	-	-	-	{Pilzstamm Pilzstamm Pilzstamm Pilzstamm Eisen Eisen Eisen Hamster Hamster Hamster}	-	{{exp_Holz 0.4}}	14	-	14	{{exp_Holz 0.5}}
+Industriebad	-	{{exp_Holz 0.15}}	-	-	-	-	-	{Pilzstamm Pilzstamm Stein Stein Eisen Eisen}	-	{{exp_Holz 0.4}}	14	-	14	{{exp_Holz 0.3} {exp_Nahrung 0.2}}
+Luxuswohnzimmer	-	{{exp_Stein 0.08}}	-	-	-	-	-	{Pilzstamm Pilzstamm Pilzhut Kristall Kristall Kristall Kristall}	-	{{exp_Stein 0.5}}	14	-	14	{{exp_Stein 0.3} {exp_Service 0.09} {exp_Energie 0.09}}
+Luxusschlafzimmer	-	{{exp_Stein 0.1}}	-	-	-	-	-	{Pilzstamm Kristall Kristall Kristall Kristall Hamster Hamster}	-	{{exp_Stein 0.5}}	14	-	14	{{exp_Stein 0.48} {exp_Service 0.08}}
+Luxusbad	-	{{exp_Stein 0.08}}	-	-	-	-	-	{Stein Stein Kristall Kristall Kristall Eisen}	-	{{exp_Stein 0.5}}	14	-	14	{{exp_Stein 0.55} {exp_Energie 0.07}}
+Dampfaufzug	-	{{exp_Metall 0.06}}	-	-	-	-	-	{Kohle Kohle Eisen Eisen Eisen}	-	{{exp_Metall 0.4}}	6	-	6	{{exp_Metall 0.2} {exp_Transport 0.3}}
+Kristallaufzug	-	{{exp_Metall 0.02} {exp_Stein 0.02}}	-	-	-	-	-	{Eisen Eisen Kristall Kristall Kristall}	-	{{exp_Stein 0.5}}	6	-	6	{{exp_Stein 0.3} {exp_Transport 0.4} {exp_Energie 0.11}}
+Holztuer	-	{{exp_Holz 0.03}}	-	-	-	-	{_Offen _Verschlossen _Automatisch}	{Pilzstamm Pilzstamm Pilzstamm Stein}	{_Offen _Verschlossen _Automatisch}	{{exp_Holz 0.2}}	2	-	2	{{exp_Holz 0.079}}
+Metalltuer	-	{{exp_Metall 0.05}}	-	-	-	-	{_Offen _Verschlossen _Automatisch}	{Kohle Eisen Eisen Eisen}	{_Offen _Verschlossen _Automatisch}	{{exp_Metall 0.3}}	2	-	2	{{exp_Metall 0.179}}
+Steintuer	-	{{exp_Stein 0.05}}	-	-	-	-	{_Offen _Verschlossen _Automatisch}	{Stein Stein Stein}	{_Offen _Verschlossen _Automatisch}	{{exp_Stein 1.0}}	2	-	2	{{exp_Stein 0.20}}
+Kristalltuer	-	{{exp_Stein 0.03} {exp_Metall 0.01}}	-	-	-	-	{_Offen _Verschlossen _Automatisch}	{Eisen Kristall Kristall Kristall}	{_Offen _Verschlossen _Automatisch}	{{exp_Stein 0.5}}	2	-	2	{{exp_Stein 0.5} {exp_Metall 0.21}}
+Keule	-	{{exp_Stein 0.01}}	-	-	-	-	-	{Pilzstamm Pilzstamm Stein}	-	{{exp_Stein 0.3}}	-	-	-	{{exp_Stein 0.009} {exp_Kampf 0.009}}
+Schild	-	{{exp_Metall 0.01}}	-	-	-	-	-	{Stein Eisen}	-	{{exp_Metall 0.2}}	-	-	-	{}
+Streitaxt	-	{{exp_Metall 0.02}}	-	-	-	-	-	{Pilzstamm Eisen Eisen}	-	{{exp_Metall 0.3}}	-	-	-	{{exp_Metall 0.04} {exp_Kampf 0.12}}
+Schwert	-	{{exp_Metall 0.04}}	-	-	-	-	-	{Kohle Eisen Kohle Eisen Eisen}	-	{{exp_Metall 0.4}}	-	-	-	{}
+PfeilUndBogen	-	{{exp_Holz 0.01} {exp_Metall 0.03}}	-	-	-	-	-	{Pilzstamm Pilzstamm Eisen}	-	{{exp_Holz 0.1} {exp_Metall 0.1}}	-	-	-	{{exp_Holz 0.059} {exp_Metall 0.039} {exp_Kampf 0.069}}
+Metallschild	-	{{exp_Metall 0.02}}	-	-	-	-	-	{Kohle Eisen Eisen Eisen}	-	{{exp_Metall 0.3}}	-	-	-	{{exp_Metall 0.15} {exp_Kampf 0.15}}
+Buechse	-	{{exp_Metall 0.05} {exp_Energie 0.02}}	-	-	-	-	-	{Pilzstamm Eisen Eisen Eisen Kohle Kohle}	-	{{exp_Metall 0.4}}	-	-	-	{{exp_Metall 0.4} {exp_Energie 0.1} {exp_Kampf 0.2}}
+Lichtschwert	-	{{exp_Metall 0.02} {exp_Energie 0.02}}	-	-	-	-	-	{Kristall Kristall Kristall Kristall Eisen}	-	{{exp_Stein 0.1} {exp_Metall 0.2}}	-	-	-	{{exp_Energie 0.5} {exp_Kampf 0.4}}
+Kristallschild	-	{{exp_Stein 0.02} {exp_Metall 0.02}}	-	-	-	-	-	{Kristall Kristall Kristall Gold Gold}	-	{{exp_Stein 0.1} {exp_Metall 0.2}}	-	-	-	{{exp_Stein 0.3} {exp_Metall 0.17} {exp_Kampf 0.3}}
+Kristall	-	{{exp_Stein 0.02} {exp_Energie 0.006}}	-	-	-	-	-	{Kristallerz}	-	{{exp_Stein 1.0}}	-	-	-	{}
+SteinfalleMedusa	-	{{exp_Stein 0.03}}	-	-	-	-	{}	{Stein Kristall Kristall Gold}	{}	{{exp_Stein 0.4}}	3	-	3	{{exp_Stein 0.4} {exp_Kampf 0.4}}
+Energie	-	{{exp_Energie 0.02}}	-	-	-	-	-	{Pilzhut}	-	{{exp_Energie 0.3}}	-	-	-	{}
+Energie_	-	{{exp_Energie 0.05}}	-	-	-	-	-	{}	-	{{exp_Energie 0.3}}	-	-	-	{}
+Energie__	-	{{exp_Energie 0.05}}	-	-	-	-	-	{Kohle}	-	{{exp_Energie 0.4}}	-	-	-	{}
+Energie___	-	{{exp_Energie 0.1}}	-	-	-	-	-	{Kristall}	-	{{exp_Energie 0.5}}	-	-	-	{}
+Titanic_abpumpen	-	{{exp_Metall 0.005}}	-	-	-	-	-	"[Xmal Kohle 30]"	-	{{exp_Metall 0.5}}	-	-	-	{}
+_Unterricht	-	{}	-	-	-	-	-	{}	-	{}	-	-	-	{}
+Barbetrieb	-	{{exp_Service 0.01}}	-	-	-	-	-	{Bier Bier Bier Bier Bier Bier Bier Bier}	-	{{exp_Service 0.7}}	-	-	-	{}
+_Auflegen	-	{{exp_Service 0.01}}	-	-	-	-	-	{}	-	{{exp_Service 0.9}}	-	-	-	{}
+_Theatervorstellung	-	{{exp_Service 0.01}}	-	-	-	-	-	{}	-	{{exp_Service 0.8}}	-	-	-	{}
+_Liebesdienst	-	{{exp_Service 0.015}}	-	-	-	-	-	{}	-	{{exp_Service 0.6}}	-	-	-	{}
+_Kungfu	-	{}	-	-	-	-	-	{}	-	{}	-	-	-	{}
+_Schwertkampf	-	{}	-	-	-	-	-	{}	-	{}	-	-	-	{}
+_Zweihandkampf	-	{}	-	-	-	-	-	{}	-	{}	-	-	-	{}
+_Schusswaffen	-	{}	-	-	-	-	-	{}	-	{}	-	-	-	{}
+_Verteidigung	-	{}	-	-	-	-	-	{}	-	{}	-	-	-	{}
+_Bewachen_nah	-	{}	-	-	-	-	-	{}	-	{{exp_Kampf 0.5}}	-	-	-	{}
+_Bewachen_mittel	-	{}	-	-	-	-	-	{}	-	{{exp_Kampf 0.7}}	-	-	-	{}
+_Bewachen_weit	-	{}	-	-	-	-	-	{}	-	{{exp_Kampf 1.0}}	-	-	-	{}
+_Offen	-	{}	-	-	-	-	-	{}	-	{}	-	-	-	{}
+_Verschlossen	-	{}	-	-	-	-	-	{}	-	{}	-	-	-	{}
+_Automatisch	-	{}	-	-	-	-	-	{}	-	{}	-	-	-	{}
+_Weiche_1	-	{}	-	-	-	-	-	{}	-	{}	-	-	-	{}
+_Weiche_2	-	{}	-	-	-	-	-	{}	-	{}	-	-	-	{}
+_Weiche_3	-	{}	-	-	-	-	-	{}	-	{}	-	-	-	{}
+_Weiche_4	-	{}	-	-	-	-	-	{}	-	{}	-	-	-	{}
+_Kamera	-	{}	-	-	-	-	-	{}	-	{}	-	-	-	{}
+_Heilen	-	{}	-	-	-	-	-	{}	-	{{exp_Service 1.0}}	-	-	-	{}
+_Nahrung_einlagern	-	{{exp_Transport 0.001}}	-	-	-	-	-	{}	-	{{exp_Transport 1.0}}	-	-	-	{}
+_Kisten_einlagern	-	{{exp_Transport 0.001}}	-	-	-	-	-	{}	-	{{exp_Transport 1.0}}	-	-	-	{}
+_Pilze_einlagern	-	{{exp_Transport 0.001}}	-	-	-	-	-	{}	-	{{exp_Transport 1.0}}	-	-	-	{}
+_Rohmineralien_einlagern	-	{{exp_Transport 0.001}}	-	-	-	-	-	{}	-	{{exp_Transport 1.0}}	-	-	-	{}
+_Mineralien_einlagern	-	{{exp_Transport 0.001}}	-	-	-	-	-	{}	-	{{exp_Transport 1.0}}	-	-	-	{}
+_Waffen_Werkzeug_und_Traenke_einlagern	-	{{exp_Transport 0.001}}	-	-	-	-	-	{}	-	{{exp_Transport 1.0}}	-	-	-	{}

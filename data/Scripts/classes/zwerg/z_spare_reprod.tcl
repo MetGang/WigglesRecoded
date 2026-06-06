@@ -140,7 +140,7 @@ if {[in_class_def]} {
 		set list_old $partner_preference_list
 		set gnome_list [lnand 0 [obj_query this "-class Zwerg -owner own -range 15"]]
 		set fa1 [partner_info getfather this]
-		set mo1 [partner_info getfather this]
+		set mo1 [partner_info getmother this]
 		set mystart [get_worktime this start]
 		set myend [get_worktime this end]
 		foreach gnome $gnome_list {
@@ -160,7 +160,7 @@ if {[in_class_def]} {
 								if {$count<8000} {
 									set relatives 0
 									set fa2 [partner_info getfather $gnome]
-									set mo2 [partner_info getfather $gnome]
+									set mo2 [partner_info getmother $gnome]
 									if {$fa1==$fa2&&$fa1!=0} {incr relatives 1}
 									if {$mo1==$mo2&&$mo1!=0} {incr relatives 2}
 									if {$fa1==$gnome} {incr relatives 4}
@@ -395,7 +395,7 @@ if {[in_class_def]} {
 				} else {
 				//Wenn bereits popplace festgelegt
 					if {[lindex $sparetime_popplace 0]<1} {
-						//Männer: Frauen fragen, wo
+						//Mï¿½nner: Frauen fragen, wo
 						set herpp [call_method $reprod_partner reprod_getpopplace]
 						set sparetime_popplace [get_place -center $herpp -mindist 0.8 -circle 5 -except this -placelockidexcept $myref]
 					}
@@ -447,7 +447,7 @@ if {[in_class_def]} {
 			3 {
 				global reprod_trapped_cnt
 				if {$gnome_gender=="female"} {
-					//Frauen: Winkel überprüfen, wenn o.k., beide auf rac=4
+					//Frauen: Winkel ï¿½berprï¿½fen, wenn o.k., beide auf rac=4
 					if {$reprod_trapped_cnt<50} {set critical 0.15} elseif {$reprod_trapped_cnt<70} {set critical 0.8} else {set critical 3.2}
 					if {abs(abs(abs([get_roty this]-[get_roty $reprod_partner])-1.57)-1.57)<$critical} {
 						incr reprod_actioncount

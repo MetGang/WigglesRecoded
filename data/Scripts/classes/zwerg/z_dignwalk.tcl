@@ -1,4 +1,6 @@
-/// Rausgenommen aus den überlasteten z_work und z_procs
+call scripts/utility.tcl
+
+/// Rausgenommen aus den ï¿½berlasteten z_work und z_procs
 /// Abschnitt 1 : dig - Graben
 /// Abschnitt 2 : walk - Gehen (weiter unten)
 /// Abschnitt 3 : rotate - Drehen (noch weiter unten)
@@ -8,12 +10,12 @@
 //								Wrapper der Walk-Action
 // ----------------------------------------------------------------------
 
-// Löst eine Walk-Action auf dem aktuelle Zwerg aus
-// !! niemand sollte das von Hand tun, falls es nicht unbedingt nötig ist !!
+// Lï¿½st eine Walk-Action auf dem aktuelle Zwerg aus
+// !! niemand sollte das von Hand tun, falls es nicht unbedingt nï¿½tig ist !!
 //
 // syntax:	walk_action "paramstring" "finishcode optional" "breakcode optional" "erweiterte Parameter"
 //
-// paramstring wird direkt an die action übergeben
+// paramstring wird direkt an die action ï¿½bergeben
 // erweiterte Parameter: finish- und breakcode muessen angegeben sein (notfalls leer ""):
 //		-withbox		: mit kiste laufen, schnell laufen verbieten
 
@@ -108,7 +110,7 @@ proc walk_action {paramstring {finishcode ""} {breakcode ""} args} {
 		}
 	}
 
-	// zusätzliche Wünsche des Skripts berücksichtigen
+	// zusï¿½tzliche Wï¿½nsche des Skripts berï¿½cksichtigen
 
 	if {[lsearch $args "-withbox"] >= 0} {
 		set slow $ANIMSET_WALKWITHBOX
@@ -182,21 +184,35 @@ proc dig_check {pos {try 0}} {
 	if {$freeneighbours>1} {return 1} {return 0}
 }
 
-proc enable_digbrushes {own} {
-	global tttexp_digbrush2 tttexp_digbrush3 tttexp_digbrush4
-	if {[im_in_tutorial]} {return}
-	set maxstones [gamestats attribmax $own exp_Stein]
-	set maxreached 0
-	for {set i 1} {$i<5} {} {
-		if {$maxreached} {
-			set_owner_attrib $own digenable$i 0
-			incr i
-		} else {
-			set_owner_attrib $own digenable$i 1
-			incr i
-			if {$i==5} {break}
-			if {$maxstones<[subst \$tttexp_digbrush$i]} {
-				set maxreached 1
+# Enable/disable dig brushes based on maximum exp_Stein
+proc enable_digbrushes {owner} {
+	if { [im_in_tutorial] } { return }
+
+	# Thresholds are:
+	# 0.00 - small cave
+	# 0.15 - wide cave
+	# 0.30 - big cave
+	# 0.70 - tall cave
+
+	set exp [gamestats attribmax $owner exp_Stein]
+
+	# Reset
+	set_owner_attrib $owner digenable1 0
+	set_owner_attrib $owner digenable2 0
+	set_owner_attrib $owner digenable3 0
+	set_owner_attrib $owner digenable4 0
+
+	# Set
+	if { $exp > 0.00 } {
+		set_owner_attrib $owner digenable1 1
+		if { $exp > 0.15 } {
+			set_owner_attrib $owner digenable2 1
+			if { $exp > 0.30 } {
+				set_owner_attrib $owner digenable3 1
+				if { $exp > 0.70 } {
+					set_owner_attrib $owner digenable4 1
+					am_trigger_achv_step SoMuchDigging
+				}
 			}
 		}
 	}
@@ -401,7 +417,7 @@ proc dig_anim {digpos {accident_possible 1}} {
 				set digpose 0								;# nach oben
 			} elseif {$height>0.6} {
 				set digpose 1								;# nach vorn
-				set accident 0								;# keine Unfallanimation für vorne da
+				set accident 0								;# keine Unfallanimation fï¿½r vorne da
 			} else {
 				set digpose 2								;# nach unten
 			}
@@ -592,7 +608,7 @@ proc walk_pos {pos {force 0}} {
 	beam_back
 	note_pathlength $pos
 	state_disable this
-//	log "[get_objname this]: state_disable für walkpos..."
+//	log "[get_objname this]: state_disable fï¿½r walkpos..."
 	set pos [vector_fix $pos]
 	if {$force} {set force "-forcetarget $force"} {set force "-forcetarget 0"}
 	walk_action "-target \{$pos\} -waving 1 $force" {
@@ -608,7 +624,7 @@ proc walk_pos_with_box {pos} {
 	beam_back
 	note_pathlength $pos
 	state_disable this
-//	log "[get_objname this]: state_disable für walkpos..."
+//	log "[get_objname this]: state_disable fï¿½r walkpos..."
 	set pos [vector_fix $pos]
 	walk_action "-target \{$pos\} -forcetarget 0 -canclimb 0" {
 		walkfail
@@ -704,7 +720,7 @@ proc run_pos_obj {pos obj {dist 1.8}} {
 
 proc walk_pos_dig {pos dpos} {
 	state_disable this
-//	log "[get_objname this]: state_disable für walkpos..."
+//	log "[get_objname this]: state_disable fï¿½r walkpos..."
 //	log "DIG_VERSUCHE = $dig_versuche"
 	set pos [vector_fix $pos]
 	if {[get_gnomeposition this]&&[get_hmap [lindex $pos 0] [lindex $pos 1]]<12} {
@@ -730,7 +746,7 @@ proc walk_random {plength} {
 
 
 
-// läuft in die Nähe eines Items (oder eines Punktes)
+// lï¿½uft in die Nï¿½he eines Items (oder eines Punktes)
 
 proc walk_near_item {item radius {tolerance 0.1} {speedtype auto}} {
 	//log "WALK NEAR ITEM [get_objname this] pos: $item radius: $radius"
@@ -787,7 +803,7 @@ proc walk_near_item {item radius {tolerance 0.1} {speedtype auto}} {
 //    	log "tolerance: $tolerance"
 	    return true
 	}
-	
+
 	// falls das Ziel vor dem Zwerg in der Luft schwebt
 	if {[get_gnomeposition this]&&[lindex $thispos 2]<[lindex $walkpos 2]+2&&[vector_dist $thispos $walkpos]<=2.0} {
 	//	log "WALK NEAR ITEM 3. Ausstieg - Wand (unerreichbar)"

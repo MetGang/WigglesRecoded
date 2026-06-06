@@ -1,6 +1,6 @@
-// Wiggles ai script
+call scripts/debug.tcl
 
-ai_log "Ai init starting"
+log AI "Ai init starting"
 
 ai_tickhandler {
 	dotickhandler
@@ -10,10 +10,10 @@ set iTickCounter 0							;# AI Ticks seit Init
 set iMyOwner 	 [ai_getownerid]			;# AI Owner
 set iObjQueryCnt 0							;# Anzahl der Objquery-Aufrufe
 set fCalculationTime 0.0					;# Verbrauchte Rechenzeit
-ai_log "My owner ist $iMyOwner."
+log AI "My owner ist $iMyOwner."
 
 set MyGnomesList			""				;# Liste aller meiner Zwerge
-set MyProdsList				""				;# Liste aller meiner Gebäude
+set MyProdsList				""				;# Liste aller meiner Gebï¿½ude
 set IntruderGnomesList    	""				;# Liste von fremden Zwergen
 set IntruderProdList	  	""				;# Liste von fremden PS
 set EnemyGnomesList		 	""				;# Liste von feindichen Zwergen
@@ -24,17 +24,17 @@ set EnemyTrapsList			""				;# Liste von feindichen Fallen
 set EnemyDoorsList			""				;# Liste von feindlichen Tueren
 set	UnavailableGnomesList 	""				;# Liste von Zwergen, die in diesem Tick schon verplant wurden
 
-set bRaidInProgress			0				;# läuft gerade ein Angriff?
+set bRaidInProgress			0				;# lï¿½uft gerade ein Angriff?
 set iLastRaidTime			0				;# Zeitpunkt meines letzten Angriffs
-set RaidingPartyList		""				;# Liste der Angreifer (index 0 ist Anführer)
+set RaidingPartyList		""				;# Liste der Angreifer (index 0 ist Anfï¿½hrer)
 set iRaidingTarget			0				;# Ziel des Angriffs
 set iRaidState				""				;# Status des Angriffs
-set iRaidingTimeOut			0				;# Time-Out-Counter für Angriff (zählt rückwärts)
-set RAIDINGTIMEOUT			[expr 12 * 5]	;# Standard-Timeout für Raid (5 Minuten)
+set iRaidingTimeOut			0				;# Time-Out-Counter fï¿½r Angriff (zï¿½hlt rï¿½ckwï¿½rts)
+set RAIDINGTIMEOUT			[expr 12 * 5]	;# Standard-Timeout fï¿½r Raid (5 Minuten)
 
-set vBasePos 				"-1 -1 -1"		;# Position meiner Basis - selbst wenn dort keine Gebäude mehr stehen
+set vBasePos 				"-1 -1 -1"		;# Position meiner Basis - selbst wenn dort keine Gebï¿½ude mehr stehen
 set fBasePerimeter			0.0				;# Perimeter-Entfernung
-set vSafePos				"-1 -1 -1"		;# sichere Position, für Flucht z.B. (in jedem Tick neu berechnet)
+set vSafePos				"-1 -1 -1"		;# sichere Position, fï¿½r Flucht z.B. (in jedem Tick neu berechnet)
 
 set bIsDigging				1				;# AI graebt
 set bIsBuilding				1				;# AI baut Gebaeude
@@ -52,7 +52,7 @@ set DontBuildList			""				;# Items, die die AI nicht bauen soll
 set DontUseList				""				;# PS, wo die AI nicht produzieren soll
 set DontPlaceArea			""				;# in diesem Bereich nix platzieren
 
-// Symbolische Konstanten für Angriffs-FSM (iRaidState)
+// Symbolische Konstanten fï¿½r Angriffs-FSM (iRaidState)
 
 set RS_NONE					0				;# kein
 set RS_GATHER				1				;# Angreifer werden versammelt
@@ -64,16 +64,16 @@ set RS_INTARGETZONE			3				;# Zielgebiet erreicht
 // Beschreibung der AI - Parameter:
 //
 // bDefensive			spielt defensiv, d.h. greift Feinde und PS in der eigenen Basis an
-// bAggressive			spielt aggressiv, d.h. führt selbst Angriffe auf feindliche Basis durch
+// bAggressive			spielt aggressiv, d.h. fï¿½hrt selbst Angriffe auf feindliche Basis durch
 // fBaseDefenseRange	innerhalb dieser Entfernung um eigene PS ist "meine Basis" und wird wird verteidigt
 // sBestMeleeWeapon		beste Nahkampfwaffe
 // sBestRangedWeapon	beste Fernkampfwaffe
 // sBestShield			bester Schild
-// fRetreatHP			Prozentsatz Hitpoints, unter den ein Zwerg sinken muss, damit er sich zurückzieht
+// fRetreatHP			Prozentsatz Hitpoints, unter den ein Zwerg sinken muss, damit er sich zurï¿½ckzieht
 
 
 switch $iMyOwner {
-	1		{	ai_log "Init as: Voodoos"
+	1		{	log AI "Init as: Voodoos"
 				set bDefensive 			1
 				set bAggressive			1
 				set bStartWar			0
@@ -89,7 +89,7 @@ switch $iMyOwner {
 				set PreinventedList		{Farm Holzkiepe Hauklotz Steinmetz Pilz Kleiner_Heiltrank Grillhamster}
 				set DontBuildList		{Schreinerei Schmelze Schmiede}
 			}
-	2		{	ai_log "Init as: Knockers"
+	2		{	log AI "Init as: Knockers"
 				set bDefensive 			1
 				set bAggressive			1
 				set bStartWar			0
@@ -105,7 +105,7 @@ switch $iMyOwner {
 				set PreinventedList		{Hauklotz Grillhamster Farm Pilz Raupe Holzkiepe Steinmetz Keule Streitaxt PfeilUndBogen Reithamster Schild}
 				set DontBuildList		{Dampfhammer Dampfmaschine Tischlerei Saegewerk}
 			}
-	3		{	ai_log "Init as: Brains"
+	3		{	log AI "Init as: Brains"
 				set bDefensive 			1
 				set bAggressive			1
 				set bStartWar			1
@@ -122,7 +122,7 @@ switch $iMyOwner {
 				set DontBuildList		{Disco Fitnessstudio}
 				set DontUseList			{Tischlerei}
 			}						
-	4		{	ai_log "Init as: Vampys"
+	4		{	log AI "Init as: Vampys"
 				set bDefensive 			1
 				set bAggressive			1
 				set bStartWar			1
@@ -139,7 +139,7 @@ switch $iMyOwner {
 				set PreinventedList		{Hauklotz Grillhamster Farm Pilz Raupe Holzkiepe Steinmetz Keule Streitaxt PfeilUndBogen Schild Buechse Kristallschild Hoverboard Labor Raupensuppe Grosser_Heiltrank Unverwundbarkeitstrank Unsichtbarkeitstrank Gold}
 				set DontBuildList		{Dreherei}
 			}
-	default	{ 	ai_log "Init as: default"
+	default	{ 	log AI "Init as: default"
 				set bDefensive 			1
 				set bAggressive			0
 				set bStartWar			0
@@ -166,12 +166,12 @@ proc set_ai_style {style} {
 	global PreinventedList DontBuildList DontUseList
 	
 	
-	// ACHTUNG: nicht vergessen, neu hinzugefügte Vars hier global zu machen :-)
+	// ACHTUNG: nicht vergessen, neu hinzugefï¿½gte Vars hier global zu machen :-)
 	
 	switch $style {
 
 		aggressive {
-			ai_log "ai set to 'aggressive'"
+			log AI "ai set to 'aggressive'"
 
 			set bDefensive 			1
 			set bAggressive			1
@@ -186,7 +186,7 @@ proc set_ai_style {style} {
 		}
 						
 		defensive {
-			ai_log "ai set to 'defensive'"
+			log AI "ai set to 'defensive'"
 
 			set bDefensive 			1
 			set bAggressive			0
@@ -201,7 +201,7 @@ proc set_ai_style {style} {
 		}
 	
 		debug {
-			ai_log "ai set to 'debug'"
+			log AI "ai set to 'debug'"
 
 			set bDefensive 			1
 			set bAggressive			1
@@ -217,10 +217,10 @@ proc set_ai_style {style} {
 		
 		default	{
 			if {$style != "normal"} {
-				ai_log "illegal ai style, ai will play on 'normal'"
+				log AI "illegal ai style, ai will play on 'normal'"
 				set style normal
 			} else {
-				ai_log "ai set to 'normal'"
+				log AI "ai set to 'normal'"
 			}
 			
 			set bDefensive 			1
@@ -261,7 +261,7 @@ proc dotickhandler {} {
 		
 	//set starttime [gettime]
 	
-//	ai_log "AI: $iMyOwner"
+	log AI "AI: $iMyOwner"
 	
 	ai_nprint "Ai Tick $iTickCounter\n"		;# AI Tick Count
 	incr iTickCounter
@@ -277,7 +277,7 @@ proc dotickhandler {} {
 	set MyProdsList			  ""
 	set	UnavailableGnomesList ""
 
-	// Dinge, die nur ab und zu geupdatet werden müssen
+	// Dinge, die nur ab und zu geupdatet werden mï¿½ssen
 	
 	if {$iTickCounter % 25 == 0} {			
 		set vSafePos			  "-1 -1 -1"
@@ -327,38 +327,10 @@ proc dotickhandler {} {
 	fincr fCalculationTime [expr {$endtime-$starttime}]
 	
 	return
-	
-	// ----- ab hier alter und nicht mehr benutzter Kram von Carsten ------
-	
-	for {set ipop 0} {$ipop < $popcnt} {incr ipop} {
-		set lst [ai_gnomepop_getlist $ipop]
-		ai_nprint " $ipop:([ai_gnomepop_getcount $ipop]) "
-		foreach item $lst {
-			set name [get_objname $item]
-			ai_nprint " $name"
-		}
-		ai_nprint "\n"
-		if {$iTickCounter%1==0} {
-			automatic_economy $ipop
-		}
-	}
-
-	set popcnt [ai_prodpopscount]
-	ai_nprint "prod pops: $popcnt\n"
-	for {set ipop 0} {$ipop < $popcnt} {incr ipop} {
-		set lst [ai_prodpop_getlist $ipop]
-		ai_nprint " $ipop:"
-		foreach item $lst {
-			set name [get_objname $item]
-			ai_nprint " $name"
-		}
-		ai_nprint "\n"
-	}
-
 }
 
 //------------------------------------------------------------------------------------------------
-// Allgemeine und nützliche Procs
+// Allgemeine und nï¿½tzliche Procs
 //------------------------------------------------------------------------------------------------
 
 
@@ -392,7 +364,7 @@ proc get_core_base_pos {} {
 		set d [expr {$d + [vector_dist $vBasePos [get_pos $obj]]}]
 	}
 	set fBasePerimeter [expr { (($d / $len) * 0.6) + $fBaseDefenseRange }]
-	ai_log "Calculated Base Center: \{$vBasePos\}, Perimeter Distance $fBasePerimeter"
+	log AI "Calculated Base Center: \{$vBasePos\}, Perimeter Distance $fBasePerimeter"
 }
 
 // guckt nach, ob Zwerg in der UnavailableGnomesList ist
@@ -430,7 +402,7 @@ proc check_for_thieves {} {
 		set stolecnt [lindex $ClansStoleCntList $iNeutralGnomeStoleItem]
 		set myrace [get_ownerrace $iMyOwner]
 		if {$stolecnt>1||$boxed&&$stolecnt} {
-			ai_log "Diplomatie $iMyOwner $iNeutralGnomeStoleItem -> enemy"
+			log AI "Diplomatie $iMyOwner $iNeutralGnomeStoleItem -> enemy"
 			set_diplomacy $iMyOwner $iNeutralGnomeStoleItem "enemy"
 			set_diplomacy $iNeutralGnomeStoleItem $iMyOwner "enemy"
 			set nttext [lmsg Clantoenemy]
@@ -508,7 +480,7 @@ proc get_enemyownerlist {} {
 }
 
 
-// sucht ein mögliches Angriffsziel
+// sucht ein mï¿½gliches Angriffsziel
 
 proc target_search {obj rangeparam {limitparam 1}} {
 
@@ -517,7 +489,7 @@ proc target_search {obj rangeparam {limitparam 1}} {
 		return -1
 	}
 
-	// zerstörte PS sind nicht mehr hoverable!
+	// zerstï¿½rte PS sind nicht mehr hoverable!
 	set target [obj_query $obj "-type {production energy store protection gnome} -range $rangeparam -owner $enemyownerlist -flagpos hoverable -limit $limitparam"]
 //	incr_objquerycnt
 	return $target
@@ -525,7 +497,7 @@ proc target_search {obj rangeparam {limitparam 1}} {
 
 
 
-// überprüft, ob die Position eines Objektes (PS/Zwerg) sicher ist
+// ï¿½berprï¿½ft, ob die Position eines Objektes (PS/Zwerg) sicher ist
 
 proc is_objpos_safe {obj} {
 	set enemy [obj_query $obj "-class Zwerg -owner enemy -range 20 -limit 1"]
@@ -537,7 +509,7 @@ proc is_objpos_safe {obj} {
 }
 
 
-// liefert einen sicheren Platz zurück
+// liefert einen sicheren Platz zurï¿½ck
 
 proc get_safe_pos {} {
 	global vSafePos vBasePos iMyOwner 
@@ -549,21 +521,21 @@ proc get_safe_pos {} {
 		set ProdList [obj_query 0 -pos $vBasePos -type production -owner $iMyOwner -range 50]
 		if {$ProdList != 0} {
 			foreach obj $ProdList {
-	//			ai_log "looking at $obj"
+				log AI "looking at $obj"
 				if {[is_objpos_safe $obj]} {
-	//				ai_log "$obj is safe"
+					log AI "$obj is safe"
 					set vSafePos "[get_posx $obj] [get_posy $obj] 14"
 					break
 				} 
 			}
 		}
 	}
-	ai_log "returning pos: $vSafePos"
+	log AI "returning pos: $vSafePos"
 	return $vSafePos
 }
 
 //------------------------------------------------------------------------------------------------
-// Kämpferische Komponente der AI
+// Kï¿½mpferische Komponente der AI
 //------------------------------------------------------------------------------------------------
 
 
@@ -579,21 +551,21 @@ proc fight_ai {} {
 	// Agressives Verhalten - laufenden Angriff koordinieren
 	
 	if {$bAggressive && $bRaidInProgress} {
-		ai_log "RAID: in Progress (Timeout T minus $iRaidingTimeOut)"
+		log AI "RAID: in Progress (Timeout T minus $iRaidingTimeOut)"
 		
 		review_raidingparty
-		ai_log "Raiding Party: $RaidingPartyList"
+		log AI "Raiding Party: $RaidingPartyList"
 		if {[llength $RaidingPartyList] == 0} {
 			set bRaidInProgress 0
 			set iRaidState $RS_NONE
-			ai_log "RAID: raiding party has broken up - operation terminated"
+			log AI "RAID: raiding party has broken up - operation terminated"
 			send_raidingparty_home
 		}
 		review_raidingtarget
 		if {$iRaidingTarget <= 0} {
 			set bRaidInProgress 0
 			set iRaidState $RS_NONE			
-			ai_log "RAID: no target - operation terminated"
+			log AI "RAID: no target - operation terminated"
 			send_raidingparty_home
 		}
 
@@ -601,7 +573,7 @@ proc fight_ai {} {
 		if {$iRaidingTimeOut <= 0} {
 			set bRaidInProgress 0
 			set iRaidState $RS_NONE			
-			ai_log "RAID: timed out - operation terminated"
+			log AI "RAID: timed out - operation terminated"
 			send_raidingparty_home			
 		}
 		
@@ -611,21 +583,21 @@ proc fight_ai {} {
 		}
 
 		if {$iRaidState == $RS_GATHER} {
-			ai_log "RAID: gathering raiding party"
+			log AI "RAID: gathering raiding party"
 			if {[gather_raidingparty]} {
 				set iRaidState $RS_ONTHEWAY
 			}
 		}
 					
 		if {$iRaidState == $RS_ONTHEWAY} {
-			ai_log "RAID: raiding party is on the way!"
+			log AI "RAID: raiding party is on the way!"
 			if {[approach_raidingtarget]} {
 				set iRaidState $RS_INTARGETZONE
 			}
 		}
 		
 		if {$iRaidState == $RS_INTARGETZONE} {
-			ai_log "RAID: raiding party is in target zone!"
+			log AI "RAID: raiding party is in target zone!"
 			set iRaidingTimeOut $RAIDINGTIMEOUT					;# Timeout auffrischen!
 			attack_raidingtarget
 		}
@@ -683,7 +655,7 @@ proc fight_ai {} {
 			}
 		}
 
-		// danach mögliche Produktionsstätten in meiner Basis angreifen
+		// danach mï¿½gliche Produktionsstï¿½tten in meiner Basis angreifen
 		foreach obj $EnemyProdList {
 			if {[is_in_my_base $obj]} {
 				if {[get_objtype $obj] != "elevator"} {
@@ -699,15 +671,15 @@ proc fight_ai {} {
 	if {$bAggressive  &&  !$bRaidInProgress} {
 		if {[gettime] >= [expr {$iLastRaidTime + $iTimeBetweenRaids}]} {
 	
-			ai_log "Planning a raid..."
+			log AI "Planning a raid..."
 			set iLastRaidTime [gettime]
 		
 			if {[find_raiding_target]} {
-				ai_log "Raiding Target: $iRaidingTarget ([get_objname $iRaidingTarget])"
+				log AI "Raiding Target: $iRaidingTarget ([get_objname $iRaidingTarget])"
 				
 				if {[find_raidingparty]} {
 					review_raidingparty
-					ai_log "Raiding Party: $RaidingPartyList"
+					log AI "Raiding Party: $RaidingPartyList"
 				
 					set bRaidInProgress 1
 					set iRaidingTimeOut $RAIDINGTIMEOUT
@@ -720,16 +692,16 @@ proc fight_ai {} {
 		
 	
 	
-	// übrige Zwerge: bei Gefahr nach Hause schicken!
+	// ï¿½brige Zwerge: bei Gefahr nach Hause schicken!
 	
 	if {($iTickCounter % 6) == 0} {
-//		ai_log "Looking for gnomes in danger..."
+		log AI "Looking for gnomes in danger..."
 		foreach obj $MyGnomesList {
 			if {[lsearch $UnavailableGnomesList $obj] < 0} {
 				if {![is_objpos_safe $obj]} {
 					if {![is_in_my_base $obj]} {
 						set_event $obj evt_task_walk -target $obj -pos1 "[get_safe_pos]"
-						ai_log "[get_objname $obj] is in an unsafe location, sending her/him home"
+						log AI "[get_objname $obj] is in an unsafe location, sending her/him home"
 					}
 				}
 			}
@@ -817,7 +789,7 @@ proc filter_prods {} {
 }
 
 
-// liefert eine Bewertung eines Zwerges bezüglich seiner Nahkampfkraft
+// liefert eine Bewertung eines Zwerges bezï¿½glich seiner Nahkampfkraft
 // 0.0 = unbewaffnet und tot bis open end
 
 proc fight_evaluation {gnome} {
@@ -840,18 +812,18 @@ proc fight_evaluation {gnome} {
 
 
 
-// liefert den besten verfügbaren Kämpfer
+// liefert den besten verfï¿½gbaren Kï¿½mpfer
 // 0, wenn keiner mehr da ist
 
 proc get_best_available_fighter {} {
 	global UnavailableGnomesList MyGnomesList
 	
 	set best   0
-	set bestfe 1.0 		;// niemals einen Zwerg unter 1.0 zurückliefern! 
+	set bestfe 1.0 		;// niemals einen Zwerg unter 1.0 zurï¿½ckliefern! 
 	foreach obj $MyGnomesList {
 		if {[lsearch $UnavailableGnomesList $obj] < 0} {
 			set fe [fight_evaluation $obj]
-//			ai_log "[get_objname $obj] has fight_evaluation of $fe"
+			log AI "[get_objname $obj] has fight_evaluation of $fe"
 			if {$fe >= $bestfe} {
 				set bestfe $fe
 				set best $obj
@@ -859,12 +831,12 @@ proc get_best_available_fighter {} {
 		}
 	}
 
-//	ai_log "best fighter: $best $bestfe"
+	log AI "best fighter: $best $bestfe"
 	return $best
 }
 
 
-// liefert eine Bewertung eines Zwerges bezüglich seiner Fernkampfkraft
+// liefert eine Bewertung eines Zwerges bezï¿½glich seiner Fernkampfkraft
 // 0.0 = keine Fernwaffe bis open end
 
 proc ballistic_evaluation {gnome} {
@@ -881,7 +853,7 @@ proc is_in_my_base {target} {
 	global iMyOwner fBaseDefenseRange vBasePos fBasePerimeter
 	
 	if {[vector_dist [get_pos $target] $vBasePos] <= $fBasePerimeter} {
-//		ai_log "in inner base!"
+		log AI "in inner base!"
 		return 1
 	}
 	
@@ -906,7 +878,7 @@ proc is_splitting_my_base {target} {
 	}
 }
 
-// sucht in der Nähe eines Zieles (feindlicher Zwerg od. PS) nach eigenen Zwergen (d.h. ausreichend vielen)
+// sucht in der Nï¿½he eines Zieles (feindlicher Zwerg od. PS) nach eigenen Zwergen (d.h. ausreichend vielen)
 // und schickt sie zum Angriff
 
 proc dispatch_interceptors {target} {
@@ -923,7 +895,7 @@ proc dispatch_interceptors {target} {
 	
 	declare_war $target
 	
-	// solange Zwerge als Angreifer hinzufügen, bis die Summe der Kampfkraft >= der des Zieles
+	// solange Zwerge als Angreifer hinzufï¿½gen, bis die Summe der Kampfkraft >= der des Zieles
 
 	foreach obj $possibleattackers {
 		if {[isGnomeAvailable $obj]} {
@@ -943,17 +915,17 @@ proc dispatch_interceptors {target} {
 		}
 		if {[vector_dist [get_pos $obj] $targetpos] < 8.0} {
 			set_event $obj evt_task_attack -target $obj -subject1 $target
-			ai_log "FIGHT: ordered [get_objname $obj] to attack [get_objname $target] (total [llength $attackers])"
+			log AI "FIGHT: ordered [get_objname $obj] to attack [get_objname $target] (total [llength $attackers])"
 		} else {
 			set_event $obj evt_task_walk -target $obj -pos1 [get_pos $target]
-			ai_log "FIGHT: sent [get_objname $obj] to intercept [get_objname $target] (total [llength $attackers])"
+			log AI "FIGHT: sent [get_objname $obj] to intercept [get_objname $target] (total [llength $attackers])"
 		}
 	}
 }
 
 
-// sucht in der Nähe eines Zieles (feindlicher Zwerg od. PS) nach eigenen Zwergen
-// die einen Fernangriff führen können und löst diesen aus
+// sucht in der Nï¿½he eines Zieles (feindlicher Zwerg od. PS) nach eigenen Zwergen
+// die einen Fernangriff fï¿½hren kï¿½nnen und lï¿½st diesen aus
 
 proc dispatch_shooters {target {cheat 0}} {
 	global iMyOwner UnavailableGnomesList sBestRangedWeapon
@@ -979,14 +951,14 @@ proc dispatch_shooters {target {cheat 0}} {
 		}
 	}
 
-	// falls kein Schütze gefunden wurde und cheaten erlaubt ist, machen wir uns einen Schützen!
+	// falls kein Schï¿½tze gefunden wurde und cheaten erlaubt ist, machen wir uns einen Schï¿½tzen!
 	if {[llength $attackers] == 0  &&  $cheat} {
 		set gnome	[lindex $possibleattackers 0]
 		if {[inv_find $gnome $sBestRangedWeapon] < 0} {
 			set obj		[new $sBestRangedWeapon]
 			if {[inv_check $gnome $obj]} {
 				inv_add $gnome $obj
-				ai_log "FIGHT: Cheating... giving $sBestRangedWeapon to [get_objname [lindex $possibleattackers 0]]"
+				log AI "FIGHT: Cheating... giving $sBestRangedWeapon to [get_objname [lindex $possibleattackers 0]]"
 			} else {
 				del $obj
 			}
@@ -1003,13 +975,13 @@ proc dispatch_shooters {target {cheat 0}} {
 			continue
 		}
 		set_event $obj evt_task_attack -target $obj -subject1 $target
-		ai_log "FIGHT: ordered [get_objname $obj] to shoot [get_objname $target] (total [llength $attackers])"
+		log AI "FIGHT: ordered [get_objname $obj] to shoot [get_objname $target] (total [llength $attackers])"
 	}
 }
 
 
 
-// sucht ein lohnendes Ziel für einen Angriff
+// sucht ein lohnendes Ziel fï¿½r einen Angriff
 // liefert: 1 - Erfolg   	0 - nichts gefunden
 
 proc find_raiding_target {} {
@@ -1025,7 +997,7 @@ proc find_raiding_target {} {
 
 
 // sucht eine Gruppe von Angreifern 
-// liefert 1 - Erfolg 	0 - nicht möglich (weil z.B. Zwerge alle zu schwach etc.)
+// liefert 1 - Erfolg 	0 - nicht mï¿½glich (weil z.B. Zwerge alle zu schwach etc.)
 
 proc find_raidingparty {} {
 	global iRaidingPartySize RaidingPartyList MyGnomesList UnavailableGnomesList
@@ -1052,9 +1024,9 @@ proc find_raidingparty {} {
 
 
 
-// Überprüft die Angriffstruppe:
+// ï¿½berprï¿½ft die Angriffstruppe:
 // - ob noch alle am Leben sind
-// - ob es nicht Zeit wäre, jemanden nach Hause zu schicken
+// - ob es nicht Zeit wï¿½re, jemanden nach Hause zu schicken
 // meldet ausserdem alle Mitglieder als unavailable
 
 
@@ -1069,10 +1041,10 @@ proc review_raidingparty {} {
 			continue
 		}
 		
-		if {[get_attrib $obj atr_Hitpoints] <= $fRetreatHP} {		;# Zwerg fühlt sich nicht gut, ab nach Hause!
+		if {[get_attrib $obj atr_Hitpoints] <= $fRetreatHP} {		;# Zwerg fï¿½hlt sich nicht gut, ab nach Hause!
 			lrem RaidingPartyList $idx
 			set_event $obj evt_task_walk -target $obj -pos1 "[get_safe_pos]"
-			ai_log "RAID: [get_objname $obj] is too weak, sending her/him home"
+			log AI "RAID: [get_objname $obj] is too weak, sending her/him home"
 		}
 	}
 		
@@ -1083,7 +1055,7 @@ proc review_raidingparty {} {
 }
 
 
-// Überprüft das aktuelle Angriffsziel und legt im Bedarfsfalle ein neues fest
+// ï¿½berprï¿½ft das aktuelle Angriffsziel und legt im Bedarfsfalle ein neues fest
 
 proc review_raidingtarget {} {
 	global iRaidingTarget RaidingPartyList
@@ -1095,7 +1067,7 @@ proc review_raidingtarget {} {
 }
 
 
-// versammelt die Angriffsgruppe um den Anführer
+// versammelt die Angriffsgruppe um den Anfï¿½hrer
 // liefert: 1 - Gruppe versammelt	0 - noch nicht versammelt 
 
 proc gather_raidingparty {} {
@@ -1108,7 +1080,7 @@ proc gather_raidingparty {} {
 		if {[vector_dist [get_pos $obj] $leaderpos] > 3} {
 			set ready 0
 			set_event $obj evt_task_walk -target $obj -pos1 "$leaderpos"
-			ai_log "GATHERING RAIDINGPARTY: sent [get_objname $obj] to meet with [get_objname $leader]"		
+			log AI "GATHERING RAIDINGPARTY: sent [get_objname $obj] to meet with [get_objname $leader]"		
 		}
 	}
 
@@ -1116,7 +1088,7 @@ proc gather_raidingparty {} {
 }
 
 
-// Angriffstruppe läuft zum Ziel
+// Angriffstruppe lï¿½uft zum Ziel
 // wenn unterwegs ein anderes Ziel gefunden wird, wird das statt dessen angegriffen
 // liefert: 	1 - angekommen	0 - noch unterwegs
 
@@ -1128,7 +1100,7 @@ proc approach_raidingtarget {} {
 	set othertarget [target_search $leader 10]
 	if {[vector_dist $leaderpos [get_pos $othertarget]] < [vector_dist $leaderpos [get_pos $iRaidingTarget]]} {
 		set iRaidingTarget $othertarget
-		ai_log "RAID: target change during approach - new target is $othertarget"
+		log AI "RAID: target change during approach - new target is $othertarget"
 	}
 
 	set targetpos [get_pos $iRaidingTarget]
@@ -1138,7 +1110,7 @@ proc approach_raidingtarget {} {
 	
 	foreach obj $RaidingPartyList {
 		set_event $obj evt_task_walk -target $obj -pos1 "$targetpos"
-		ai_log "RAID: sent [get_objname $obj] to target [get_objname $iRaidingTarget]"
+		log AI "RAID: sent [get_objname $obj] to target [get_objname $iRaidingTarget]"
 	}
 	
 	return 0
@@ -1152,7 +1124,7 @@ proc attack_raidingtarget {} {
 
 	foreach obj $RaidingPartyList {
 		order_attack $obj $iRaidingTarget
-		ai_log "RAID: ordered [get_objname $obj] to attack [get_objname $iRaidingTarget]"
+		log AI "RAID: ordered [get_objname $obj] to attack [get_objname $iRaidingTarget]"
 	}
 }
 
@@ -1164,7 +1136,7 @@ proc send_raidingparty_home {} {
 
 	foreach obj $RaidingPartyList {
 		set_event $obj evt_task_walk -target $obj -pos1 "[get_safe_pos]"
-		ai_log "sending [get_objname $obj] home ([get_safe_pos])"
+		log AI "sending [get_objname $obj] home ([get_safe_pos])"
 	}
 }
 
@@ -1173,7 +1145,7 @@ proc send_raidingparty_home {} {
 // Wirtschaftliche Komponente der AI
 //------------------------------------------------------------------------------------------------
 
-// setzt automatisch Aufträge zur Produktion für einen bestimmten Pop
+// setzt automatisch Auftrï¿½ge zur Produktion fï¿½r einen bestimmten Pop
 
 
 // Initialisierung
@@ -1227,9 +1199,8 @@ proc economy_ai {} {
 		}
 	}
 	set EconGnomesList $newlist
-	//log "komme hier vorbei"
-	//ai_log "invent_cheat: $inventcheat"
-	//ai_log "notinvented: $notinventlist"
+	log AI "invent_cheat: $inventcheat"
+	log AI "notinvented: $notinventlist"
 	if {0} {return}
 	if {$iTickCounter%4} {return}
 	if {$iTickCounter%120==4} {
@@ -1241,7 +1212,7 @@ proc economy_ai {} {
 	set sizeofpop 		[llength $MyGnomesList]
 	set populationowner $iMyOwner
 	set ctime [gettime]
-	//ai_log "locate: [ai_getprodlocation Zelt {120 35 11}]"
+	log AI "locate: [ai_getprodlocation Zelt {120 35 11}]"
 	
 	// Zivilisationsstufe
 	set civ_state [expr {([gamestats attribsum $populationowner expsum]+[gamestats numbuiltprodclasses $populationowner])*0.01}]
@@ -1266,17 +1237,17 @@ proc economy_ai {} {
 	set inventablelist [ai_getpossibleinventions]
 	if {$PreinventedList!=""} {
 		foreach item $PreinventedList {
-			ai_log "PREINVENTING $iMyOwner: $item"
+			log AI "PREINVENTING $iMyOwner: $item"
 			set_owner_attrib $iMyOwner Bp$item 1.0
 		}
 		set PreinventedList ""
 	}
-	//ai_log "inventablelist $inventablelist"
+	log AI "inventablelist $inventablelist"
 	set itemcnts [string repeat "0 " $proditem_classcnt]
 	set nearestinvention ""
 	if {$iTickCounter%30==0&&$inventcheat==""} {
 		if {$notinventlist!=""} {
-			//ai_log "checking to cheat"
+			log AI "checking to cheat"
 			set minlack 1000
 			set cheatclass "none"
 			foreach item $notinventlist {
@@ -1303,7 +1274,7 @@ proc economy_ai {} {
 					}
 				}
 			}
-			ai_log "INVENTCHEAT GESETZT: $cheatclass ($nearestinvention)"
+			log AI "INVENTCHEAT GESETZT: $cheatclass ($nearestinvention)"
 		}
 		set nearestgnome 0
 		set nearestattrs 100
@@ -1322,7 +1293,7 @@ proc economy_ai {} {
 				}
 			}
 			if {$lowestattr==""} {
-				ai_log "INVENTCHEAT ENDE: $inventcheat"
+				log AI "INVENTCHEAT ENDE: $inventcheat"
 				set inventcheat ""
 			} else {
 				if {$lowestattr=="exp_Kampf"} {
@@ -1331,11 +1302,11 @@ proc economy_ai {} {
 				} else {
 					set increase 0.001
 				}
-				if {$iTickCounter%80==0} {ai_log "cheatin' $gnome $lowestattr [get_attrib $gnome $lowestattr] + [expr {$increase*10.0}] ($attrs)"}
+				if {$iTickCounter%80==0} {log AI "cheatin' $gnome $lowestattr [get_attrib $gnome $lowestattr] + [expr {$increase*10.0}] ($attrs)"}
 				add_expattrib $gnome $lowestattr $increase
 			}
 		} else {
-			ai_log "INVENTCHEAT ENDE: $gnome gestorben"
+			log AI "INVENTCHEAT ENDE: $gnome gestorben"
 			set inventcheat ""
 		}
 	}
@@ -1425,14 +1396,14 @@ proc economy_ai {} {
 		}
 		set gnomebestdistribution $newdistribution
 		// Produktionskisten im Inventory?
-		//ai_log "([inv_list $gnome]) ($stealboxlist)"
+		log AI "([inv_list $gnome]) ($stealboxlist)"
 		foreach item [inv_list $gnome] {
 			if {[land $item $stealboxlist]!=""||[get_boxed $item]} {
 				if {[get_prod_unpack $item]} {
 					set buildupinprogress 1
 				} else {
 					set pdentry [list $gnome $item]
-					//ai_log "Found: $item ($gnome)"
+					log AI "Found: $item ($gnome)"
 					if {[lsearch $putdownlist $pdentry]==-1} {
 						lappend putdownlist $pdentry
 					}
@@ -1486,7 +1457,7 @@ proc economy_ai {} {
 		}
 	}
 	if {$worktiming} {
-	//	ai_log "worktimelist: $worktimelist"
+		log AI "worktimelist: $worktimelist"
 		// finde Singles
 		set malelist ""
 		set femalelist ""
@@ -1519,7 +1490,7 @@ proc economy_ai {} {
 		set worktimelist [lsort -index 2 -real -decreasing $worktimelist]
 		set worktimelist [concat $worktimelist [lsort -index 2 -real -decreasing [concat $malelist $femalelist]]]
 		set worktimelen [llength $worktimelist]
-		ai_log "worktimelist: $worktimelist"
+		log AI "worktimelist: $worktimelist"
 		if {$worktimelen>1} {
 			switch $worktimelen {
 				2 {set hours {6}}
@@ -1535,7 +1506,7 @@ proc economy_ai {} {
 				if {$nexthour>11} {incr nexthour -12}
 				foreach gnome [lrange $entry 0 1] {
 					if {[string is integer $gnome]} {
-						//ai_log "setting $gnome to: $nexthour 6.0"
+						log AI "setting $gnome to: $nexthour 6.0"
 						set_worktime $gnome $nexthour 6.0
 					}
 				}
@@ -1551,7 +1522,7 @@ proc economy_ai {} {
 	}
 	// Erfindecheat einrichten
 	if {$nearestinvention!=""} {
-		ai_log "INVENTCHEAT GNOME: $nearestgnome [get_objname $nearestgnome] $nearestinvention"
+		log AI "INVENTCHEAT GNOME: $nearestgnome [get_objname $nearestgnome] $nearestinvention"
 		set inventcheat [list $nearestgnome $nearestinvention]
 	}
 	// Hungersituation
@@ -1559,8 +1530,8 @@ proc economy_ai {} {
 		if {$hunger/$sparegnomes<0.4} {set greathunger 1}
 	}
 	set hunger [expr {$fullstomach-$hunger+$workershunger*0.5}]
-	//ai_log "$sparegnomes $hunger $greathunger $workershunger"
-	//ai_log "GBD: $gnomebestdistribution"
+	log AI "$sparegnomes $hunger $greathunger $workershunger"
+	log AI "GBD: $gnomebestdistribution"
 	set possiblenewtasks $idlegnomes
 	fincr lborder -30.0
 	fincr rborder  30.0
@@ -1576,22 +1547,22 @@ proc economy_ai {} {
 	// --------------------------------------
 	// Graben und so
 	set DigFrequency [expr {int(50-$fExpandSpeed*35)*4}]
-	//ai_log "DigFrequency: $DigFrequency"
+	log AI "DigFrequency: $DigFrequency"
 	if {$bIsDigging&&($iTickCounter%$DigFrequency)==20} {
-		ai_log "analyzing world for digging: $iTickCounter ($DigFrequency $fExpandSpeed)"
+		log AI "analyzing world for digging: $iTickCounter ($DigFrequency $fExpandSpeed)"
 		set placeneed 0
 		foreach entry $failedbuilduptasks {
 			incr placeneed [lindex $entry 1]
 		}
 		analyze_world $center $xdim $ydim $populationowner $placeneed $idlegnomes
 	} else {
-		//ai_log "naw $iTickCounter"
+		log AI "naw $iTickCounter"
 	}
 	// --------------------------------------
 	//set kitchens {Feuerstelle Mittelalterkueche Industriekueche Luxuskueche}
 	//set kitchenlist [lnand 0 [obj_query $firstgnomeofpop "-class \{$kitchens\} $searchparams -owner own -flagpos build"]]
 	incr_objquerycnt
-	//ai_log "(-type production $searchparams -owner own -flagpos build)"
+	log AI "(-type production $searchparams -owner own -flagpos build)"
 	// --------------------------------------------------
 	// Hier werden die Produktionsstellen zusammengesucht
 	// --------------------------------------------------
@@ -1599,7 +1570,7 @@ proc economy_ai {} {
 	//set prodlist [lor $prodlist [lnand 0 [obj_query $firstgnomeofpop "-type \{production elevator energy store protection\} -pos \{-100 -100 0\} -range 10 -owner own -flagpos \{boxed contained\}"]]]
 	incr_objquerycnt
 	set prodlist [lor $prodlist $MyProdsList]
-	//ai_log "pl: $prodlist"
+	log AI "pl: $prodlist"
 	set prodclasses {}
 	set prodreadylist {}
 	foreach item $prodlist {
@@ -1615,7 +1586,7 @@ proc economy_ai {} {
 		econ_handle_prods $item $prodclass $prodtype
 	}
 	set prodlength [llength $prodclasses]
-	//ai_log "pp found: $prodlist ($center)"
+	log AI "pp found: $prodlist ($center)"
 	// Fremde
 	set prodenemylist [lnand 0 [obj_query $firstgnomeofpop "-type \{production elevator energy store protection\} $searchparams -owner enemy -flagneg \{boxed contained\}"]]
 	incr_objquerycnt
@@ -1634,12 +1605,12 @@ proc economy_ai {} {
 	// dasselbe fuer Produktklassen
 	// --------------------------------------------------
 	set itemexistlist [lnand 0 [obj_query $firstgnomeofpop "-class \{$proditem_classnames $eatclasses\} $searchparams"]]
-	//ai_log "found items: $itemexistlist"
+	log AI "found items: $itemexistlist"
 	set itemclassexists {}
 	foreach item $itemexistlist {
 		lappend itemclassexists [get_objclass $item]
 	}
-	//ai_log "found itemclasses: $itemclassexists"
+	log AI "found itemclasses: $itemclassexists"
 	
 	
 	// Produktwuensche zusammenstellen
@@ -1674,11 +1645,11 @@ proc economy_ai {} {
 	set desiredlist {}
 	set outofenergylist {}
 	set DesiredEnemyProdList ""
-	//ai_log "-------------------------------------------------"
-	//ai_log "inventable: ($inventablelist)"
-	//ai_log "Popcount: $sizeofpop Civstate: $civ_state GH: $greathunger ($hunger)"
-	//ai_log $prodlist
-	//ai_log $prodclasses
+	log AI "-------------------------------------------------"
+	log AI "inventable: ($inventablelist)"
+	log AI "Popcount: $sizeofpop Civstate: $civ_state GH: $greathunger ($hunger)"
+	log AI $prodlist
+	log AI $prodclasses
 	foreach entry $product_values {
 		set classname [lindex $entry 0]
 		set desiredcnt [lindex $entry 1]
@@ -1694,7 +1665,7 @@ proc economy_ai {} {
 		if {$desiredcnt} {
 			lappend desiredlist [list $classname $desiredcnt]
 		}
-		//ai_log "$classname gewünscht: $desiredcnt"
+		log AI "$classname gewï¿½nscht: $desiredcnt"
 		set priority [lindex $entry 3]
 		// vorhandene eigene
 		set currentinst {}
@@ -1704,18 +1675,18 @@ proc economy_ai {} {
 			}
 		}
 		//set currentcnt [llength $currentinst]
-		//ai_log "$classname vorhanden: $currentinst"
-		//if {$currentinst!=""} {ai_log "($currentinst) ($stealboxlist)"}
+		log AI "$classname vorhanden: $currentinst"
+		//if {$currentinst!=""} {log AI "($currentinst) ($stealboxlist)"}
 		set searchforit [lcount $oldprodplacetasks $classname]
 		foreach pp $currentinst {
-			//if {$classname=="Zelt"} {ai_log "$desiredcnt $searchforit"}
+			//if {$classname=="Zelt"} {log AI "$desiredcnt $searchforit"}
 			if {$desiredcnt==0&&!$searchforit} {break}
 			if {[get_boxed $pp]} {
 				if {![get_prod_unpack $pp]} {
 					if {![is_contained $pp]} {
 						lappend builduplist [list $pp $priority]
 					} else {
-						//ai_log "found box in inv: $pp"
+						log AI "found box in inv: $pp"
 						//set stealboxlist [lor $stealboxlist $pp]
 					}
 					set desiredcnt 1
@@ -1759,7 +1730,7 @@ proc economy_ai {} {
 			incr desiredcnt -$searchforit
 			set desiredcnt [hmax 0 $desiredcnt]
 		}
-		//ai_log "$classname gewünscht: $desiredcnt"
+		log AI "$classname gewï¿½nscht: $desiredcnt"
 		if {$desiredcnt} {
 			// erreichbare fremde Kisten
 			set others {}
@@ -1770,7 +1741,7 @@ proc economy_ai {} {
 				}
 				incr iinst
 			}
-			//ai_log "other $classname: $others"
+			log AI "other $classname: $others"
 			foreach pp $others {
 				// bewacht?
 				set gl [obj_query $pp -class Zwerg -owner own -range 15]
@@ -1795,13 +1766,13 @@ proc economy_ai {} {
 		if {[get_owner_attrib $populationowner Bp$classname]<0.5} {
 			if {[lsearch $inventablelist $classname]!=-1} {
 				lappend inventlist [list $classname $priority]
-				//ai_log "$classname kann von $populationowner erfunden werden"
+				log AI "$classname kann von $populationowner erfunden werden"
 			} else {
 				set places [prod_get_task_all_places $populationowner $classname]
 				if {$places!=""} {
 					lappend notinventlist [list $classname $priority [lindex $places 0]]
 				}
-				//ai_log "$classname kann noch nicht von $populationowner erfunden werden"
+				log AI "$classname kann noch nicht von $populationowner erfunden werden"
 			}
 		} else {
 			// noch zu bauen
@@ -1826,7 +1797,7 @@ proc economy_ai {} {
 			}
 		}
 		set currentcnt [lindex $itemcnts $i]
-		//ai_log "$classname $currentcnt mal vorhanden"
+		log AI "$classname $currentcnt mal vorhanden"
 		incr desiredcnt -$currentcnt
 		if {$desiredcnt>0} {
 			lappend desiredlist [list $classname $desiredcnt]
@@ -1852,13 +1823,13 @@ proc economy_ai {} {
 		if {[get_owner_attrib $populationowner Bp$classname]<0.5} {
 			if {[lsearch $inventablelist $classname]!=-1} {
 				lappend inventlist [list $classname $priority]
-				//ai_log "$classname kann von $populationowner erfunden werden"
+				log AI "$classname kann von $populationowner erfunden werden"
 			} else {
 				set places [prod_get_task_all_places $populationowner $classname]
 				if {$places!=""} {
 					lappend notinventlist [list $classname $priority [lindex $places 0]]
 				}
-				//ai_log "$classname kann noch nicht von $populationowner erfunden werden"
+				log AI "$classname kann noch nicht von $populationowner erfunden werden"
 			}
 		} else {
 			if {$desiredcnt>0} {
@@ -1867,7 +1838,7 @@ proc economy_ai {} {
 			}
 		}
 	}
-	//ai_log "gewünscht: $desiredlist"
+	log AI "gewï¿½nscht: $desiredlist"
 	
 	// Farmregeln
 	set farms [land $prodlist [prod_get_task_all_places $populationowner Hamster]]
@@ -1877,13 +1848,13 @@ proc economy_ai {} {
 	//if {$civ_state<0.1} {lappend farmitems Pilz}
 	append farmitems [string repeat " Hamster Raupe Pilz" [expr {$farmcount/3+1}]]
 	set farmitems [lrange $farmitems 0 [expr {$farmcount-1}]]
-	//ai_log "Farms: $farms , $farmitems"
+	log AI "Farms: $farms , $farmitems"
 	set forbidden {}
 	if {[get_owner_attrib $populationowner BpPilz]>0.0} {
 		set pilzfarms [land $farms [prod_get_task_active_places $populationowner Pilz]]
 		set mneed 1
 		foreach pf $pilzfarms {
-			//ai_log "found Pilzfarm: $pf"
+			log AI "found Pilzfarm: $pf"
 			set idx [lsearch $farmitems Pilz]
 			if {$idx==-1} {break}
 			lrem farmitems $idx
@@ -1910,12 +1881,12 @@ proc economy_ai {} {
 			set mneed 1
 			foreach f $cfarms {
 				set idx [lsearch $farmitems $farmclass]
-				//ai_log "found ${farmclass}farm: $f ($idx)"
+				log AI "found ${farmclass}farm: $f ($idx)"
 				if {$idx!=-1} {
 					lrem farmitems $idx
 					set farms [lnand $f $farms]
 				}
-				//ai_log "checking mneed"
+				log AI "checking mneed"
 				if {[get_prod_materialneed $f]==0} {
 					set mneed 0
 					break
@@ -1932,7 +1903,7 @@ proc economy_ai {} {
 			}
 		}
 	}
-	//ai_log "remaining farmitems: $farmitems ($farms)"
+	log AI "remaining farmitems: $farmitems ($farms)"
 	foreach farmclass $farmitems {
 		set found 0
 		while {$farms!=""&&$found==0} {
@@ -1940,7 +1911,7 @@ proc economy_ai {} {
 			set invent 0
 			foreach item {Pilz Hamster Raupe} {
 				if {[get_prod_slot_cnt $nf $item]==1} {
-					//ai_log "Found Invention at $nf: $item"
+					log AI "Found Invention at $nf: $item"
 					set invent 1
 				}
 			}
@@ -1952,13 +1923,13 @@ proc economy_ai {} {
 			}
 		}
 		if {$found==0} {break}
-		//ai_log "$farmclass buildable at $nf: [get_prod_slot_buildable $nf $farmclass]"
+		log AI "$farmclass buildable at $nf: [get_prod_slot_buildable $nf $farmclass]"
 		if {[get_prod_slot_buildable $nf $farmclass]} {
 			if {[get_prod_slot_cnt $nf $farmclass]==0} {
 				foreach item [lnand $item {Pilz Hamster Raupe}] {
 					set_prod_slot_cnt $nf $item 0
 				}
-				ai_log "BEAUFTRAGUNG: $nf -> $farmclass 10"
+				log AI "BEAUFTRAGUNG: $nf -> $farmclass 10"
 				set_prod_slot_cnt $nf $farmclass 10
 			}
 			lrem farms 0
@@ -1977,13 +1948,13 @@ proc economy_ai {} {
 				foreach nitem [lnand $item {Pilz Hamster Raupe}] {
 					set_prod_slot_cnt $farm $nitem 0
 				}
-				ai_log "BEAUFTRAGUNG: $farm -> $item 10"
+				log AI "BEAUFTRAGUNG: $farm -> $item 10"
 				set_prod_slot_cnt $farm $item 10
 				break
 			}
 		}
 	}
-	//ai_log "forbidden: $forbidden"
+	log AI "forbidden: $forbidden"
 	
 	// Nahrung
 	set allowed {}
@@ -2012,14 +1983,14 @@ proc economy_ai {} {
 	foreach ecn $eatclasses {
 		incr foodcount [lcount $itemclassexists $ecn]
 	}
-	//ai_log "allowed: $allowed ($foodcount)"
+	log AI "allowed: $allowed ($foodcount)"
 	//incr_objquerycnt
 	fincr hunger [expr {-0.2*$foodcount}]
 	set foodlist {}
 	set whilecounter 0
 	while {$hunger>0.05&&$allowed!=""&&$whilecounter<100} {
 		incr whilecounter
-		//ai_log "$hunger $foodlist $allowed"
+		log AI "$hunger $foodlist $allowed"
 		set allowed [lsort -integer -index 1 $allowed]
 		set nextitem [lindex $allowed 0]
 		set item [lindex $nextitem 0]
@@ -2036,7 +2007,7 @@ proc economy_ai {} {
 		incr rc 2
 		lrep allowed 0 [list $item $rc]
 	}
-	//ai_log "foodlist: $foodlist"
+	log AI "foodlist: $foodlist"
 	if {$greathunger} {
 		set producelist $foodlist
 	} else {
@@ -2044,16 +2015,16 @@ proc economy_ai {} {
 	}
 	
 	// Produktion
-	//if {$producelist!=""} {ai_log "to produce: $producelist"}
-	//if {$builduplist!=""} {ai_log "to buildup: $builduplist"}
-	//if {$pickuplist!=""} {ai_log "to pickup: $pickuplist"}
-	//if {$outofenergylist!=""} {ai_log "out of energy: $outofenergylist"}
-	if {$steallist!=""} {ai_log "to steal: $steallist"}
+	//if {$producelist!=""} {log AI "to produce: $producelist"}
+	//if {$builduplist!=""} {log AI "to buildup: $builduplist"}
+	//if {$pickuplist!=""} {log AI "to pickup: $pickuplist"}
+	//if {$outofenergylist!=""} {log AI "out of energy: $outofenergylist"}
+	if {$steallist!=""} {log AI "to steal: $steallist"}
 	if {$inventlist!=""} {
-		//ai_log "to invent: $inventlist"
+		log AI "to invent: $inventlist"
 		set notinventlist ""
 	}
-	if {$repairlist!=""} {ai_log "to repair: $repairlist"}
+	if {$repairlist!=""} {log AI "to repair: $repairlist"}
 	
 	// Fremde Kisten klauen
 	if {!$greathunger&&$idlegnomes} {
@@ -2067,7 +2038,7 @@ proc economy_ai {} {
 				if {$gnomes!=""} {
 					set nearest [lindex $gnomes 0]
 					timer_event $nearest evt_task_pickup -subject1 $box -pos1 [get_pos $box] -attime [expr {$ctime+0.01}]
-					ai_log "AUFHEBEN: $nearest [get_objname $nearest] $box [get_objname $box]"
+					log AI "AUFHEBEN: $nearest [get_objname $nearest] $box [get_objname $box]"
 					lappend EconGnomesList $nearest
 					set stealboxlist [lor $stealboxlist $box]
 					incr idlegnomes -1
@@ -2078,7 +2049,7 @@ proc economy_ai {} {
 	}
 	
 	// Zu Digmarkierung laufen
-	//ai_log "vDSP: $vDigSendPoint ($idlegnomelist) $idlegnomes"
+	log AI "vDSP: $vDigSendPoint ($idlegnomelist) $idlegnomes"
 	if {$vDigSendPoint!=""&&$idlegnomes} {
 		set mindist 1000
 		set bestgnome 0
@@ -2091,7 +2062,7 @@ proc economy_ai {} {
 		}
 		if {$bestgnome} {
 			timer_event $bestgnome evt_task_walk -pos1 $vDigSendPoint -attime [expr {$ctime+0.01}]
-			ai_log "HINLAUFEN: $bestgnome ($vDigSendPoint)"
+			log AI "HINLAUFEN: $bestgnome ($vDigSendPoint)"
 			set idlegnomelist [lnand $bestgnome $idlegnomelist]
 			incr idlegnomes -1
 			set vDigSendPoint ""
@@ -2099,17 +2070,17 @@ proc economy_ai {} {
 	}
 	
 	// Aufhebauftraege ausstellen
-	//ai_log "GH $greathunger IG $idlegnomes"
+	log AI "GH $greathunger IG $idlegnomes"
 	if {!$greathunger&&$idlegnomes} {
 		for {set i 0} {$i<$distributeitemslength} {incr i} {
 			set items [lindex $newpickuplist $i]
 			set gnomeslist [lindex $gnomebestdistribution $i]
 			set gnomeslist [lsort -real -decreasing -index 1 $gnomeslist]
-			//ai_log $gnomeslist
+			log AI $gnomeslist
 			set gnomeslist [lrange $gnomeslist 0 [expr {[llength $items]-1}]]
-			//ai_log "checkin $items | $gnomeslist"
+			log AI "checkin $items | $gnomeslist"
 			foreach gnomeentry $gnomeslist {
-				//ai_log "checking $gnomeentry ($idlegnomelist)"
+				log AI "checking $gnomeentry ($idlegnomelist)"
 				set gnome [lindex $gnomeentry 0]
 				if {[land $gnome $idlegnomelist]==""} {
 					continue
@@ -2125,12 +2096,12 @@ proc economy_ai {} {
 				}
 				set items [lnand $nearestitem $items]
 				timer_event $gnome evt_task_pickup -subject1 $item -pos1 [get_pos $item] -attime [expr {$ctime+0.01}]
-				ai_log "AUFHEBEN: $gnome [get_objname $gnome] $item [get_objname $item]"
+				log AI "AUFHEBEN: $gnome [get_objname $gnome] $item [get_objname $item]"
 				lappend EconGnomesList $gnome
 				incr idlegnomes -1
 				set idlegnomelist [lnand $gnome $idlegnomelist]
 				set putdownitems [get_downgrades $gnome $item]
-				//ai_log "pdi [get_objname $gnome]: $putdownitems"
+				log AI "pdi [get_objname $gnome]: $putdownitems"
 				if {$putdownitems!=""} {
 					lappend putdownlist [list $gnome $putdownitems]
 				}
@@ -2140,7 +2111,7 @@ proc economy_ai {} {
 	
 	// Items ablegen
 	set newpdlist ""
-	//ai_log "PDL: $putdownlist"
+	log AI "PDL: $putdownlist"
 	foreach entry $putdownlist {
 		set gnome [lindex $entry 0]
 		if {![obj_valid $gnome]} {continue}
@@ -2162,7 +2133,7 @@ proc economy_ai {} {
 						timer_event $gnome evt_task_putdown -subject1 $item -pos1 $safe_pos -attime [expr {$ctime+0.01}]
 						lappend EconGnomesList $gnome
 						set stealboxlist [lnand $item $stealboxlist]
-						ai_log "ABLEGEN: $gnome [get_objname $gnome] $item [get_objname $item]"
+						log AI "ABLEGEN: $gnome [get_objname $gnome] $item [get_objname $item]"
 					}
 				}
 			}
@@ -2190,7 +2161,7 @@ proc economy_ai {} {
 			set classname [lindex $entry 0]
 			if {[prod_get_task_total_cnt $populationowner $classname]==0} {
 				set places [prod_get_task_all_places $populationowner $classname]
-				//ai_log "possibleplaces $places"
+				log AI "possibleplaces $places"
 				set places [land $prodlist $places]
 				if {$places!=""} {
 					set chosen [lindex $places 0]
@@ -2200,12 +2171,12 @@ proc economy_ai {} {
 						}
 					}
 					set_prod_slot_cnt $chosen $classname 1
-					ai_log "BEAUFTRAGUNG: $chosen -> $classname 1 (Erfinden)"
+					log AI "BEAUFTRAGUNG: $chosen -> $classname 1 (Erfinden)"
 					incr possibleinvtasks -1
 					incr possiblenewtasks -1
 				}
 			} else {
-				//ai_log "Invention im Gange: $classname [prod_get_task_total_cnt $populationowner $classname]"
+				log AI "Invention im Gange: $classname [prod_get_task_total_cnt $populationowner $classname]"
 				incr possibleinvtasks -1
 				incr possiblenewtasks -1
 			}
@@ -2217,7 +2188,7 @@ proc economy_ai {} {
 	// Aufbauauftraege
 	if {!$buildupinprogress} {
 		foreach entry [lsort -index 1 -decreasing $builduplist] {
-			//ai_log "placesearch foreach $entry"
+			log AI "placesearch foreach $entry"
 			set entryitem [lindex $entry 0]
 			set failidx [lsearch -glob $failedbuilduptasks "$entryitem *"]
 			set failentry [lindex $failedbuilduptasks $failidx]
@@ -2230,19 +2201,19 @@ proc economy_ai {} {
 			set entryclass [get_objclass $entryitem]
 			if {$entryclass=="Leiter"} {continue}
 			set testrange [expr {[hmax $xdim $ydim]*1.2}]
-			//ai_log "testrange for $entryclass: $testrange ($xdim $ydim)"
+			log AI "testrange for $entryclass: $testrange ($xdim $ydim)"
 			set startrange [hmax [expr {int($testrange-25)}] 10]
 			set whilecounter 0
 			set found 0
 			while {$startrange<$testrange&&$whilecounter<100} {
-				//ai_log "placesearch $whilecounter"
+				log AI "placesearch $whilecounter"
 				incr whilecounter
 				set bestplace [get_best_buildup_place $entryclass $center $centergnome $startrange]
 				incr startrange 20
-				//ai_log "looping placesearch $whilecounter: $entryclass $startrange"
+				log AI "looping placesearch $whilecounter: $entryclass $startrange"
 			}
 			if {$bestplace!=""} {
-				ai_log "BEAUFTRAGUNG: $entryitem -> $entryclass buildup at $bestplace"
+				log AI "BEAUFTRAGUNG: $entryitem -> $entryclass buildup at $bestplace"
 				ai_setbuildup $entryitem $bestplace
 				set found 1
 				if {$failidx!=-1} {
@@ -2250,7 +2221,7 @@ proc economy_ai {} {
 				}
 				break
 			} else {
-				ai_log "found no place for $entryclass ($entryitem)"
+				log AI "found no place for $entryclass ($entryitem)"
 				if {$failidx==-1} {
 					lappend failedbuilduptasks [list $entryitem 1 [expr {$iTickCounter+8}]]
 				} else {
@@ -2260,18 +2231,18 @@ proc economy_ai {} {
 					lrep failedbuilduptasks $failidx [list $entryitem $ccnt [expr {$iTickCounter+$nexttime}]]
 				}
 			}
-			if {$found} {ai_log "leaving placesearch foreach";break}
+			if {$found} {log AI "leaving placesearch foreach";break}
 		}
 	}
 	
 	// Produktionsauftraege
 	set whilecounter 0
 	set alreadytaskedlist ""
-	//ai_log "zu vergeben: $possiblenewtasks"
+	log AI "zu vergeben: $possiblenewtasks"
 	while {$possiblenewtasks>0&&$producelist!=""&&$whilecounter<20} {
 		incr whilecounter
 		set producelist [lsort -real -decreasing -index 2 $producelist]
-		//ai_log "pl: $producelist"
+		log AI "pl: $producelist"
 		set nextitem [lindex $producelist 0]
 		set classname [lindex $nextitem 0]
 		set cc [lindex $nextitem 1]
@@ -2283,7 +2254,7 @@ proc economy_ai {} {
 			}
 			set totalcnt [prod_get_task_total_cnt $populationowner $classname]
 			incr alreadytasked $totalcnt
-			//ai_log "incr at by $totalcnt -> $alreadytasked $classname"
+			log AI "incr at by $totalcnt -> $alreadytasked $classname"
 			if {$totalcnt&&[lsearch $alreadytaskedlist $classname]==-1} {
 				lappend alreadytaskedlist $classname
 				incr possiblenewtasks -1
@@ -2292,7 +2263,7 @@ proc economy_ai {} {
 		}
 		set deleteclass 0
 		set found 0
-		//ai_log "at: $alreadytasked cc $cc"
+		log AI "at: $alreadytasked cc $cc"
 		if {$alreadytasked-$cc<0} {
 			for {set i 0} {$i<4} {incr i} {
 				set classname [string replace $classname end end]
@@ -2301,14 +2272,14 @@ proc economy_ai {} {
 					if {$DontUseList!=""} {
 						if {[lsearch $DontUseList [get_objclass $pp]]!=-1} {
 							set deleteclass 1
-							ai_log "Forbidden PS: $pp"
+							log AI "Forbidden PS: $pp"
 							break
 						}
 					}
 					set tasks 0
 					set mitems [call_method $pp prod_item_materials $classname]
 					if {[land $forbidden $mitems]!=""} {
-						//ai_log "Forbidden: $mitems ($pp) $forbidden ($classname)"
+						log AI "Forbidden: $mitems ($pp) $forbidden ($classname)"
 						set deleteclass 1
 						break
 					}
@@ -2329,7 +2300,7 @@ proc economy_ai {} {
 							set deleteclass 1
 						}
 						set found 1
-						ai_log "BEAUFTRAGUNG: $pp -> $classname $taskcnt [get_prod_slot_buildable $pp $classname]"
+						log AI "BEAUFTRAGUNG: $pp -> $classname $taskcnt [get_prod_slot_buildable $pp $classname]"
 						if {[lsearch {production store elevator energy} [get_class_type $classname]]!=-1} {
 							lappend oldprodplacetasks $classname
 						}
@@ -2384,11 +2355,11 @@ proc get_best_buildup_place {cn pos gnome range} {
 	global DontPlaceArea
 	set dolog 0
 	//set pos [get_pos $gnome]
-	//ai_log "bestplace enter $cn"
+	log AI "bestplace enter $cn"
 	set places [ai_getprodlocations $cn $pos $range]
-	ai_log "Found places for $cn : $places"
-	if {$places==""} {ai_log "no locations found for $cn $range";return ""}
-	//ai_log "found locations: $places"
+	log AI "Found places for $cn : $places"
+	if {$places==""} {log AI "no locations found for $cn $range";return ""}
+	log AI "found locations: $places"
 	set allplaces $places
 	set bestplace ""
 	set nextplace ""
@@ -2400,20 +2371,20 @@ proc get_best_buildup_place {cn pos gnome range} {
 		set pilzz 5
 	}
 	set whilecounter 0
-	if {$dolog} {ai_log $places}
+	if {$dolog} {log AI $places}
 	if {$DontPlaceArea!=""} {
-		ai_log "Forbidden Area: $DontPlaceArea"
+		log AI "Forbidden Area: $DontPlaceArea"
 		set dpaxn [lindex $DontPlaceArea 0]
 		set dpayn [lindex $DontPlaceArea 1]
 		set dpaxp [lindex $DontPlaceArea 2]
 		set dpayp [lindex $DontPlaceArea 3]
 	}
 	while {$bestplace==""&&$places!=""&&$whilecounter<200} {
-		//ai_log "placewhile $whilecounter ($nextplace)"
+		log AI "placewhile $whilecounter ($nextplace)"
 		incr whilecounter
 		if {$nextplace==""} {
 			set nextplace [lrem places 0]
-			//ai_log "new nextplace: $nextplace"
+			log AI "new nextplace: $nextplace"
 			set pilzlist [lnand 0 [obj_query $gnome -pos $nextplace -class PilzMyzel -boundingbox {-20 -1 -10 20 1 10}]]
 			set pilzposlist ""
 			foreach pilz $pilzlist {
@@ -2424,7 +2395,7 @@ proc get_best_buildup_place {cn pos gnome range} {
 		set ny [lindex $nextplace 1]
 		if {$DontPlaceArea!=""} {
 			if {$nx>$dpaxn||$nx<$dpaxp||$ny>$dpayn||$ny<$dpayp} {
-				ai_log "forbidden: $nextplace"
+				log AI "forbidden: $nextplace"
 				set nextplace ""
 				continue
 			}
@@ -2441,9 +2412,9 @@ proc get_best_buildup_place {cn pos gnome range} {
 				break
 			}
 		}
-		//ai_log "ny: $ny"
-		//ai_log "$ysort"
-		//ai_log "$xsort"
+		log AI "ny: $ny"
+		log AI "$ysort"
+		log AI "$xsort"
 		set xsort [lsort -index 0 -real $xsort]
 		set zsort ""
 		set cx -1.0
@@ -2454,14 +2425,14 @@ proc get_best_buildup_place {cn pos gnome range} {
 			if {$npx<$nx-2.5} {continue}
 			if {$npx>$cx} {
 				if {$zsort!=""} {
-					//ai_log "found: [lsort -index 2 -real $zsort]"
+					log AI "found: [lsort -index 2 -real $zsort]"
 					set bestnear [lindex [lsort -index 2 -real $zsort] 0]
 					break
 				}
 			}
 			if {$npx>$nx+2.5} {break}
 			set npz [lindex $nplace 2]
-			//ai_log "nplace foreach $nplace"
+			log AI "nplace foreach $nplace"
 			set pilzfree 1
 			foreach pilzpos $pilzposlist {
 				if {abs($npx-[lindex $pilzpos 0])<$pilzx&&abs($npz-[lindex $pilzpos 2])<$pilzz} {
@@ -2476,7 +2447,7 @@ proc get_best_buildup_place {cn pos gnome range} {
 		}
 		//set nearplaces [ai_getprodlocations $cn $nextplace 5]
 		//set leftsort [lsort -index 0 -real $nearplaces]
-		if {$whilecounter>100} {ai_log "$whilecounter: $nextplace ($bestnear) $bestplace"}
+		if {$whilecounter>100} {log AI "$whilecounter: $nextplace ($bestnear) $bestplace"}
 		if {""==$bestnear} {
 			set nextplace ""
 		} elseif {$bestnear==$nextplace} {
@@ -2486,16 +2457,16 @@ proc get_best_buildup_place {cn pos gnome range} {
 		}
 	}
 	if {$bestplace!=""&&[lsearch $allplaces $bestplace]==-1} {
-		ai_log "FOUND PLACE NOT IN LIST: $cn ($bestplace) - $allplaces"
+		log AI "FOUND PLACE NOT IN LIST: $cn ($bestplace) - $allplaces"
 	}
-	ai_log "Found place $cn: $bestplace"
+	log AI "Found place $cn: $bestplace"
 	return $bestplace
 }
 
 set worldlog 0
 proc w_log {str} {
 	global worldlog
-	if {$worldlog} {ai_log $str}
+	if {$worldlog} {log AI $str}
 }
 proc analyze_world {center xdim ydim owner placeneed igcount} {
 	global bExpandBase fExpandRate vDigSendPoint
@@ -2584,10 +2555,10 @@ proc analyze_world {center xdim ydim owner placeneed igcount} {
 					if {$ne&1} {
 						if {$bit==4} {
 							incr vertcnt
-							//ai_log "vert: $pointer $ce $ne"
+							log AI "vert: $pointer $ce $ne"
 						} elseif {$bit==16} {
 							incr horicnt
-							//ai_log "hori: $pointer $ce $ne"
+							log AI "hori: $pointer $ce $ne"
 						}
 					}
 					set ne [expr {$ne|$bit}]
@@ -3010,7 +2981,7 @@ proc analyze_world {center xdim ydim owner placeneed igcount} {
 			}
 		}
 		if {$digpoints!=""} {
-			ai_log "BEAUFTRAGUNG: graben Typ $type at [lindex $digfield 0] (priority [lindex $prop 3])"
+			log AI "BEAUFTRAGUNG: graben Typ $type at [lindex $digfield 0] (priority [lindex $prop 3])"
 			if {$type==3} {
 				set cave_skin_x1 [expr {$cx+4.0+$p0*2}]
 				set cave_skin_y2 $cy
@@ -3234,5 +3205,5 @@ foreach entry [get_proditem_ratio] {
 	incr proditem_classcnt
 }
 		
-ai_log "Ai init done."
+log AI "Ai init done."
 

@@ -1,34 +1,47 @@
+call scripts/lib/ui.tcl
+call scripts/utility.tcl
 
-set quests 0							;# für Questlog
-
-
-proc is_invented {class} {
-//	log "checking class $class"
-	return [expr {[get_owner_attrib [net localid] "Bp$class"] > 0}]
-}
+set quests 0
 
 proc inventionlinks {classname} {
-	set links 0
-
 	layout print "/(al)/p/p"
-	if {![check_method $classname prod_items]} {
+
+	if { ![check_method $classname prod_items] || [lsearch {Lager Theater} $classname] != -1 } {
 		return
 	}
-	
-	foreach item [call_method_static $classname prod_items] {
-		incr links
 
-		set item [string trim $item "_"]		
-		if {[is_invented $item]} {
-			layout print [layout autolink "tt_$item.tcl" "/(tx[lmsg $item])"]
+	if { [lsearch {Farm Feuerstelle} $classname] != -1 } {
+		layout print "/p"
+	}
+
+	set parity 0
+
+	foreach item [call_method_static $classname prod_items] {
+		set item [string trim $item "_"]
+
+		layout print "/(fn1)"
+
+		if { [is_invented [net localid] $item] } {
+			layout print [btn_run_doc [lmsg $item] "tt_$item.tcl"]
+			if { [chm_cheat_enabled InventButtons] } {
+				layout print "/(fn0)/(tx )"
+				layout print [btn [lmsg Forget] "set_invented [net localid] Bp$item 0; layout reload"]
+			}
 		} else {
-			layout print "[lmsg $item]"
+			layout print [lmsg $item]
+			if { [chm_cheat_enabled InventButtons] } {
+				layout print "/(fn0)/(tx )"
+				layout print [btn [lmsg Invent] "set_invented [net localid] Bp$item 1; layout reload"]
+			}
 		}
-		if {($links % 2) == 0} {
-			layout print "/p "
-		} else {
+
+		if { ($parity % 2) == 0 } {
 			layout print "/(tb50)"
+		} else {
+			layout print "/p"
 		}
+
+		incr parity
 	}
 }
 
@@ -44,7 +57,6 @@ proc ohlp_tttextbodystyle {} {
 	layout print "/p/p/(ab)/(fn1)"
 }
 
-
 proc questlog_headline {} {
 	layout print "/(ac)/(fn2)"
 	layout print [lmsg Questlog]
@@ -56,52 +68,44 @@ proc questlog {story_event headline text} {
 
 	set done_event $story_event
 	append done_event _done
-	
-	if {![is_storymgr]} {
-		return
-	}
-	
-	if {![sm_get_event $story_event]} {
-		return
-	}
-	
+
+	if { ![is_storymgr] } { return }
+
+	if { ![sm_get_event $story_event] } { return }
+
 	incr quests
-	
+
 	layout print "/(al)/(fn1)"
 	layout print "$headline /p"
 	layout print "/(al)/(fn0)/p"
 
-	if {![sm_get_event $done_event]} {
+	if { ![sm_get_event $done_event] } {
 		layout print "$text"
 	} else {
 		layout print [lmsg "Quest Done"]
 	}
+
 	layout print "/p/p/p"
 }
-
 
 proc questlog_end {} {
 	global quests
 
-	if {$quests == 0} {
+	if { $quests == 0 } {
 		layout print "/(ac)/(fn0)/p/p"
 		layout print [lmsg "No Quests"]
 		layout print "/p"
 	}
 }
 
-
 proc linkline {target text} {
 	layout print [layout autolink $target "/(tx$text)/p"]
 }
 
-
 proc paragraph {text} {
-	layout print "$text /p/p"
+	layout print "$text/p/p"
 }
 
-
 proc pickone {lst} {
-	set i [irandom [llength $lst]]
-	layout print [lindex $lst $i]
+	layout print [lindex $lst [irandom [llength $lst]]]
 }
